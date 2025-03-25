@@ -10,29 +10,51 @@ const CreateAccountForm = () => {
   const { push } = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
-    console.log(email);
   };
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
-    console.log(username);
+  };
+
+  const handleBirthdateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let value = event.target.value;
+    
+    
+    value = value.replace(/\D/g, ''); 
+    
+    if (value.length > 2) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    
+    if (value.length > 5) {
+      value = value.slice(0, 5) + '/' + value.slice(5);
+    }
+    
+    
+    value = value.slice(0, 10);
+    
+    setBirthdate(value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-    console.log(password);
+  };
+
+  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(event.target.value);
   };
 
   return (
     <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2">
       <div className="pb-10">
         <Label htmlFor="email" className="pb-4 text-2xl font-semibold ml-[10%]">
-          {" "}
-          Email{" "}
+          Email
         </Label>
         <Input
           id="email"
@@ -42,62 +64,70 @@ const CreateAccountForm = () => {
           className="mt-3 lg:w-[80%] mx-auto"
         />
       </div>
-      <div>
+      <div className="pb-10">
         <Label htmlFor="username" className="pb-4 text-2xl font-semibold ml-[10%]">
-          {" "}
-          Username{" "}
+          Username
         </Label>
         <Input
           id="username"
           placeholder="Enter Username"
-          value={email}
+          value={username}
           onChange={handleUsernameChange}
           className="mt-3 lg:w-[80%] mx-auto"
         />
       </div>
-      <div>
+      <div className="pb-10">
+        <Label htmlFor="birthdate" className="pb-4 text-2xl font-semibold ml-[10%]">
+          Date of Birth
+        </Label>
+        <Input
+          id="birthdate"
+          placeholder="mm/dd/yyyy"
+          value={birthdate}
+          onChange={handleBirthdateChange}
+          className="mt-3 lg:w-[80%] mx-auto"
+        />
+      </div>
+      <div className="pb-10">
         <Label
           htmlFor="password"
-          className="pb-4 text-2xl font-semibold ml-[10%] mt-5"
+          className="pb-4 text-2xl font-semibold ml-[10%]"
         >
-          {" "}
-          Password{" "}
+          Password
         </Label>
-
         <Input
           id="password"
+          type="password"
           placeholder="Enter Password"
           value={password}
           onChange={handlePasswordChange}
           className="mt-3 lg:w-[80%] mx-auto"
         />
       </div>
-      <div>
+      <div className="pb-10">
         <Label
-          htmlFor="password"
-          className="pb-4 text-2xl font-semibold ml-[10%] mt-5"
+          htmlFor="confirm-password"
+          className="pb-4 text-2xl font-semibold ml-[10%]"
         >
-          {" "}
-          Confirm Password{" "}
+          Confirm Password
         </Label>
-
         <Input
-          id="password"
+          id="confirm-password"
+          type="password"
           placeholder="Re-enter Password"
-          value={password}
-          onChange={handlePasswordChange}
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
           className="mt-3 lg:w-[80%] mx-auto"
         />
       </div>
       <div className="flex justify-center">
         <Button className="bg-blue-600 text-white text-xl mt-7 h-15 w-40">
-          {" "}
           Create Account
         </Button>
       </div>
       <div className="flex justify-center py-3 text-xl">
-        <p className="text-gray-400"> Already have an account? </p>
-        <Link href={"/create-account"}>Login Here!</Link>
+        <p className="text-gray-400 mr-2">Already have an account?</p>
+        <Link href={"/login"} className="text-blue-600">Login Here!</Link>
       </div>
     </div>
   );
