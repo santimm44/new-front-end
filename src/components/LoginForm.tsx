@@ -3,8 +3,12 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "./ui/input";
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 
 const LoginForm = () => {
+    const { push } = useRouter();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,7 +21,6 @@ const LoginForm = () => {
     setPassword(event.target.value);
     console.log(password);
   };
-
 
 
   return (
@@ -54,7 +57,7 @@ const LoginForm = () => {
       </div>
       <div className="flex justify-center py-3 text-xl">
         <p className="text-gray-400"> Dont have an account? </p>
-        <a href="/" className="underline text-blue-500">Create an account!</a>
+        <Link href={"/create-account"}>Create your account!</Link>
       </div>
       <div className="flex justify-center mt-20 text-xl">
         <p className="text-gray-400">Forgot Password/Username?</p>
