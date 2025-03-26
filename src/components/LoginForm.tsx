@@ -57,7 +57,7 @@ const LoginForm = () => {
       </div>
       <div className="flex justify-center py-3 text-xl">
         <p className="text-gray-400"> Dont have an account? </p>
-        <Link href={"/create-account"}>Create your account!</Link>
+        <Link className="underline text-blue-500" href={"/create-account"}>Create your account!</Link>
       </div>
       <div className="flex justify-center mt-20 text-xl">
         <p className="text-gray-400">Forgot Password/Username?</p>

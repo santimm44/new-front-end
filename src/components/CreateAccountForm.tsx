@@ -127,7 +127,7 @@ const CreateAccountForm = () => {
       </div>
       <div className="flex justify-center py-3 text-xl">
         <p className="text-gray-400 mr-2">Already have an account?</p>
-        <Link href={"/login"} className="text-blue-600">Login Here!</Link>
+        <Link href="/" className="text-blue-600">Login Here!</Link>
       </div>
     </div>
   );
