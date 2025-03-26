@@ -5,6 +5,8 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import BgImage from "@/assets/A close up of a dumbbell with a nice gym background.jpg"
+import Image from "next/image";
 
 const CreateAccountForm = () => {
   const { push } = useRouter();
@@ -51,7 +53,9 @@ const CreateAccountForm = () => {
   };
 
   return (
-    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2">
+   
+    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2 bg-slate-400">
+
       <div className="pb-10">
         <Label htmlFor="email" className="pb-4 text-2xl font-semibold ml-[10%]">
           Email
@@ -61,7 +65,7 @@ const CreateAccountForm = () => {
           placeholder="Enter Email"
           value={email}
           onChange={handleEmailChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-1 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="pb-10">
@@ -73,7 +77,7 @@ const CreateAccountForm = () => {
           placeholder="Enter Username"
           value={username}
           onChange={handleUsernameChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-1 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="pb-10">
@@ -85,7 +89,7 @@ const CreateAccountForm = () => {
           placeholder="mm/dd/yyyy"
           value={birthdate}
           onChange={handleBirthdateChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-1 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="pb-10">
@@ -101,7 +105,7 @@ const CreateAccountForm = () => {
           placeholder="Enter Password"
           value={password}
           onChange={handlePasswordChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-1 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="pb-10">
@@ -117,19 +121,20 @@ const CreateAccountForm = () => {
           placeholder="Re-enter Password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-1 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="flex justify-center">
-        <Button className="bg-blue-600 text-white text-xl mt-7 h-15 w-40">
+        <Button className="bg-blue-600 text-white text-xl mt-2 h-15 w-40">
           Create Account
         </Button>
       </div>
       <div className="flex justify-center py-3 text-xl">
-        <p className="text-gray-400 mr-2">Already have an account?</p>
-        <Link href="/" className="text-blue-600">Login Here!</Link>
+        <p className=" mr-2">Already have an account?</p>
+        <Link href="/" className="text-blue-600 underline">Login Here!</Link>
       </div>
     </div>
+  
   );
 };
 
