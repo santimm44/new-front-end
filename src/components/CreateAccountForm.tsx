@@ -125,7 +125,7 @@ const CreateAccountForm = () => {
         />
       </div>
       <div className="flex justify-center">
-        <Button className="bg-blue-600 text-white text-xl mt-2 h-15 w-40">
+        <Button className="bg-blue-600 text-white text-xl mt-2 h-15 w-40 hover:bg-white hover:text-blue-600 hover:border-black hover:border-2">
           Create Account
         </Button>
       </div>
