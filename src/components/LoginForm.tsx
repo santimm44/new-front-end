@@ -24,7 +24,7 @@ const LoginForm = () => {
 
 
   return (
-    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2">
+    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2 bg-slate-400">
       <div className="pb-10">
         <Label htmlFor="user" className="pb-4 text-2xl font-semibold ml-[10%]">
           {" "}
@@ -35,7 +35,7 @@ const LoginForm = () => {
           placeholder="Enter Username/Email"
           value={user}
           onChange={handleUserChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-3 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div>
@@ -49,19 +49,19 @@ const LoginForm = () => {
           placeholder="Enter Password"
           value={password}
           onChange={handlePasswordChange}
-          className="mt-3 lg:w-[80%] mx-auto"
+          className="mt-3 lg:w-[80%] mx-auto bg-white"
         />
       </div>
       <div className="flex justify-center">
-        <Button className="bg-blue-600 text-white text-2xl mt-7 h-15 w-40"> Sign In</Button>
+        <Button className="bg-blue-600 text-white text-2xl mt-7 h-15 w-40 hover:bg-white hover:text-blue-600 hover:border-black hover:border-2"> Sign In</Button>
       </div>
       <div className="flex justify-center py-3 text-xl">
-        <p className="text-gray-400"> Dont have an account? </p>
-        <Link className="underline text-blue-500" href={"/create-account"}>Create your account!</Link>
+        <p className=""> Dont have an account? </p>
+        <Link className="underline text-blue-600" href={"/create-account"}>Create your account!</Link>
       </div>
       <div className="flex justify-center mt-20 text-xl">
-        <p className="text-gray-400">Forgot Password/Username?</p>
-        <a href="/" className="underline text-blue-500">Click Here!</a>
+        <p className="">Forgot Password/Username?</p>
+        <a href="/" className="underline text-blue-600">Click Here!</a>
       </div>
     </div>
   );
