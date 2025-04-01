@@ -195,7 +195,7 @@ export default function Home() {
               <div className="lg:flex lg:justify-center">
                 <Label
                   htmlFor="username"
-                  className="block text-xl font-semibold mb-1"
+                  className="block text-xl font-semibold mb-1 lg:w-[80%]"
                 >
                   Username
                 </Label>
@@ -214,7 +214,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="birthdate"
-                    className="block text-xl font-semibold mb-1"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
                   >
                     Date of Birth
                   </Label>
@@ -233,7 +233,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="create-password"
-                    className="block text-xl font-semibold mb-1"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
                   >
                     Password
                   </Label>
@@ -253,7 +253,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="confirm-password"
-                    className="block text-xl font-semibold mb-1"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
                   >
                     Confirm Password
                   </Label>

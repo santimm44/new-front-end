@@ -1,6 +1,6 @@
 import { IUserData, IUserInfo } from "./Interfaces";
 
-const url = "";
+const url = "https://spotme-dbaccesspoint-f6g8beadb2erdega.westus-01.azurewebsites.net/";
 let userData: IUserData;
 
 // Login Fetch
@@ -79,6 +79,6 @@ export const createAccount = async (user: IUserInfo) => {
     return result;
   };
 
-  
+
 
 // Data fetches 
