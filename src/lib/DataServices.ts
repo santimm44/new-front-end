@@ -1,6 +1,7 @@
-import { IUserInfo } from "./Interfaces";
+import { IUserData, IUserInfo } from "./Interfaces";
 
 const url = "";
+let userData: IUserData;
 
 // Login Fetch
 export const login = async (user: IUserInfo) => {
@@ -33,7 +34,7 @@ export const createAccount = async (user: IUserInfo) => {
       },
       body: JSON.stringify(user),
     });
-    
+
     if (!res.ok) {
       const data = await res.json();
       const message = data.message;
@@ -44,5 +45,40 @@ export const createAccount = async (user: IUserInfo) => {
     const data = await res.json();
     return data.success;
   };
+
+  // Getting Logged in Data Fetch
+
+  export const getLoggedInUserData = async (username: string) => {
+    const res = await fetch(url + `User/GetUserInfoByUsername/${username}`);
+  
+    if (!res.ok) {
+      const data = await res.json();
+      const message = data.message;
+      console.log(message);
+      return null;
+    }
+    userData = await res.json();
+  
+    return userData;
+  };
+
+  export const loggedInData = () => {
+    return userData;
+  };
+
+  export const checkToken = () => {
+    let result = false;
+  
+    if (typeof window !== null) {
+      const lsData = localStorage.getItem("Token");
+  
+      if (lsData != null) {
+        result = true;
+      }
+    }
+    return result;
+  };
+
+  
 
 // Data fetches 
