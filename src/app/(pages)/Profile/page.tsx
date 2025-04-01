@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import profile from "@/assets/blank-profile-picture-973460_640.png";
 import SettingsImage from "@/assets/settings.png";
 import Image from "next/image";
-import { Button } from "flowbite-react";
+import { Button } from "@/components/ui/button";
 
 // NOTE Need to change default profile picture to User's uploaded picture and set inputs for profile
 const page = () => {
@@ -17,7 +17,7 @@ const page = () => {
 
   return (
     <div>
-      <div className="flex justify-end -mt-[515px]">
+      <div className="flex justify-end -mt-[460px]">
         <div className="lg:mr-[20%]">
           <Image
             src={profile}
@@ -40,10 +40,10 @@ const page = () => {
         <p> * Details About User </p>
         <p> * Details About User part 2 </p>
       </div>
-      <div className="flex justify-center">
-        <Button className="mx-[2%]">Stats</Button>
-        <Button className="mx-[2%]">Posts</Button>
-        <Button className="mx-[2%]">Friends</Button>
+      <div className="flex justify-end lg:mr-[8%] mt-10">
+        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Stats</Button>
+        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Posts</Button>
+        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Friends</Button>
       </div>
     </div>
   );

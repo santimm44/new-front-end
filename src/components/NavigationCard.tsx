@@ -17,14 +17,13 @@ const NavigationCard = () => {
   <SidebarItems>
     <SidebarItemGroup>
       <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Home</SidebarItem>
-      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Discovery</SidebarItem>
       <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Profile</SidebarItem>
       <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Match</SidebarItem>
       <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">
         Find A Spotter
       </SidebarItem>
       <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">
-        Test Your Strength
+        Find A Trainer
       </SidebarItem>
     </SidebarItemGroup>
   </SidebarItems>
