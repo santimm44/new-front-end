@@ -1,42 +1,34 @@
 "use client";
-import React from 'react'
-import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarLogo } from "flowbite-react";
-
-
+import React from "react";
+import {
+  Sidebar,
+  SidebarItem,
+  SidebarItemGroup,
+  SidebarItems,
+} from "flowbite-react";
+import Logo from "@/assets/spot-me-high-resolution-logo.png";
+import Image from "next/image";
 
 const NavigationCard = () => {
   return (
-    <Sidebar aria-label="Sidebar with logo branding example">
-      <SidebarLogo href="#" img="" imgAlt="Flowbite logo">
-        Flowbite
-      </SidebarLogo>
-      <SidebarItems>
-        <SidebarItemGroup>
-          <SidebarItem href="#">
-            Dashboard
-          </SidebarItem>
-          <SidebarItem href="#">
-            Kanban
-          </SidebarItem>
-          <SidebarItem href="#">
-            Inbox
-          </SidebarItem>
-          <SidebarItem href="#">
-            Users
-          </SidebarItem>
-          <SidebarItem href="#">
-            Products
-          </SidebarItem>
-          <SidebarItem href="#">
-            Sign In
-          </SidebarItem>
-          <SidebarItem href="#">
-            Sign Up
-          </SidebarItem>
-        </SidebarItemGroup>
-      </SidebarItems>
-    </Sidebar>
-  )
-}
+    <Sidebar className="[&>div]:bg-[#FFE9D1] mt-10 ml-[3%] !rounded-3xl shadow-2xl !overflow-hidden lg:w-[300px]">
+  <Image src={Logo} alt="Logo" className="h-36 w-full" priority />
+  <SidebarItems>
+    <SidebarItemGroup>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Home</SidebarItem>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Discovery</SidebarItem>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Profile</SidebarItem>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">Match</SidebarItem>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">
+        Find A Spotter
+      </SidebarItem>
+      <SidebarItem href="#" className="[&:hover]:bg-white !text-black text-xl bg-white border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:text-2xl hover:position-absolute h-[48px]">
+        Test Your Strength
+      </SidebarItem>
+    </SidebarItemGroup>
+  </SidebarItems>
+</Sidebar>
+  );
+};
 
-export default NavigationCard
+export default NavigationCard;

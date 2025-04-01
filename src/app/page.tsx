@@ -1,5 +1,6 @@
 "use client";
 import BgImage from "@/assets/A close up of a dumbbell with a nice gym background.jpg";
+import Logo from "@/assets/spot-me-high-resolution-logo.png"
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -105,7 +106,10 @@ export default function Home() {
         <div className="z-10">
           {!switchBool ? (
             // Login Form
-            <div className="lg:w-[650px] border-2 rounded-3xl px-8 py-10 bg-slate-400">
+            <div className="lg:w-[650px] border-2 rounded-3xl px-8 py-10 bg-[#FFE9D1]">
+              <div className="flex justify-center" >
+                <Image src={Logo} alt="Logo" className=" h-30 w-50 rounded-full" />
+              </div>
               <div className="mb-6">
               <div className="lg:flex lg:justify-center">
                 <Label
@@ -149,7 +153,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <Button
-                  className="bg-blue-600 text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-blue-600 hover:border-black hover:border-2"
+                  className="bg-[#FC6F2F] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#FC6F2F] hover:border-[#FC6F2F] hover:border-2"
                   onClick={handleSubmit}
                 >
                   Sign In
@@ -171,7 +175,10 @@ export default function Home() {
             </div>
           ) : (
             // Create Account Form
-            <div className="lg:w-[650px] border-2 rounded-3xl px-8 py-14 bg-slate-400 max-h-[90vh] overflow-y-auto">
+            <div className="lg:w-[650px] border-2 rounded-3xl px-8 py-14 bg-[#FFE9D1] max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-center" >
+                <Image src={Logo} alt="Logo" className=" h-30 w-50 rounded-full" />
+              </div>
               <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
                 <Label
@@ -272,7 +279,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <Button
-                  className="bg-blue-600 text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-blue-600 hover:border-black hover:border-2"
+                  className="bg-[#FC6F2F] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#FC6F2F] hover:border-[#FC6F2F] hover:border-2"
                   onClick={handleSubmit}
                 >
                   Create Account
