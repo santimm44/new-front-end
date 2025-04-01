@@ -11,6 +11,7 @@ import Image from "next/image";
 
 const NavigationCard = () => {
   return (
+    <div className="lg:w-[30%] w-[35%] flex justify-center">
     <Sidebar className="[&>div]:bg-[#FFE9D1] mt-10 ml-[3%] !rounded-3xl shadow-2xl !overflow-hidden lg:w-[300px]">
   <Image src={Logo} alt="Logo" className="h-36 w-full" priority />
   <SidebarItems>
@@ -28,6 +29,7 @@ const NavigationCard = () => {
     </SidebarItemGroup>
   </SidebarItems>
 </Sidebar>
+</div>
   );
 };
 
