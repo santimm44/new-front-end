@@ -54,7 +54,7 @@ const CreateAccountForm = () => {
 
   return (
    
-    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2 bg-slate-400">
+    <div className="lg:w-[650px] border-2 rounded-3xl px-20 pt-20 pb-2">
 
       <div className="pb-10">
         <Label htmlFor="email" className="pb-4 text-2xl font-semibold ml-[10%]">

@@ -101,54 +101,35 @@ const page = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="w-full sm:w-[90%] md:w-[90%] lg:w-[85%] mx-auto mt-8 text-center border-2 py-4 rounded-3xl bg-[#82C0CC]">
-          <h1 className="text-2xl sm:text-3xl font-semibold underline mb-4">
-            {name}'s Scores
-          </h1>
+        <div className="w-full sm:w-[90%] md:w-[90%] lg:w-[85%] mx-auto mt-8 text-center py-4">
+          <div className="mt-6">
+            <h2 className="text-xl font-bold mb-4">{name}'s Scores</h2>
 
-          <div className="w-full max-h-[400px] overflow-y-auto px-2 sm:px-4">
-            {statsItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="mb-2 last:mb-0 border-b border-[#EDE7E3]/40 last:border-b-0 pb-4 last:pb-0"
-              >
-                <div className="flex flex-col p-2 sm:p-4">
-                  <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-center  mb-3">
-                    <p className="text-xl sm:text-2xl font-bold underline">
-                      {item.sport}:
-                    </p>
-                    <p className="text-xl sm:text-2xl pl-0 sm:pl-2">
-                      {item.statName}
-                    </p>
-                    <p className="text-xl sm:text-2xl pl-0 sm:pl-2">
-                      {" "}
-                      ({item.score})
-                    </p>
-                  </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {statsItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-lg shadow-md flex flex-col items-center text-center bg-[#82C0CC]"
+                >
+                  <h3 className="text-lg text-black font-bold">{item.sport}</h3>
+                  <p className="text-black">{item.statName}</p>
+                  <p className="text-xl font-bold">{item.score}</p>
 
-                  <div className="flex flex-row gap-3 justify-center">
-                    <Button
-                      className=" bg-[#16697A] hover:!text-[#16697A] hover:bg-white text-white rounded-3xl"
-                      onClick={() => {}}
-                    >
+                  <div className="flex gap-2 mt-2">
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded">
                       Edit
-                    </Button>
-                    <Button
-                      className="bg-[#16697A] hover:!text-[#16697A] hover:bg-white text-white rounded-3xl"
-                      onClick={() => {}}
-                    >
+                    </button>
+                    <button className="bg-red-500 text-white px-3 py-1 rounded">
                       Delete
-                    </Button>
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* Add Stats Section */}
         </div>
-
-        {/* Add Stats Section */}
-
-
       </div>
     </main>
   );

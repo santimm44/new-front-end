@@ -8,14 +8,12 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-[#EDE7E3]">
-    
-      <div className="w-full md:w-[40%] lg:w-[35%] md:fixed md:top-0 md:left-0 md:bottom-0 z-10">
-        <NavigationCard />
-      </div>
+    <div className="flex flex-col md:flex-row min-h-screen bg-[]">
+      {/* Sidebar - Now handled as sticky in NavigationCard component */}
+      <NavigationCard />
       
-      
-      <div className="w-full md:ml-[40%] lg:ml-[35%]">
+      {/* Main Content */}
+      <div className="w-full md:w-[75%] lg:w-[80%] min-h-screen">
         {children}
       </div>
     </div>
@@ -23,3 +21,4 @@ const Layout = ({
 };
 
 export default Layout;
+
