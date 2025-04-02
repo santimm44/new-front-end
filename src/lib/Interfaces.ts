@@ -11,3 +11,9 @@ export interface IUserData {
     id: number
     username: string
 }
+
+export interface IUserStats{
+    sport: string
+    statName: string
+    score: string
+}
