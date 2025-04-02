@@ -2,3 +2,9 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../../.flowbite-react/class-list.json";
 
+:root {
+    --orange: #FFA62B;
+    --darkblue: #16697A;
+    --lightblue: #82C0CC;
+    --tan: #EDE7E3;
+  }

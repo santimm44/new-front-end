@@ -11,3 +11,7 @@
 *Messaging System - Fills in the missing space and makes it easy for users to communicate
 
 *Friends List* - Add 3 Buttons (View Profile, Message, Delete Friend)
+
+*Styling* - Look into more Modern Websites... think about adding Darker Blue to Stay when Nav Buttons are clicked
+
+*Icons* Add one based on sport chosen
