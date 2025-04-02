@@ -16,9 +16,9 @@ const page = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-end -mt-[460px]">
-        <div className="lg:mr-[20%]">
+    <div className="">
+      <div className="flex justify-end lg:w-[75%] -mt-[460px] ml-[25%]">
+        <div className="lg:mr-[23%]">
           <Image
             src={profile}
             alt="User Profile"
@@ -27,6 +27,8 @@ const page = () => {
           <div className="text-center text-xl font-bold">
             <p>Name: {name} </p>
             <p>Location: {location}</p>
+            <p> * Details About User </p>
+            <p> * Details About User part 2 </p>
           </div>
         </div>
         <Image
@@ -36,14 +38,10 @@ const page = () => {
           onClick={handleToggleSettings}
         />
       </div>
-      <div className="text-center text-xl font-bold py-4 ">
-        <p> * Details About User </p>
-        <p> * Details About User part 2 </p>
-      </div>
-      <div className="flex justify-end lg:mr-[8%] mt-10">
-        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Stats</Button>
-        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Posts</Button>
-        <Button className="mx-[2%] h-14 lg:w-[200px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Friends</Button>
+      <div className="flex justify-end mt-10 mr-[11%]">
+        <Button className="mx-[1%] h-14 lg:w-[180px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Stats</Button>
+        <Button className="mx-[1%] h-14 lg:w-[180px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Posts</Button>
+        <Button className="mx-[1%] h-14 lg:w-[180px] text-xl bg-[#FFE9D1] border-[#FC6F2F] border-2 hover:!text-[#FC6F2F] hover:bg-white rounded-3xl">Friends</Button>
       </div>
     </div>
   );
