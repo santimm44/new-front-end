@@ -10,13 +10,28 @@ import Logo from "@/assets/spot-me-high-resolution-logo.png";
 import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
 import MessageImage from "@/assets/image-removebg-preview.png"
+import { useRouter } from "next/navigation";
 
 const NavigationCard = () => {
+    const router = useRouter();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const handleOpenMessages = () => {
+    router.push('/DirectMessages');
+  }
+
+  const handleOpenMatch = () => {
+    router.push('/Match');
+  }
+
+  const handleOpenProfile = () => {
+    router.push('/Profile');
+  }
 
   return (
     <>
@@ -57,14 +72,14 @@ const NavigationCard = () => {
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {handleOpenProfile()}}
               >
                 Profile
               </SidebarItem>
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {handleOpenMatch()}}
               >
                 Match
               </SidebarItem>
@@ -85,7 +100,7 @@ const NavigationCard = () => {
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {handleOpenMessages()}}
               >
                 Messages
               </SidebarItem>
