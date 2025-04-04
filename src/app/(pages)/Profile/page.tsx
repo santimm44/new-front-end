@@ -44,6 +44,8 @@ const page = () => {
 
   const [statsItems, setStatsItems] = useState<IUserStats[]>(Stats);
 
+  // ------------ Toggle Logic -------------------
+
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);
   };
@@ -66,6 +68,8 @@ const page = () => {
     setToggleFriends(true);
   };
 
+  // ---------------- Stats Logic --------------------
+
   const handleStatModal = () => {
     setToggleStatModal(!toggleStatModal);
   };
@@ -79,13 +83,24 @@ const page = () => {
   const handleCategories = (categories: string) =>
     setStatCategories(categories);
 
+  const handleSave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const item = {}
+    setOpenAddModal(false);
+
+    if(edit){
+      // Our Edit Login Will go here
+    }else{
+      // Our Add Logic will go here
+    }
+  }
+
   return (
     <main className="flex flex-col">
       {/* Main content area */}
       <div className="w-full px-4 sm:px-6 md:px-8 py-6">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           {/* Profile Image and Details */}
-          <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center mb-6 sm:mb-0">
+          <div className="w-full sm:w-auto flex flex-col mx-auto sm:flex-row items-center mb-6 sm:mb-0">
             <div className="relative mb-4 sm:mb-0">
               <Image
                 src={profileImage}
@@ -97,13 +112,13 @@ const page = () => {
             <div className="text-lg md:text-xl font-bold text-center sm:text-left sm:ml-6">
               <p>Name: {name}</p>
               <p>Location: {location}</p>
-              <p>Details: About Me</p>
-              <p>Details: About Me As Well</p>
+              <p>Details: Master of Hacks</p>
+              <p>Details: 8x Cat Owner of the year</p>
             </div>
           </div>
 
           {/* Settings Button */}
-          <div className="mt-4 sm:mt-0">
+          <div className="mt-4 sm:-mt-40">
             <Image
               src={SettingsImage}
               alt="Settings"
@@ -115,25 +130,26 @@ const page = () => {
 
         {/* Navigation Buttons */}
         <div className="flex flex-col sm:flex-row justify-center mt-8 gap-3 sm:gap-4">
-          <Button
-            onClick={handleStats}
-            className="h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg sm:text-xl bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC] rounded-3xl"
-          >
-            Stats
-          </Button>
+  <Button
+    onClick={handleStats}
+    className="h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg hover:text-xl sm:hover:text-2xl sm:text-xl bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC] rounded-3xl"
+  >
+    Stats
+  </Button>
 
-          <Button
-            onClick={handleFriends}
-            className="h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg sm:text-xl bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC] rounded-3xl"
-          >
-            Friends
-          </Button>
-        </div>
+  <Button
+    onClick={handleFriends}
+    className="h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg hover:text-xl sm:hover:text-2xl sm:text-xl bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC] rounded-3xl"
+  >
+    Friends
+  </Button>
+</div>
+
 
         {/* Stats Section */}
         <div className="w-full sm:w-[90%] md:w-[90%] lg:w-[85%] mx-auto mt-8 text-center py-4">
           <Button
-            className="bg-[#FFA62B] text-2xl font-bold px-10 py-7 rounded-3xl"
+            className="bg-[#FFA62B] text-2xl font-bold px-10 py-7 rounded-3xl cursor-pointer"
             onClick={() => setOpenAddModal(true)}
           >
             Add Stat +
@@ -213,7 +229,7 @@ const page = () => {
               </form>
             </ModalBody>
             <ModalFooter>
-              <Button className="bg-[#82C0CC] text-xl" onClick={() => {}}>Save</Button>
+              <Button className="bg-[#82C0CC] text-xl" onClick={() => {handleSave}}>Save</Button>
               <Button className="bg-red-500 text-xl" onClick={() => setOpenAddModal(false)}>
                 Cancel
               </Button>
@@ -235,7 +251,7 @@ const page = () => {
                   </div>
                   <h3 className="text-xl text-black font-bold">{item.sport}</h3>
                   <p className="text-black">{item.statName}</p>
-                  <p className="text-xl text-white font-bold">{item.score}</p>
+                  <p className="text-xl text-white font-semibold">{item.score}</p>
                 </div>
               ))}
             </div>

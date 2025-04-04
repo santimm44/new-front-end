@@ -48,5 +48,10 @@
       "sport": "Volleyball",
       "statName": "Service Aces",
       "score": "43"
+    }, 
+    {
+        "sport": "Croquet",
+        "statName": "Quickest Finish",
+        "score": "12 Strokes"
     }
   ]

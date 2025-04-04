@@ -9,6 +9,7 @@ import {
 import Logo from "@/assets/spot-me-high-resolution-logo.png";
 import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
+import MessageImage from "@/assets/image-removebg-preview.png"
 
 const NavigationCard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,6 +21,7 @@ const NavigationCard = () => {
   return (
     <>
       {/* Mobile Menu Toggle Button - Only visible on small screens */}
+
       <div className="md:hidden fixed top-4 left-4 z-20">
         <button
           onClick={toggleMobileMenu}
@@ -79,6 +81,13 @@ const NavigationCard = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Find A Trainer
+              </SidebarItem>
+              <SidebarItem
+                href="#"
+                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Messages
               </SidebarItem>
             </SidebarItemGroup>
           </SidebarItems>
