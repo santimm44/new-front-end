@@ -24,6 +24,7 @@ const page = () => {
   const [toggleStats, setToggleStats] = useState<boolean>(true);
   const [togglePosts, setTogglePosts] = useState<boolean>(false);
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
+  const [toggleModal, setToggleModal] = useState<boolean>(false);
 
   const [statsItems, setStatsItems] = useState<IUserStats[]>(Stats);
 
@@ -48,6 +49,10 @@ const page = () => {
     setTogglePosts(false);
     setToggleFriends(true);
   };
+
+  const handleStatModal = () => {
+    setToggleModal(!toggleModal);
+  }
 
   return (
     <main className="flex flex-col">
@@ -105,25 +110,24 @@ const page = () => {
           <div className="mt-6">
             <h2 className="text-xl font-bold mb-4">{name}'s Scores</h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
               {statsItems.map((item, idx) => (
+                
+                
                 <div
                   key={idx}
-                  className="p-4 rounded-lg shadow-md flex flex-col items-center text-center bg-[#82C0CC]"
+                  className="px-4 pb-4 rounded-lg shadow-md flex flex-col items-center text-center bg-[#82C0CC]"
                 >
-                  <h3 className="text-lg text-black font-bold">{item.sport}</h3>
-                  <p className="text-black">{item.statName}</p>
-                  <p className="text-xl font-bold">{item.score}</p>
-
-                  <div className="flex gap-2 mt-2">
-                    <button className="bg-blue-500 text-white px-3 py-1 rounded">
-                      Edit
-                    </button>
-                    <button className="bg-red-500 text-white px-3 py-1 rounded">
-                      Delete
-                    </button>
+                  <div className="flex justify-end w-full">
+                  <button className=" text-3xl tracking-widest font-bold text-black pb-2">
+                      ...
+                  </button>
                   </div>
+                  <h3 className="text-xl text-black font-bold">{item.sport}</h3>
+                  <p className="text-black">{item.statName}</p>
+                  <p className="text-xl text-white font-bold">{item.score}</p>
                 </div>
+            
               ))}
             </div>
           </div>
