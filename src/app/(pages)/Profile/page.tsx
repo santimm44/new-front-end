@@ -32,35 +32,35 @@ const mockFriends = [
     id: 1,
     name: "Sarah Johnson",
     image: profile,
-    location: "Oakland, CA",
+    state: "Oakland, CA",
     specialty: "Weightlifting",
   },
   {
     id: 2,
     name: "James Wilson",
     image: profile,
-    location: "San Jose, CA",
+    state: "San Jose, CA",
     specialty: "Track & Field",
   },
   {
     id: 3,
     name: "Emma Davis",
     image: profile,
-    location: "Fresno, CA",
+    state: "Fresno, CA",
     specialty: "Basketball",
   },
   {
     id: 4,
     name: "Alex Taylor",
     image: profile,
-    location: "Sacramento, CA",
+    state: "Sacramento, CA",
     specialty: "Boxing",
   },
   {
     id: 5,
     name: "Chris Lee",
     image: profile,
-    location: "Modesto, CA",
+    state: "Modesto, CA",
     specialty: "Tennis",
   },
 ];
@@ -70,7 +70,7 @@ const page = () => {
   const router = useRouter();
   const [toggleSettings, setToggleSettings] = useState<boolean>(false);
   const [name, setName] = useState<string>("Mike Hackerman");
-  const [location, setLocation] = useState<string>("CA");
+  const [state, setState] = useState<string>("CA");
   const [city, setCity] = useState<string>("Stockton");
   const [specialty, setSpecialty] = useState<string>("Master of Hacks");
   const [profileImage, setProfileImage] = useState<any>(profile);
@@ -87,7 +87,7 @@ const page = () => {
 
   const [statTitle, setStatTitle] = useState<string>("");
   const [statDescription, setStatDescription] = useState<string>("");
-  const [statCategories, setStatCategories] = useState<string>("");
+  const [statCategories, setStatCategories] = useState<string>("Categories");
 
   const [statsItems, setStatsItems] = useState<IUserStats[]>(Stats);
 
@@ -120,15 +120,34 @@ const page = () => {
     }
   };
 
-  const handleLocation = (location: string) => setLocation(location);
+  const handleState = (state: string) => setState(state);
+
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
+
   const handleCity = (e: React.ChangeEvent<HTMLInputElement>) =>
     setCity(e.target.value);
+
   const handleSpecialty = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSpecialty(e.target.value);
 
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // We're creating a new file reader object
+    let reader = new FileReader();
 
+    // Then we are going to get the first file we uploaded
+    let file = e.target.files?.[0];
+
+    // And if there is a file to select
+    if (file) {
+      //When this file is turned into a string this onLoad function will run
+      reader.onload = () => {
+        setProfileImage(reader.result); // Once the file is read we will store the result into our setter function
+      };
+
+      reader.readAsDataURL(file); // This converts our file to a base64 encoded string
+    }
+  };
 
   // ---------------- Stats Logic --------------------
 
@@ -194,7 +213,9 @@ const page = () => {
 
             <div className="text-lg md:text-xl font-bold text-center sm:text-left sm:ml-6">
               <p>Name: {name}</p>
-              <p>Location: {city}, {location}</p>
+              <p>
+                Location: {city}, {state}
+              </p>
               <p>Speciality: {specialty}</p>
             </div>
           </div>
@@ -232,165 +253,165 @@ const page = () => {
                   <Label htmlFor="Title">Location</Label>
                 </div>
                 <TextInput
-                  id="Location"
+                  id="City"
                   type="text"
-                  placeholder="Location"
+                  placeholder="City"
                   required
                   onChange={handleCity}
                 />
                 <div>
                   <Dropdown label="State" dismissOnClick={true}>
                     <div className="h-[300px] overflow-y-auto">
-                    <DropdownItem onClick={() => handleLocation("AL")}>
-                      Alabama
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("AK")}>
-                      Alaska
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("AZ")}>
-                      Arizona
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("AR")}>
-                      Arkansas
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("CA")}>
-                      California
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("CO")}>
-                      Colorado
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("CT")}>
-                      Connecticut
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("DE")}>
-                      Delaware
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("FL")}>
-                      Florida
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("GA")}>
-                      Georgia
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("HI")}>
-                      Hawaii
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("ID")}>
-                      Idaho
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("IL")}>
-                      Illinois
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("IN")}>
-                      Indiana
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("IA")}>
-                      Iowa
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("KS")}>
-                      Kansas
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("KY")}>
-                      Kentucky
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("LA")}>
-                      Louisiana
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("ME")}>
-                      Maine
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MD")}>
-                      Maryland
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MA")}>
-                      Massachusetts
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MI")}>
-                      Michigan
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MN")}>
-                      Minnesota
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MS")}>
-                      Mississippi
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MO")}>
-                      Missouri
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("MT")}>
-                      Montana
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NE")}>
-                      Nebraska
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NV")}>
-                      Nevada
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NH")}>
-                      New Hampshire
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NJ")}>
-                      New Jersey
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NM")}>
-                      New Mexico
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NY")}>
-                      New York
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("NC")}>
-                      North Carolina
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("ND")}>
-                      North Dakota
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("OH")}>
-                      Ohio
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("OK")}>
-                      Oklahoma
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("OR")}>
-                      Oregon
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("PA")}>
-                      Pennsylvania
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("RI")}>
-                      Rhode Island
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("SC")}>
-                      South Carolina
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("SD")}>
-                      South Dakota
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("TN")}>
-                      Tennessee
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("TX")}>
-                      Texas
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("UT")}>
-                      Utah
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("VT")}>
-                      Vermont
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("VA")}>
-                      Virginia
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("WA")}>
-                      Washington
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("WV")}>
-                      West Virginia
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("WI")}>
-                      Wisconsin
-                    </DropdownItem>
-                    <DropdownItem onClick={() => handleLocation("WY")}>
-                      Wyoming
-                    </DropdownItem>
+                      <DropdownItem onClick={() => handleState("AL")}>
+                        Alabama
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("AK")}>
+                        Alaska
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("AZ")}>
+                        Arizona
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("AR")}>
+                        Arkansas
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("CA")}>
+                        California
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("CO")}>
+                        Colorado
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("CT")}>
+                        Connecticut
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("DE")}>
+                        Delaware
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("FL")}>
+                        Florida
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("GA")}>
+                        Georgia
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("HI")}>
+                        Hawaii
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("ID")}>
+                        Idaho
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("IL")}>
+                        Illinois
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("IN")}>
+                        Indiana
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("IA")}>
+                        Iowa
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("KS")}>
+                        Kansas
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("KY")}>
+                        Kentucky
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("LA")}>
+                        Louisiana
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("ME")}>
+                        Maine
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MD")}>
+                        Maryland
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MA")}>
+                        Massachusetts
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MI")}>
+                        Michigan
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MN")}>
+                        Minnesota
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MS")}>
+                        Mississippi
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MO")}>
+                        Missouri
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("MT")}>
+                        Montana
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NE")}>
+                        Nebraska
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NV")}>
+                        Nevada
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NH")}>
+                        New Hampshire
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NJ")}>
+                        New Jersey
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NM")}>
+                        New Mexico
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NY")}>
+                        New York
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("NC")}>
+                        North Carolina
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("ND")}>
+                        North Dakota
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("OH")}>
+                        Ohio
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("OK")}>
+                        Oklahoma
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("OR")}>
+                        Oregon
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("PA")}>
+                        Pennsylvania
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("RI")}>
+                        Rhode Island
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("SC")}>
+                        South Carolina
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("SD")}>
+                        South Dakota
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("TN")}>
+                        Tennessee
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("TX")}>
+                        Texas
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("UT")}>
+                        Utah
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("VT")}>
+                        Vermont
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("VA")}>
+                        Virginia
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("WA")}>
+                        Washington
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("WV")}>
+                        West Virginia
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("WI")}>
+                        Wisconsin
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleState("WY")}>
+                        Wyoming
+                      </DropdownItem>
                     </div>
                   </Dropdown>
                   <div className="mb-2 block">
@@ -402,6 +423,16 @@ const page = () => {
                     type="text"
                     required
                     onChange={handleSpecialty}
+                  />
+
+                  <div className="mb-2 block">
+                    <Label htmlFor="Image">Image</Label>
+                  </div>
+                  <FileInput
+                    onChange={handleImage}
+                    id="Picture"
+                    accept="image/png, image/jpg"
+                    placeholder="Chose Picture"
                   />
                 </div>
               </form>
@@ -495,7 +526,7 @@ const page = () => {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <Dropdown label="Categories" dismissOnClick={true}>
+                        <Dropdown label={statCategories} dismissOnClick={true}>
                           <DropdownItem
                             onClick={() => handleCategories("Basketball")}
                           >
@@ -672,7 +703,7 @@ const page = () => {
                           className="h-16 w-16 rounded-full border border-black object-cover"
                         />
                         <div className="ml-4 text-left">
-                          <p className="text-black">{friend.location}</p>
+                          <p className="text-black">{friend.state}</p>
                           <p className="text-black">
                             Specialty: {friend.specialty}
                           </p>

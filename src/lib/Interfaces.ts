@@ -17,3 +17,10 @@ export interface IUserStats{
     statName: string
     score: string
 }
+
+export interface IProfileData {
+    name: string
+    city: string
+    state: string
+    image: string
+}
