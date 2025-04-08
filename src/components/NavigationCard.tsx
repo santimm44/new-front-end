@@ -9,6 +9,12 @@ import {
 import Logo from "@/assets/spot-me-high-resolution-logo.png";
 import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
+import HomeIcon from "@/assets/home.png";
+import UserIcon from "@/assets/user.png";
+import MatchIcon from "@/assets/link.png";
+import SpotterIcon from "@/assets/binoculars.png";
+import TrainerIcon from "@/assets/muscle.png";
+import MessageIcon from "@/assets/paper-plane.png";
 import MessageImage from "@/assets/image-removebg-preview.png"
 import { useRouter } from "next/navigation";
 
@@ -31,6 +37,18 @@ const NavigationCard = () => {
 
   const handleOpenProfile = () => {
     router.push('/Profile');
+  }
+
+  const handleOpenFindSpotter = () => {
+    router.push('/FindSpotter');
+  }
+
+  const handleOpenFindTrainer = () => {
+    router.push('/FindTrainer');
+  }
+
+  const handleOpenHome = () => {
+    router.push('/Home');
   }
 
   return (
@@ -64,45 +82,63 @@ const NavigationCard = () => {
             <SidebarItemGroup className="flex flex-col h-full justify-start">
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                onClick={() => handleOpenHome()}
               >
-                Home
+                <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={HomeIcon} alt='Home Icon' />
+                    Home
+                </div>
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
                 onClick={() => {handleOpenProfile()}}
               >
-                Profile
+                 <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={UserIcon} alt='User Icon' />
+                    Profile
+                </div>
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
                 onClick={() => {handleOpenMatch()}}
               >
-                Match
+                 <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={MatchIcon} alt='Match Icon' />
+                    Match
+                </div>
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                onClick={() => {handleOpenFindSpotter()}}
               >
-                Find A Spotter
+              <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={SpotterIcon} alt='Spotter Icon' />
+                    Find A Spotter
+                </div>
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                onClick={() => {handleOpenFindTrainer()}}
               >
-                Find A Trainer
+                 <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={TrainerIcon} alt='Trainer Icon' />
+                    Find A Trainer
+                </div>
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-white text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
                 onClick={() => {handleOpenMessages()}}
               >
-                Messages
+                 <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={MessageIcon} alt='Message Icon' />
+                    Messages
+                </div>
               </SidebarItem>
             </SidebarItemGroup>
           </SidebarItems>

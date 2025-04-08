@@ -24,3 +24,10 @@ export interface IProfileData {
     state: string
     image: string
 }
+
+export interface Friend {
+    id: number;
+    name: string;
+    image: any; 
+    lastMessage?: string; 
+  }
