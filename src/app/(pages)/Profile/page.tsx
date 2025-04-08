@@ -32,37 +32,123 @@ const mockFriends = [
     id: 1,
     name: "Sarah Johnson",
     image: profile,
-    state: "Oakland, CA",
+    city: "Oakland",
+    state: "CA",
     specialty: "Weightlifting",
   },
   {
     id: 2,
     name: "James Wilson",
     image: profile,
-    state: "San Jose, CA",
+    city: "San Jose",
+    state: "CA",
     specialty: "Track & Field",
   },
   {
     id: 3,
     name: "Emma Davis",
     image: profile,
-    state: "Fresno, CA",
+    city: "Fresno",
+    state: "CA",
     specialty: "Basketball",
   },
   {
     id: 4,
     name: "Alex Taylor",
     image: profile,
-    state: "Sacramento, CA",
+    city: "Sacramento",
+    state: "CA",
     specialty: "Boxing",
   },
   {
     id: 5,
     name: "Chris Lee",
     image: profile,
-    state: "Modesto, CA",
+    city: "Modesto",
+    state: "CA",
     specialty: "Tennis",
   },
+  {
+    id: 6,
+    name: "Olivia Martin",
+    image: profile,
+    city: "Austin",
+    state: "TX",
+    specialty: "Yoga",
+  },
+  {
+    id: 7,
+    name: "Liam Anderson",
+    image: profile,
+    city: "Denver",
+    state: "CO",
+    specialty: "Soccer",
+  },
+  {
+    id: 8,
+    name: "Ava Thompson",
+    image: profile,
+    city: "Seattle",
+    state: "WA",
+    specialty: "Swimming",
+  },
+  {
+    id: 9,
+    name: "Noah White",
+    image: profile,
+    city: "Chicago",
+    state: "IL",
+    specialty: "Basketball",
+  },
+  {
+    id: 10,
+    name: "Mia Harris",
+    image: profile,
+    city: "Orlando",
+    state: "FL",
+    specialty: "Running",
+  },
+  {
+    id: 11,
+    name: "Ethan Moore",
+    image: profile,
+    city: "Phoenix",
+    state: "AZ",
+    specialty: "Cycling",
+  },
+  {
+    id: 12,
+    name: "Isabella Clark",
+    image: profile,
+    city: "San Diego",
+    state: "CA",
+    specialty: "Pilates",
+  },
+  {
+    id: 13,
+    name: "Mason Hall",
+    image: profile,
+    city: "Portland",
+    state: "OR",
+    specialty: "CrossFit",
+  },
+  {
+    id: 14,
+    name: "Sophia Allen",
+    image: profile,
+    city: "Atlanta",
+    state: "GA",
+    specialty: "Dancing",
+  },
+  {
+    id: 15,
+    name: "Logan Young",
+    image: profile,
+    city: "Boston",
+    state: "MA",
+    specialty: "Martial Arts",
+  },
+  
 ];
 
 // NOTE Need to change default profile picture to User's uploaded picture and set inputs for profile in settings
@@ -703,7 +789,7 @@ const page = () => {
                           className="h-16 w-16 rounded-full border border-black object-cover"
                         />
                         <div className="ml-4 text-left">
-                          <p className="text-black">{friend.state}</p>
+                          <p className="text-black">{friend.city}, {friend.state}</p>
                           <p className="text-black">
                             Specialty: {friend.specialty}
                           </p>

@@ -56,7 +56,32 @@ const mockFriends: Friend[] = [
     id: 10,
     name: "Mia Harris",
     image: profile,
-  }
+  },
+  {
+    id: 11,
+    name: "Ethan Moore",
+    image: profile,
+  },
+  {
+    id: 12,
+    name: "Isabella Clark",
+    image: profile,
+  },
+  {
+    id: 13,
+    name: "Mason Hall",
+    image: profile,
+  },
+  {
+    id: 14,
+    name: "Sophia Allen",
+    image: profile,
+  },
+  {
+    id: 15,
+    name: "Logan Young",
+    image: profile,
+  },
 ];
 
 const Page = () => {
@@ -72,7 +97,7 @@ const Page = () => {
       {/* Friends list sidebar (1/3 width) */}
       <div className="w-1/3 border-r overflow-y-auto">
         <div className="p-4 border-b">
-          <h2 className="text-xl font-bold">Direct</h2>
+          <h2 className="text-xl font-bold">Direct Messages</h2>
         </div>
         <div className="flex flex-col">
           {friends.map((friend) => (
