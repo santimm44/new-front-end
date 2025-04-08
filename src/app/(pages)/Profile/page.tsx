@@ -28,11 +28,41 @@ import { useRouter } from "next/navigation";
 
 // Mock data for friends
 const mockFriends = [
-  { id: 1, name: "Sarah Johnson", image: profile, location: "Oakland, CA", specialty: "Weightlifting" },
-  { id: 2, name: "James Wilson", image: profile, location: "San Jose, CA", specialty: "Track & Field" },
-  { id: 3, name: "Emma Davis", image: profile, location: "Fresno, CA", specialty: "Basketball" },
-  { id: 4, name: "Alex Taylor", image: profile, location: "Sacramento, CA", specialty: "Boxing" },
-  { id: 5, name: "Chris Lee", image: profile, location: "Modesto, CA", specialty: "Tennis" },
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    image: profile,
+    location: "Oakland, CA",
+    specialty: "Weightlifting",
+  },
+  {
+    id: 2,
+    name: "James Wilson",
+    image: profile,
+    location: "San Jose, CA",
+    specialty: "Track & Field",
+  },
+  {
+    id: 3,
+    name: "Emma Davis",
+    image: profile,
+    location: "Fresno, CA",
+    specialty: "Basketball",
+  },
+  {
+    id: 4,
+    name: "Alex Taylor",
+    image: profile,
+    location: "Sacramento, CA",
+    specialty: "Boxing",
+  },
+  {
+    id: 5,
+    name: "Chris Lee",
+    image: profile,
+    location: "Modesto, CA",
+    specialty: "Tennis",
+  },
 ];
 
 // NOTE Need to change default profile picture to User's uploaded picture and set inputs for profile in settings
@@ -40,15 +70,16 @@ const page = () => {
   const router = useRouter();
   const [toggleSettings, setToggleSettings] = useState<boolean>(false);
   const [name, setName] = useState<string>("Mike Hackerman");
-  const [location, setLocation] = useState<string>("Stockton, CA");
+  const [location, setLocation] = useState<string>("CA");
+  const [city, setCity] = useState<string>("Stockton");
+  const [specialty, setSpecialty] = useState<string>("Master of Hacks");
   const [profileImage, setProfileImage] = useState<any>(profile);
   const [toggleStats, setToggleStats] = useState<boolean>(true);
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
   const [toggleStatModal, setToggleStatModal] = useState<boolean>(false);
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const [openAddFriendModal, setOpenAddFriendModal] = useState<boolean>(false);
-  
- 
+
   const [friends, setFriends] = useState(mockFriends);
   const [friendSearch, setFriendSearch] = useState<string>("");
 
@@ -76,6 +107,29 @@ const page = () => {
     setToggleFriends(true);
   };
 
+  // ---------------- Settings Logic ---------------------
+
+  const handleSettingsSave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const item = {};
+    setToggleSettings(false);
+
+    if (edit) {
+      // Our Edit Login Will go here
+    } else {
+      // Our Add Logic will go here
+    }
+  };
+
+  const handleLocation = (location: string) => setLocation(location);
+  const handleName = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value);
+  const handleCity = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setCity(e.target.value);
+  const handleSpecialty = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSpecialty(e.target.value);
+
+
+
   // ---------------- Stats Logic --------------------
 
   const handleStatModal = () => {
@@ -95,9 +149,9 @@ const page = () => {
     const item = {};
     setOpenAddModal(false);
 
-    if(edit){
+    if (edit) {
       // Our Edit Login Will go here
-    }else{
+    } else {
       // Our Add Logic will go here
     }
   };
@@ -116,12 +170,10 @@ const page = () => {
   };
 
   const handleMessageFriend = (friendId: number) => {
-   
     router.push(`/DirectMessages?friendId=${friendId}`);
   };
 
   const handleViewProfile = (friendId: number) => {
-   
     router.push(`/profile/${friendId}`);
   };
 
@@ -142,9 +194,8 @@ const page = () => {
 
             <div className="text-lg md:text-xl font-bold text-center sm:text-left sm:ml-6">
               <p>Name: {name}</p>
-              <p>Location: {location}</p>
-              <p>Details: Master of Hacks</p>
-              <p>Details: 8x Cat Owner of the year</p>
+              <p>Location: {city}, {location}</p>
+              <p>Speciality: {specialty}</p>
             </div>
           </div>
 
@@ -157,6 +208,219 @@ const page = () => {
               onClick={handleToggleSettings}
             />
           </div>
+          <Modal
+            className="bg-[#16697A]"
+            show={toggleSettings}
+            onClose={() => setToggleSettings(false)}
+          >
+            <ModalHeader>Settings</ModalHeader>
+            <ModalBody>
+              <form className="flex max-w-md flex-col gap-4">
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="Title">Name</Label>
+                  </div>
+                  <TextInput
+                    id="Name"
+                    type="text"
+                    placeholder="Name"
+                    required
+                    onChange={handleName}
+                  />
+                </div>
+                <div className="mb-2 block">
+                  <Label htmlFor="Title">Location</Label>
+                </div>
+                <TextInput
+                  id="Location"
+                  type="text"
+                  placeholder="Location"
+                  required
+                  onChange={handleCity}
+                />
+                <div>
+                  <Dropdown label="State" dismissOnClick={true}>
+                    <div className="h-[300px] overflow-y-auto">
+                    <DropdownItem onClick={() => handleLocation("AL")}>
+                      Alabama
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("AK")}>
+                      Alaska
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("AZ")}>
+                      Arizona
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("AR")}>
+                      Arkansas
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("CA")}>
+                      California
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("CO")}>
+                      Colorado
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("CT")}>
+                      Connecticut
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("DE")}>
+                      Delaware
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("FL")}>
+                      Florida
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("GA")}>
+                      Georgia
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("HI")}>
+                      Hawaii
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("ID")}>
+                      Idaho
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("IL")}>
+                      Illinois
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("IN")}>
+                      Indiana
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("IA")}>
+                      Iowa
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("KS")}>
+                      Kansas
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("KY")}>
+                      Kentucky
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("LA")}>
+                      Louisiana
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("ME")}>
+                      Maine
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MD")}>
+                      Maryland
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MA")}>
+                      Massachusetts
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MI")}>
+                      Michigan
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MN")}>
+                      Minnesota
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MS")}>
+                      Mississippi
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MO")}>
+                      Missouri
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("MT")}>
+                      Montana
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NE")}>
+                      Nebraska
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NV")}>
+                      Nevada
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NH")}>
+                      New Hampshire
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NJ")}>
+                      New Jersey
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NM")}>
+                      New Mexico
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NY")}>
+                      New York
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("NC")}>
+                      North Carolina
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("ND")}>
+                      North Dakota
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("OH")}>
+                      Ohio
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("OK")}>
+                      Oklahoma
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("OR")}>
+                      Oregon
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("PA")}>
+                      Pennsylvania
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("RI")}>
+                      Rhode Island
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("SC")}>
+                      South Carolina
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("SD")}>
+                      South Dakota
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("TN")}>
+                      Tennessee
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("TX")}>
+                      Texas
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("UT")}>
+                      Utah
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("VT")}>
+                      Vermont
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("VA")}>
+                      Virginia
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("WA")}>
+                      Washington
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("WV")}>
+                      West Virginia
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("WI")}>
+                      Wisconsin
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleLocation("WY")}>
+                      Wyoming
+                    </DropdownItem>
+                    </div>
+                  </Dropdown>
+                  <div className="mb-2 block">
+                    <Label htmlFor="descrption">Specialty</Label>
+                  </div>
+                  <TextInput
+                    id="Specialty"
+                    placeholder="Specialty"
+                    type="text"
+                    required
+                    onChange={handleSpecialty}
+                  />
+                </div>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                className="bg-[#82C0CC] text-xl"
+                onClick={handleSettingsSave}
+              >
+                Save
+              </Button>
+              <Button
+                className="bg-red-500 text-xl"
+                onClick={() => setToggleSettings(false)}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
         </div>
 
         {/* Navigation Buttons */}
@@ -164,9 +428,9 @@ const page = () => {
           <Button
             onClick={handleStats}
             className={`h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg hover:text-xl sm:hover:text-2xl sm:text-xl ${
-              toggleStats 
-                ? 'bg-[#82C0CC] !text-[#16697A]' 
-                : 'bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC]'
+              toggleStats
+                ? "bg-[#82C0CC] !text-[#16697A]"
+                : "bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC]"
             } rounded-3xl`}
           >
             Stats
@@ -175,9 +439,9 @@ const page = () => {
           <Button
             onClick={handleFriends}
             className={`h-12 sm:h-14 w-full sm:w-[120px] lg:w-[160px] text-white text-lg hover:text-xl sm:hover:text-2xl sm:text-xl ${
-              toggleFriends 
-                ? 'bg-[#82C0CC] !text-[#16697A]' 
-                : 'bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC]'
+              toggleFriends
+                ? "bg-[#82C0CC] !text-[#16697A]"
+                : "bg-[#16697A] hover:!text-[#16697A] hover:bg-[#82C0CC]"
             } rounded-3xl`}
           >
             Friends
@@ -195,7 +459,11 @@ const page = () => {
               >
                 Add Stat +
               </Button>
-              <Modal className="bg-[#16697A]" show={openAddModal} onClose={() => setOpenAddModal(false)}>
+              <Modal
+                className="bg-[#16697A]"
+                show={openAddModal}
+                onClose={() => setOpenAddModal(false)}
+              >
                 <ModalHeader>
                   {edit ? "Edit Stat Post" : "Add Stat Post"}
                 </ModalHeader>
@@ -233,34 +501,54 @@ const page = () => {
                           >
                             Basketball
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Boxing")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Boxing")}
+                          >
                             Boxing
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Baseball")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Baseball")}
+                          >
                             Baseball
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Cycling")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Cycling")}
+                          >
                             Cycling
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Martial Arts")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Martial Arts")}
+                          >
                             Martial Arts
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Volleyball")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Volleyball")}
+                          >
                             Volleyball
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Football")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Football")}
+                          >
                             Football
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Hockey")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Hockey")}
+                          >
                             Hockey
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Weight Lifting")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Weight Lifting")}
+                          >
                             Weight Lifting
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Track & Field")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Track & Field")}
+                          >
                             Track & Field
                           </DropdownItem>
-                          <DropdownItem onClick={() => handleCategories("Tennis")}>
+                          <DropdownItem
+                            onClick={() => handleCategories("Tennis")}
+                          >
                             Tennis
                           </DropdownItem>
                         </Dropdown>
@@ -269,8 +557,13 @@ const page = () => {
                   </form>
                 </ModalBody>
                 <ModalFooter>
-                  <Button className="bg-[#82C0CC] text-xl" onClick={handleSave}>Save</Button>
-                  <Button className="bg-red-500 text-xl" onClick={() => setOpenAddModal(false)}>
+                  <Button className="bg-[#82C0CC] text-xl" onClick={handleSave}>
+                    Save
+                  </Button>
+                  <Button
+                    className="bg-red-500 text-xl"
+                    onClick={() => setOpenAddModal(false)}
+                  >
                     Cancel
                   </Button>
                 </ModalFooter>
@@ -289,9 +582,13 @@ const page = () => {
                           ...
                         </button>
                       </div>
-                      <h3 className="text-xl text-black font-bold">{item.sport}</h3>
+                      <h3 className="text-xl text-black font-bold">
+                        {item.sport}
+                      </h3>
                       <p className="text-black">{item.statName}</p>
-                      <p className="text-xl text-white font-semibold">{item.score}</p>
+                      <p className="text-xl text-white font-semibold">
+                        {item.score}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -306,7 +603,11 @@ const page = () => {
               >
                 Add Friend +
               </Button>
-              <Modal className="bg-[#16697A]" show={openAddFriendModal} onClose={() => setOpenAddFriendModal(false)}>
+              <Modal
+                className="bg-[#16697A]"
+                show={openAddFriendModal}
+                onClose={() => setOpenAddFriendModal(false)}
+              >
                 <ModalHeader>Add New Friend</ModalHeader>
                 <ModalBody>
                   <form className="flex max-w-md flex-col gap-4">
@@ -323,15 +624,25 @@ const page = () => {
                         value={friendSearch}
                       />
                     </div>
-                    
+
                     <div className="mt-4">
-                      <p className="text-white">Search results will appear here</p>
+                      <p className="text-white">
+                        Search results will appear here
+                      </p>
                     </div>
                   </form>
                 </ModalBody>
                 <ModalFooter>
-                  <Button className="bg-[#82C0CC] text-xl" onClick={handleSaveFriend}>Add</Button>
-                  <Button className="bg-red-500 text-xl" onClick={() => setOpenAddFriendModal(false)}>
+                  <Button
+                    className="bg-[#82C0CC] text-xl"
+                    onClick={handleSaveFriend}
+                  >
+                    Add
+                  </Button>
+                  <Button
+                    className="bg-red-500 text-xl"
+                    onClick={() => setOpenAddFriendModal(false)}
+                  >
                     Cancel
                   </Button>
                 </ModalFooter>
@@ -346,12 +657,14 @@ const page = () => {
                       className="p-4 rounded-lg shadow-md flex flex-col items-center text-center bg-[#82C0CC]"
                     >
                       <div className="flex justify-between w-full mb-2">
-                        <h3 className="text-xl text-black font-bold">{friend.name}</h3>
+                        <h3 className="text-xl text-black font-bold">
+                          {friend.name}
+                        </h3>
                         <button className="text-3xl tracking-widest font-bold text-black cursor-pointer">
                           ...
                         </button>
                       </div>
-                      
+
                       <div className="flex items-center mb-3">
                         <Image
                           src={friend.image}
@@ -360,18 +673,20 @@ const page = () => {
                         />
                         <div className="ml-4 text-left">
                           <p className="text-black">{friend.location}</p>
-                          <p className="text-black">Specialty: {friend.specialty}</p>
+                          <p className="text-black">
+                            Specialty: {friend.specialty}
+                          </p>
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-around w-full mt-2">
-                        <Button 
+                        <Button
                           className="bg-[#16697A] text-white hover:bg-[#FFA62B] p-2 rounded-full"
                           onClick={() => handleMessageFriend(friend.id)}
                         >
                           <MessageSquare size={20} />
                         </Button>
-                        <Button 
+                        <Button
                           className="bg-[#16697A] text-white hover:bg-[#FFA62B] p-2 rounded-full"
                           onClick={() => handleViewProfile(friend.id)}
                         >
