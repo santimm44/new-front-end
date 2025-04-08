@@ -9,11 +9,11 @@ const Layout = ({
 }>) => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-[]">
-      {/* Sidebar - Now handled as sticky in NavigationCard component */}
+      {/* Sidebar  */}
       <NavigationCard />
       
       {/* Main Content */}
-      <div className="w-full md:w-[75%] lg:w-[80%] min-h-screen">
+      <div className="w-full md:w-[70%] lg:w-[80%] min-h-screen">
         {children}
       </div>
     </div>

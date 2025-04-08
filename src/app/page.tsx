@@ -153,7 +153,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <Button
-                  className="bg-[#FC6F2F] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#FC6F2F] hover:border-[#FC6F2F] hover:border-2"
+                  className="bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
                   onClick={handleSubmit}
                 >
                   Sign In
@@ -279,7 +279,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <Button
-                  className="bg-[#FC6F2F] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#FC6F2F] hover:border-[#FC6F2F] hover:border-2"
+                  className=" bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
                   onClick={handleSubmit}
                 >
                   Create Account

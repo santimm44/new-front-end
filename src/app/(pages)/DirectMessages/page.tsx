@@ -95,9 +95,9 @@ const Page = () => {
   return (
     <div className="flex h-screen">
       {/* Friends list sidebar (1/3 width) */}
-      <div className="w-1/3 border-r overflow-y-auto">
+      <div className="w-full md:w-1/3 border-r overflow-y-auto">
         <div className="p-4 border-b">
-          <h2 className="text-xl font-bold">Direct Messages</h2>
+          <h2 className="text-xl md:mt-0 mt-12 font-bold">Direct Messages</h2>
         </div>
         <div className="flex flex-col">
           {friends.map((friend) => (
@@ -125,7 +125,7 @@ const Page = () => {
       </div>
       
       {/* Message area */}
-      <div className="w-2/3 flex flex-col">
+      <div className="hidden md:w-2/3 md:flex flex-col">
         {selectedFriend ? (
           <div className="flex flex-col h-full">
             <div className="p-4 border-b flex items-center">

@@ -70,7 +70,7 @@ const NavigationCard = () => {
 
       {/* Sidebar - Full screen on mobile when open, sticky full-height on desktop */}
       <div
-        className={`md:sticky md:top-0 md:left-0 md:h-screen md:w-[25%] lg:w-[20%]
+        className={`md:sticky md:top-0 md:left-0 md:h-screen md:w-[30%] lg:w-[20%]
                     flex justify-center items-stretch
                     ${isMobileMenuOpen ? 'fixed inset-0 z-10 bg-white' : 'hidden md:flex'}`}
       >
@@ -82,7 +82,7 @@ const NavigationCard = () => {
             <SidebarItemGroup className="flex flex-col h-full justify-start">
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
                 onClick={() => handleOpenHome()}
               >
                 <div className="flex items-center">
@@ -92,7 +92,7 @@ const NavigationCard = () => {
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1] hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
                 onClick={() => {handleOpenProfile()}}
               >
                  <div className="flex items-center">
@@ -102,7 +102,7 @@ const NavigationCard = () => {
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
                 onClick={() => {handleOpenMatch()}}
               >
                  <div className="flex items-center">
@@ -112,7 +112,7 @@ const NavigationCard = () => {
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
                 onClick={() => {handleOpenFindSpotter()}}
               >
               <div className="flex items-center">
@@ -122,7 +122,7 @@ const NavigationCard = () => {
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1] hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
                 onClick={() => {handleOpenFindTrainer()}}
               >
                  <div className="flex items-center">
@@ -132,7 +132,7 @@ const NavigationCard = () => {
               </SidebarItem>
               <SidebarItem
                 href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#82C0CC] hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1] hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
                 onClick={() => {handleOpenMessages()}}
               >
                  <div className="flex items-center">
