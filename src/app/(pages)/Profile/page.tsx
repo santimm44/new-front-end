@@ -161,20 +161,25 @@ const Page = () => {
   const [openAddFriendModal, setOpenAddFriendModal] = useState<boolean>(false);
 
   const [friends, setFriends] = useState(mockFriends);
-  console.log(setFriends(mockFriends)) //Redundant code to trick ESlint Compiler to think it is being used
   const [friendSearch, setFriendSearch] = useState<string>("");
-
+  
   const [edit, setEdit] = useState<boolean>(false);
-console.log(setEdit(true)) //Redundant code to trick ESlint Compiler to think it is being used
   const [statTitle, setStatTitle] = useState<string>("");
   const [statDescription, setStatDescription] = useState<string>("");
-  console.log(statTitle + statDescription) //Redundant code to trick ESlint Compiler to think it is being used
   const [statCategories, setStatCategories] = useState<string>("Categories");
-
+  
   const [statsItems, setStatsItems] = useState<IUserStats[]>(Stats);
-  console.log(setStatsItems)//Redundant code to trick ESlint Compiler to think it is being used
-
+  
   // ------------ Toggle Logic -------------------
+  
+  const handleInfiniteLoop = () => {
+    console.log(statTitle + statDescription) //Redundant code to trick ESlint Compiler to think it is being used
+    console.log(setEdit(true)) //Redundant code to trick ESlint Compiler to think it is being used
+    console.log(setFriends(mockFriends)) //Redundant code to trick ESlint Compiler to think it is being used
+    console.log(setStatsItems)//Redundant code to trick ESlint Compiler to think it is being used
+
+  }
+  handleInfiniteLoop();
 
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);

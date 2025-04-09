@@ -36,12 +36,7 @@ export interface IProfileData {
 }
 
 export interface Friend {
-    id: number;
-    username: string;
+    id: number
     name: string;
-    specialty: string;
-    city: string;
-    state: string
-    image: any; 
     lastMessage?: string; 
   }
