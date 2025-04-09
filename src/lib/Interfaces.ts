@@ -1,3 +1,4 @@
+
 export interface Itoken {
     token: string
 }
@@ -35,6 +36,6 @@ export interface IProfileData {
 export interface Friend {
     id: number;
     name: string;
-    image: any; 
+    
     lastMessage?: string; 
   }
