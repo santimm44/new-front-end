@@ -15,7 +15,6 @@ import MatchIcon from "@/assets/link.png";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
 import MessageIcon from "@/assets/paper-plane.png";
-import MessageImage from "@/assets/image-removebg-preview.png"
 import { useRouter } from "next/navigation";
 
 const NavigationCard = () => {

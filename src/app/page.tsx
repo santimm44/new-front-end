@@ -55,7 +55,7 @@ export default function Home() {
 
   const handleSubmit = async () => {  //
     console.log(switchBool)
-    let userData = {
+    const userData = {
       username: username,
       password: password,
       email: email,
@@ -63,7 +63,7 @@ export default function Home() {
       phoneNumber: phoneNumber
 
     };
-    let userLoginData = {
+    const userLoginData = {
       emailOrUsername: username,
       password: password,
     }    
@@ -75,11 +75,17 @@ export default function Home() {
         return;
       }
       
-      let result = await createAccount(userData);
-      result ? alert("Account Created!") : alert("Username Already Exists");
+      const result = await createAccount(userData);
+
+      if(result){
+        alert("Account Created!")
+      }else{
+        alert("Username Already Exists")
+      }
+
     } else {
       // Login Logic here
-      let token: Itoken = await login(userLoginData);
+      const token: Itoken = await login(userLoginData);
       console.log("Message me")
       
       if (token != null) {
@@ -166,7 +172,7 @@ export default function Home() {
                 </Button>
               </div>
               <div className="flex justify-center gap-2 py-3 text-lg">
-                <p>Don't have an account?</p>
+                <p>Don&#39;t have an account?</p>
                 <button
                   onClick={handleSwitch}
                   className="underline text-blue-600 cursor-pointer"

@@ -1,15 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import BgImage from "@/assets/A close up of a dumbbell with a nice gym background.jpg"
-import Image from "next/image";
+
 
 const CreateAccountForm = () => {
-  const { push } = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [birthdate, setBirthdate] = useState("");
