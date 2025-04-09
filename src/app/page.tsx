@@ -9,15 +9,14 @@ import { createAccount, getLoggedInUserData, login } from "@/lib/DataServices";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function Home() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
   const [email, setEmail] = useState<string>("");
   const [birthdate, setBirthdate] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("")
 
   const [switchBool, setSwitchBool] = useState<boolean>(false);
 
@@ -31,6 +30,7 @@ export default function Home() {
     setEmail("");
     setBirthdate("");
     setConfirmPassword("");
+    setPhoneNumber("")
   };
 
   const handleBirthdateChange = (
@@ -53,15 +53,20 @@ export default function Home() {
     setBirthdate(value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => {  //
+    console.log(switchBool)
     let userData = {
       username: username,
       password: password,
       email: email,
-      birthdate: birthdate
-    };
+      dateOfBirth: birthdate,
+      phoneNumber: phoneNumber
 
-    console.log(userData);
+    };
+    let userLoginData = {
+      emailOrUsername: username,
+      password: password,
+    }    
 
     if (switchBool) {
       // Create Account Logic Here
@@ -74,8 +79,9 @@ export default function Home() {
       result ? alert("Account Created!") : alert("Username Already Exists");
     } else {
       // Login Logic here
-      let token: Itoken = await login(userData);
-
+      let token: Itoken = await login(userLoginData);
+      console.log("Message me")
+      
       if (token != null) {
         if (typeof window != null) {
           localStorage.setItem("Token", token.token);
@@ -194,6 +200,25 @@ export default function Home() {
                     placeholder="Enter Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
+                </div>
+              </div>
+              <div className="mb-4">
+                <div className="lg:flex lg:justify-center">
+                <Label
+                  htmlFor="PhoneNumber"
+                  className="block text-xl font-semibold mb-1 lg:w-[80%] "
+                >
+                  PhoneNumber
+                </Label>
+                </div>
+                <div className="flex justify-center">
+                  <Input
+                    id="PhoneNumber"
+                    placeholder="Enter PhoneNumber"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="w-full bg-white lg:w-[80%]"
                   />
                 </div>

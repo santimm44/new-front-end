@@ -1,10 +1,11 @@
-import { IUserData, IUserInfo } from "./Interfaces";
+import { IuserCreateInfo, IUserData, IUserInfo } from "./Interfaces";
 
-const url = "https://spotme-dbaccesspoint-f6g8beadb2erdega.westus-01.azurewebsites.net/";
+const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
 
 // Login Fetch
 export const login = async (user: IUserInfo) => {
+  console.log(user)
     const res = await fetch(url + "User/Login",{
       method: "POST",
       headers: {
@@ -26,30 +27,37 @@ export const login = async (user: IUserInfo) => {
 
 // Create Account Fetch
 
-export const createAccount = async (user: IUserInfo) => {
-    const res = await fetch(url + "User/CreateUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-
-    if (!res.ok) {
-      const data = await res.json();
-      const message = data.message;
-      console.log(message);
-      return data.success;
-    }
+export const createAccount = async (user: IuserCreateInfo) => {
   
-    const data = await res.json();
-    return data.success;
+  try{
+    const res = await fetch(url + "User/CreateUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+  
+      if (!res.ok) {
+        const data = await res.json();
+        const message = data.message;
+        console.log(message);
+        return data.success;
+      }
+    
+      const data = await res.json();
+      return data.success;
+  }
+  catch{
+    console.error('error in fetching the url+User/Createuser', url+"User/createUser")
+  }
+  
   };
 
   // Getting Logged in Data Fetch
 
   export const getLoggedInUserData = async (username: string) => {
-    const res = await fetch(url + `User/GetUserInfoByUsername/${username}`);
+    const res = await fetch(url + `User/GetUserInfoByEmailOrUsername/${username}`);
   
     if (!res.ok) {
       const data = await res.json();

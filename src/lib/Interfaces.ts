@@ -3,8 +3,15 @@ export interface Itoken {
 }
 
 export interface IUserInfo {
-    username: string
+    emailOrUsername: string
     password: string
+}
+export interface IuserCreateInfo {
+    username: string,
+    password: string,
+    email: string,
+    dateOfBirth: string,
+    phoneNumber: string
 }
 
 export interface IUserData {
@@ -12,7 +19,7 @@ export interface IUserData {
     username: string
 }
 
-export interface IUserStats{
+export interface IUserStats {
     sport: string
     statName: string
     score: string
