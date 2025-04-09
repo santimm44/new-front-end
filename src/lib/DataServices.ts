@@ -1,4 +1,4 @@
-import { IuserCreateInfo, IUserData, IUserInfo } from "./Interfaces";
+import { IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -90,3 +90,37 @@ export const createAccount = async (user: IuserCreateInfo) => {
 
 
 // Data fetches 
+
+export const getStatsByUsername = async (username: string): Promise<IUserStats[]> => {
+  const res = await fetch(`${url}UserStats/GetStatsByUsername/${username}`);
+  if (!res.ok) {
+    console.error("Failed to fetch stats");
+    return [];
+  }
+  return await res.json();
+};
+
+export const addStat = async (stat: IUserStats): Promise<boolean> => {
+  const res = await fetch(`${url}UserStats/AddStat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(stat),
+  });
+  return res.ok;
+};
+
+// export const editStat = async (stat: IUserStats): Promise<boolean> => {
+  //const res = await fetch(`${url}UserStats/EditStat/${stat.id}`, {
+   // method: "PUT",
+   // headers: { "Content-Type": "application/json" },
+   // body: JSON.stringify(stat),
+  //});
+//  return res.ok;
+// };
+
+export const deleteStat = async (id: number): Promise<boolean> => {
+  const res = await fetch(`${url}UserStats/DeleteStat/${id}`, {
+    method: "DELETE",
+  });
+  return res.ok;
+};

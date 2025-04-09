@@ -20,21 +20,27 @@ export interface IUserData {
 }
 
 export interface IUserStats {
-    sport: string
-    statName: string
-    score: string
-}
-
+    sport: string;
+    statName: string;
+    score: string;
+  }
 export interface IProfileData {
     name: string
     city: string
     state: string
     image: string
+    specialty: string 
+    username: string
+    password: string
 }
 
 export interface Friend {
     id: number;
+    username: string;
     name: string;
+    specialty: string;
+    city: string;
+    state: string
     image: any; 
     lastMessage?: string; 
   }

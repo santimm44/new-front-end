@@ -1,19 +1,17 @@
 ### Profile Page To Do List
 
-*Settings Button - Dark Orange with light orange background. On smaller Screens have it either top right or under SideBar Drowdown
+* Create verification for creating account like with email, username, and phone number
 
-*Empty Space - Desktop Version has some empty space needing to be filled
+* Account Recovery Page
 
-*Footer* - This will also be part of the layout section for every single page
+* Create Interfaces in line with back end
+    - Edit and Delete Settings
+    - Add, Edit, Delete Scores
+    - Add and Delete Friends
 
-*Fix Image/Descriptions positioning as well as mess around with Stats Box
+* Styling for Modals
 
-*Messaging System - Fills in the missing space and makes it easy for users to communicate
+* Match Page Startup 
 
-*Friends List* - Add 3 Buttons (View Profile, Message, Delete Friend)
-
-*Styling* - Look into more Modern Websites... think about adding Darker Blue to Stay when Nav Buttons are clicked
-
-*Icons* Add one based on sport chosen
 
 ## Ssantiago Pushing to publish branch
