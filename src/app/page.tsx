@@ -66,7 +66,7 @@ export default function Home() {
     const userLoginData = {
       emailOrUsername: username,
       password: password,
-    }    
+    }
 
     if (switchBool) {
       // Create Account Logic Here
@@ -74,20 +74,30 @@ export default function Home() {
         alert("Passwords do not match!");
         return;
       }
-      
-      const result = await createAccount(userData);
+      if (password != "" && username != "" && email != "" && phoneNumber != "" && birthdate != "") {
 
-      if(result){
-        alert("Account Created!")
-      }else{
-        alert("Username Already Exists")
+        console.log("Email: ", email)
+        console.log("password: ", password)
+        console.log("username: ", username)
+        console.log("phonenumber: ", phoneNumber)
+        console.log("birthdate: ", birthdate)
+
+
+        const result = await createAccount(userData);
+
+        if (result) {
+          alert("Account Created!")
+          handleSwitch()
+        } else {
+          alert("Failed to Create Account")
+        }
       }
 
     } else {
       // Login Logic here
       const token: Itoken = await login(userLoginData);
       console.log("Message me")
-      
+
       if (token != null) {
         if (typeof window != null) {
           localStorage.setItem("Token", token.token);
@@ -123,44 +133,44 @@ export default function Home() {
                 <Image src={Logo} alt="Logo" className=" h-30 w-50 rounded-full" />
               </div>
               <div className="mb-6">
-              <div className="lg:flex lg:justify-center">
-                <Label
-                  htmlFor="user"
-                  className="block text-2xl font-semibold mb-2 lg:w-[80%]"
-                >
-                  Username/Email
-                </Label>
+                <div className="lg:flex lg:justify-center">
+                  <Label
+                    htmlFor="user"
+                    className="block text-2xl font-semibold mb-2 lg:w-[80%]"
+                  >
+                    Username/Email
+                  </Label>
                 </div>
                 <div className="flex justify-center">
-                <Input
-                  id="user"
-                  placeholder="Enter Username/Email"
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full bg-white lg:w-[80%]"
-                />
-              </div>
+                  <Input
+                    id="user"
+                    placeholder="Enter Username/Email"
+                    required
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
+                </div>
               </div>
               <div className="mb-6">
-              <div className="lg:flex lg:justify-center">
-                <Label
-                  htmlFor="password"
-                  className="block text-2xl font-semibold mb-2 lg:w-[80%]"
-                >
-                  Password
-                </Label>
+                <div className="lg:flex lg:justify-center">
+                  <Label
+                    htmlFor="password"
+                    className="block text-2xl font-semibold mb-2 lg:w-[80%]"
+                  >
+                    Password
+                  </Label>
                 </div>
                 <div className="flex justify-center">
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter Password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white lg:w-[80%]"
-                />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter Password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
                 </div>
               </div>
               <div className="flex justify-center">
@@ -193,12 +203,12 @@ export default function Home() {
               </div>
               <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
-                <Label
-                  htmlFor="email"
-                  className="block text-xl font-semibold mb-1 lg:w-[80%] "
-                >
-                  Email
-                </Label>
+                  <Label
+                    htmlFor="email"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%] "
+                  >
+                    Email
+                  </Label>
                 </div>
                 <div className="flex justify-center">
                   <Input
@@ -212,12 +222,12 @@ export default function Home() {
               </div>
               <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
-                <Label
-                  htmlFor="PhoneNumber"
-                  className="block text-xl font-semibold mb-1 lg:w-[80%] "
-                >
-                  PhoneNumber
-                </Label>
+                  <Label
+                    htmlFor="PhoneNumber"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%] "
+                  >
+                    PhoneNumber
+                  </Label>
                 </div>
                 <div className="flex justify-center">
                   <Input
@@ -230,13 +240,13 @@ export default function Home() {
                 </div>
               </div>
               <div className="mb-4">
-              <div className="lg:flex lg:justify-center">
-                <Label
-                  htmlFor="username"
-                  className="block text-xl font-semibold mb-1 lg:w-[80%]"
-                >
-                  Username
-                </Label>
+                <div className="lg:flex lg:justify-center">
+                  <Label
+                    htmlFor="username"
+                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
+                  >
+                    Username
+                  </Label>
                 </div>
                 <div className="flex justify-center">
                   <Input
@@ -247,8 +257,8 @@ export default function Home() {
                     className="w-full bg-white lg:w-[80%]"
                   />
                 </div>
-                </div>
-                <div className="mb-4">
+              </div>
+              <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="birthdate"
@@ -256,18 +266,18 @@ export default function Home() {
                   >
                     Date of Birth
                   </Label>
-                  </div>
-                  <div className="flex justify-center">
-                    <Input
-                      id="birthdate"
-                      placeholder="mm/dd/yyyy"
-                      value={birthdate}
-                      onChange={handleBirthdateChange}
-                      className="w-full bg-white lg:w-[80%]"
-                    />
-                  </div>
                 </div>
-                <div className="mb-4">
+                <div className="flex justify-center">
+                  <Input
+                    id="birthdate"
+                    placeholder="mm/dd/yyyy"
+                    value={birthdate}
+                    onChange={handleBirthdateChange}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
+                </div>
+              </div>
+              <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="create-password"
@@ -275,19 +285,19 @@ export default function Home() {
                   >
                     Password
                   </Label>
-                  </div>
-                  <div className="flex justify-center">
-                    <Input
-                      id="create-password"
-                      type="password"
-                      placeholder="Enter Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white lg:w-[80%]"
-                    />
-                  </div>
                 </div>
-                <div className="mb-4">
+                <div className="flex justify-center">
+                  <Input
+                    id="create-password"
+                    type="password"
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
+                </div>
+              </div>
+              <div className="mb-4">
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="confirm-password"
@@ -295,18 +305,18 @@ export default function Home() {
                   >
                     Confirm Password
                   </Label>
-                  </div>
-                  <div className="flex justify-center">
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      placeholder="Re-enter Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full bg-white lg:w-[80%]"
-                    />
-                  </div>
-                
+                </div>
+                <div className="flex justify-center">
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Re-enter Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full bg-white lg:w-[80%]"
+                  />
+                </div>
+
               </div>
               <div className="flex justify-center">
                 <Button
