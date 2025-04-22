@@ -53,57 +53,60 @@ export default function Home() {
     setBirthdate(value);
   };
 
-  const handleSubmit = async () => {  //
-    console.log(switchBool)
+  const handleSubmit = async () => {
+    console.log(switchBool);
     const userData = {
       username: username,
       password: password,
       email: email,
       dateOfBirth: birthdate,
-      phoneNumber: phoneNumber
-
+      phoneNumber: phoneNumber,
     };
     const userLoginData = {
-      emailOrUsername: username,
+      emailOrUsername: username, 
       password: password,
-    }
-
+    };
+  
     if (switchBool) {
       // Create Account Logic Here
       if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
       }
-      if (password != "" && username != "" && email != "" && phoneNumber != "" && birthdate != "") {
-
-        console.log("Email: ", email)
-        console.log("password: ", password)
-        console.log("username: ", username)
-        console.log("phonenumber: ", phoneNumber)
-        console.log("birthdate: ", birthdate)
-
-
+      if (
+        password != "" &&
+        username != "" &&
+        email != "" &&
+        phoneNumber != "" &&
+        birthdate != ""
+      ) {
+        console.log("Email: ", email);
+        console.log("password: ", password);
+        console.log("username: ", username);
+        console.log("phonenumber: ", phoneNumber);
+        console.log("birthdate: ", birthdate);
+  
         const result = await createAccount(userData);
-
+  
         if (result) {
-          alert("Account Created!")
-          handleSwitch()
+          alert("Account Created!");
+          handleSwitch();
         } else {
-          alert("Failed to Create Account")
+          alert("Failed to Create Account");
         }
       }
-
     } else {
       // Login Logic here
-      const token: Itoken = await login(userLoginData);
-      console.log("Message me")
-
-      if (token != null) {
-        if (typeof window != null) {
-          localStorage.setItem("Token", token.token);
-          console.log(token.token);
-          await getLoggedInUserData(username);
-          router.push('/Dashboard');
+      const response: Itoken | null = await login(userLoginData); 
+  
+      if (response && response.token) {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("Token", response.token);
+          localStorage.setItem("username", username); 
+          console.log("Token stored:", response.token);
+          console.log("Username stored:", username);
+          await getLoggedInUserData(username); 
+          router.push("/Dashboard");
         }
       } else {
         alert("Invalid Username or Password!");

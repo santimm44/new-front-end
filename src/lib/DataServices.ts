@@ -126,7 +126,6 @@ export const deleteStat = async (id: number): Promise<boolean> => {
 };
 
 export const getBlogItemsByUser = async (emailOrUsername: string, token: string) => {
-  console.log("Isaiah is really cool!")
   const res = await fetch(url + "User/GetUserInfoByEmailOrUsername/" + emailOrUsername, {
     method: "GET",
     headers: {

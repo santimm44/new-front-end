@@ -26,7 +26,7 @@ export interface IUserStats {
     score: string;
   }
 export interface IProfileData {
-    name: string
+    TrueName: string
     UserLocation: string
     UserBio: string
     UserLocationPublic: boolean
