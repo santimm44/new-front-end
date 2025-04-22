@@ -27,12 +27,15 @@ export interface IUserStats {
   }
 export interface IProfileData {
     name: string
-    city: string
-    state: string
-    image: string
-    specialty: string 
-    username: string
-    password: string
+    UserLocation: string
+    UserBio: string
+    UserLocationPublic: boolean
+    UserPrimarySport: string
+    UserSecondarySport: string
+    ProfilePicture: string
+    IsTrainer: boolean
+    IsSpotter: boolean
+
 }
 
 export interface Friend {

@@ -1,4 +1,4 @@
-import { IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
+import { IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -124,3 +124,45 @@ export const deleteStat = async (id: number): Promise<boolean> => {
   });
   return res.ok;
 };
+
+export const getBlogItemsByUser = async (emailOrUsername: string, token: string) => {
+  console.log("Isaiah is really cool!")
+  const res = await fetch(url + "User/GetUserInfoByEmailOrUsername/" + emailOrUsername, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return [];
+  }
+  const data = await res.json();
+  console.log(data);
+  return data;
+}
+
+
+export const updateProfileItem = async (profile:IProfileData , token:string) => {
+  const res = await fetch(url + "User/UpdateUserInfo", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(profile)
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  // return true we have successfully added our blog to our backend DB
+  return data.success
+}
+
