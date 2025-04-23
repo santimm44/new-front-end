@@ -1,5 +1,5 @@
 "use client";
-import { getBlogItemsByUser } from "@/lib/DataServices";
+import { getProfileItemsByUser } from "@/lib/DataServices";
 import { IProfileData } from "@/lib/Interfaces";
 import React, { useEffect, useState } from "react";
 
@@ -24,7 +24,7 @@ const Page = () => {
 
         if (storedUsernameOrEmail) {
           try {
-            const profileData: IProfileData | null = await getBlogItemsByUser(
+            const profileData: IProfileData | null = await getProfileItemsByUser(
               storedUsernameOrEmail,
               storedToken
             );

@@ -17,8 +17,16 @@ export default function Home() {
   const [birthdate, setBirthdate] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("")
+  const [primarySport, setPrimarySport] = useState<string>("");
+  const [secondarySport, setSecondarySport] = useState<string>("");
+  const [userBio, setUserBio] = useState<string>("");
+  const [userLocation, setUserLocation] = useState<string>("");
+  const [userLocationPublic, setUserLocationPublic] = useState<boolean>();
+  const [isTrainer, setIsTrainer] = useState<boolean>();
+  const [isSpotter, setIsSpotter] = useState<boolean>();
 
   const [switchBool, setSwitchBool] = useState<boolean>(false);
+  const [switchCreateAccount, setSwitchCreateAccount] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -32,6 +40,18 @@ export default function Home() {
     setConfirmPassword("");
     setPhoneNumber("")
   };
+
+  const handleNextSwitch = () => {
+    setSwitchCreateAccount(true);
+    setPrimarySport("");
+    setSecondarySport("");
+    setUserBio("")
+    setUserLocation("");
+    setIsTrainer(false);
+    setIsSpotter(false);
+    setUserLocationPublic(true);
+  };
+
 
   const handleBirthdateChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -61,6 +81,13 @@ export default function Home() {
       email: email,
       dateOfBirth: birthdate,
       phoneNumber: phoneNumber,
+      userBio: userBio,
+      userLocation: userLocation,
+      userLocationPublic: userLocationPublic,
+      primarySport: primarySport,
+      secondarySport: secondarySport,
+      isSpotter: isSpotter,
+      isTrainer: isTrainer
     };
     const userLoginData = {
       emailOrUsername: username, 
@@ -71,6 +98,7 @@ export default function Home() {
       // Create Account Logic Here
       if (password !== confirmPassword) {
         alert("Passwords do not match!");
+        setSwitchBool(true);
         return;
       }
       if (
@@ -79,12 +107,20 @@ export default function Home() {
         email != "" &&
         phoneNumber != "" &&
         birthdate != ""
+
       ) {
         console.log("Email: ", email);
         console.log("password: ", password);
         console.log("username: ", username);
         console.log("phonenumber: ", phoneNumber);
         console.log("birthdate: ", birthdate);
+        console.log("location: ", userLocation);
+        console.log("bio: ", userBio);
+        console.log("LocationPublic: ", userLocationPublic);
+        console.log("primarySport: ", primarySport);
+        console.log("secondarySport: ", secondarySport);
+        console.log("isSpotter: ", isSpotter);
+        console.log("isTrainer: ", isTrainer)
   
         const result = await createAccount(userData);
   
@@ -324,9 +360,9 @@ export default function Home() {
               <div className="flex justify-center">
                 <Button
                   className=" bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
-                  onClick={handleSubmit}
+                  onClick={handleNextSwitch}
                 >
-                  Create Account
+                  Next
                 </Button>
               </div>
               <div className="flex justify-center py-3 text-lg">
