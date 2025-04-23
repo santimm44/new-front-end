@@ -22,15 +22,14 @@ export default function Home() {
   const [secondarySport, setSecondarySport] = useState<string>("");
   const [userBio, setUserBio] = useState<string>("");
   const [userLocation, setUserLocation] = useState<string>("");
-  const [userLocationPublic, setUserLocationPublic] = useState<boolean>();
-  const [isTrainer, setIsTrainer] = useState<boolean>();
-  const [isSpotter, setIsSpotter] = useState<boolean>();
+  const [userLocationPublic, setUserLocationPublic] = useState<boolean>(false);
+  const [isTrainer, setIsTrainer] = useState<boolean>(false);
+  const [isSpotter, setIsSpotter] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<StaticImageData | string | null>(ProfileImage);
 
   const [switchBool, setSwitchBool] = useState<boolean>(false);
   const [switchCreateAccount, setSwitchCreateAccount] = useState<boolean>(false);
 
-  const states = ["CA", "NY", "TX", "FL", "IL"];
   const sports = ["Powerlifting", "Bodybuilding", "CrossFit", "Strongman", "Olympic Lifting"];
 
 
@@ -401,7 +400,7 @@ export default function Home() {
             className="w-full border p-2 rounded mb-2 h-24"
           />
 
-          <Label>City</Label>
+          <Label>Location</Label>
           <Input value={userLocation} onChange={(e) => setUserLocation(e.target.value)} className="mb-2" />
 
 
@@ -416,7 +415,7 @@ export default function Home() {
           </div>
 
           <Label className="block mb-2">Are you a...</Label>
-          <div className="flex gap-4 mb-4">
+          <div className="flex gap-4 mb-4 bg-white text-black">
             <Button
               variant={isSpotter ? "default" : "outline"}
               onClick={() => {
@@ -439,7 +438,7 @@ export default function Home() {
 
         
 
-          <Button className="w-full" onClick={handleSubmit}>
+          <Button className="w-[20%] bg-white" onClick={handleSubmit}>
             Create Account
           </Button>
 

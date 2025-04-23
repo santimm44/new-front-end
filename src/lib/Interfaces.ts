@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image"
 
 export interface Itoken {
     token: string
@@ -12,17 +13,16 @@ export interface IuserCreateInfo {
     password: string,
     email: string,
     dateOfBirth: string,
-    phoneNumber: string
-    TrueName: string
-    UserLocation: string
-    UserBio: string
-    UserLocationPublic: boolean
-    UserPrimarySport: string
-    UserSecondarySport: string
-    ProfilePicture: string
-    IsTrainer: boolean
-    IsSpotter: boolean
-}
+    phoneNumber: string,
+    userBio: string,
+    userLocation: string,
+    userLocationPublic: boolean,
+    primarySport: string,
+    secondarySport: string,
+    isSpotter: boolean,
+    isTrainer: boolean,
+    profilePicture: string | StaticImageData | null
+  }
 
 export interface IUserData {
     id: number

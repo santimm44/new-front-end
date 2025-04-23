@@ -30,6 +30,7 @@ export const login = async (user: IUserInfo) => {
 export const createAccount = async (user: IuserCreateInfo) => {
   
   try{
+    console.log(user);
     const res = await fetch(url + "User/CreateUser", {
         method: "POST",
         headers: {
