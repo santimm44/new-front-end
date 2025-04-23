@@ -1,8 +1,7 @@
 "use client";
 import BgImage from "@/assets/A close up of a dumbbell with a nice gym background.jpg";
-import ProfileImage from "@/assets/Stock_Profile-removebg-preview.png";
 import Logo from "@/assets/spot-me-high-resolution-logo.png"
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Itoken } from "@/lib/Interfaces";
@@ -18,14 +17,15 @@ export default function Home() {
   const [birthdate, setBirthdate] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("")
-  const [primarySport, setPrimarySport] = useState<string>("");
-  const [secondarySport, setSecondarySport] = useState<string>("");
+  const [userPrimarySport, setUserPrimarySport] = useState<string>("");
+  const [userSecondarySport, setUserSecondarySport] = useState<string>("");
   const [userBio, setUserBio] = useState<string>("");
   const [userLocation, setUserLocation] = useState<string>("");
   const [userLocationPublic, setUserLocationPublic] = useState<boolean>(false);
   const [isTrainer, setIsTrainer] = useState<boolean>(false);
   const [isSpotter, setIsSpotter] = useState<boolean>(false);
-  const [profilePicture, setProfilePicture] = useState<StaticImageData | string | null>(ProfileImage);
+  const [profilePicture, setProfilePicture] = useState<string>("");
+  const [trueName, setTrueName] = useState<string>("");
 
   const [switchBool, setSwitchBool] = useState<boolean>(false);
   const [switchCreateAccount, setSwitchCreateAccount] = useState<boolean>(false);
@@ -44,19 +44,17 @@ export default function Home() {
     setBirthdate("");
     setConfirmPassword("");
     setPhoneNumber("")
-  };
-
-  const handleNextSwitch = () => {
-    setSwitchCreateAccount(true);
-    setPrimarySport("");
-    setSecondarySport("");
+    setSwitchCreateAccount(!switchCreateAccount);
+    setUserPrimarySport("");
+    setUserSecondarySport("");
     setUserBio("")
     setUserLocation("");
     setIsTrainer(false);
     setIsSpotter(false);
     setUserLocationPublic(true);
-    setProfilePicture(ProfileImage);
+    setProfilePicture("");
   };
+
 
 
   const handleBirthdateChange = (
@@ -90,11 +88,12 @@ export default function Home() {
       userBio: userBio,
       userLocation: userLocation,
       userLocationPublic: userLocationPublic,
-      primarySport: primarySport,
-      secondarySport: secondarySport,
+      userPrimarySport: userPrimarySport,
+      userSecondarySport: userSecondarySport,
       isSpotter: isSpotter,
       isTrainer: isTrainer,
-      profilePicture: profilePicture
+      profilePicture: profilePicture,
+      trueName: trueName
     };
     const userLoginData = {
       emailOrUsername: username, 
@@ -124,8 +123,8 @@ export default function Home() {
         console.log("location: ", userLocation);
         console.log("bio: ", userBio);
         console.log("LocationPublic: ", userLocationPublic);
-        console.log("primarySport: ", primarySport);
-        console.log("secondarySport: ", secondarySport);
+        console.log("primarySport: ", userPrimarySport);
+        console.log("secondarySport: ", userSecondarySport);
         console.log("isSpotter: ", isSpotter);
         console.log("isTrainer: ", isTrainer)
   
@@ -248,6 +247,7 @@ export default function Home() {
                 <Image src={Logo} alt="Logo" className=" h-30 w-50 rounded-full" />
               </div>
               <div className="mb-4">
+              <h1 className="text-2xl font-bold mb-2 text-center">Create Account</h1>
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="email"
@@ -359,16 +359,18 @@ export default function Home() {
                     placeholder="Re-enter Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full bg-white lg:w-[80%] mb-2"
                   />
                 </div>
-                <h2 className="text-2xl font-bold mb-4">Create Account - Step 2</h2>
 
-          <Label>Primary Sport</Label>
+          <Label className="text-xl font-semibold mb-1">Name</Label>
+          <Input value={trueName} onChange={(e) => setTrueName(e.target.value)} className="mb-2 bg-white" />
+
+          <Label className="text-xl font-semibold mb-1">Primary Sport</Label>
           <select
-            value={primarySport}
-            onChange={(e) => setPrimarySport(e.target.value)}
-            className="w-full p-2 mb-2 border rounded"
+            value={userPrimarySport}
+            onChange={(e) => setUserPrimarySport(e.target.value)}
+            className="w-full p-2 mb-2 border rounded bg-white"
           >
             <option value="">Select a sport</option>
             {sports.map((sport) => (
@@ -378,11 +380,11 @@ export default function Home() {
             ))}
           </select>
 
-          <Label>Secondary Sport</Label>
+          <Label className="text-xl font-semibold mb-1">Secondary Sport</Label>
           <select
-            value={secondarySport}
-            onChange={(e) => setSecondarySport(e.target.value)}
-            className="w-full p-2 mb-2 border rounded"
+            value={userSecondarySport}
+            onChange={(e) => setUserSecondarySport(e.target.value)}
+            className="w-full p-2 mb-2 border rounded bg-white"
           >
             <option value="">Select a sport</option>
             {sports.map((sport) => (
@@ -392,16 +394,16 @@ export default function Home() {
             ))}
           </select>
 
-          <Label>Bio</Label>
+          <Label className="text-xl font-semibold mb-1">Bio</Label>
           <textarea
             value={userBio}
             onChange={(e) => setUserBio(e.target.value)}
             placeholder="Tell us a bit about yourself..."
-            className="w-full border p-2 rounded mb-2 h-24"
+            className="w-full border p-2 rounded mb-2 h-24 bg-white"
           />
 
-          <Label>Location</Label>
-          <Input value={userLocation} onChange={(e) => setUserLocation(e.target.value)} className="mb-2" />
+          <Label className="text-xl font-semibold mb-1">Location</Label>
+          <Input value={userLocation} onChange={(e) => setUserLocation(e.target.value)} className="mb-2 bg-white" />
 
 
           <div className="flex items-center mb-4">
@@ -414,10 +416,11 @@ export default function Home() {
             <Label>Make Location Public</Label>
           </div>
 
-          <Label className="block mb-2">Are you a...</Label>
-          <div className="flex gap-4 mb-4 bg-white text-black">
+          <Label className="block mb-2 text-center text-xl font-semibold">Are you a...</Label>
+          <div className="flex justify-center gap-4 mb-">
             <Button
-              variant={isSpotter ? "default" : "outline"}
+            className="bg-white"
+              variant={isSpotter ? "outline" : "default"}
               onClick={() => {
                 setIsSpotter(true);
                 setIsTrainer(false);
@@ -426,7 +429,8 @@ export default function Home() {
               Spotter
             </Button>
             <Button
-              variant={isTrainer ? "default" : "outline"}
+            className="bg-white"
+              variant={isTrainer ? "outline" : "default"}
               onClick={() => {
                 setIsTrainer(true);
                 setIsSpotter(false);
@@ -436,19 +440,13 @@ export default function Home() {
             </Button>
           </div>
 
-        
-
-          <Button className="w-[20%] bg-white" onClick={handleSubmit}>
-            Create Account
-          </Button>
-
               </div>
               <div className="flex justify-center">
                 <Button
                   className=" bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
-                  onClick={handleNextSwitch}
+                  onClick={handleSubmit}
                 >
-                  Next
+                  Create Account
                 </Button>
               </div>
               <div className="flex justify-center py-3 text-lg">
