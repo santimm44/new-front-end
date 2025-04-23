@@ -13,6 +13,15 @@ export interface IuserCreateInfo {
     email: string,
     dateOfBirth: string,
     phoneNumber: string
+    TrueName: string
+    UserLocation: string
+    UserBio: string
+    UserLocationPublic: boolean
+    UserPrimarySport: string
+    UserSecondarySport: string
+    ProfilePicture: string
+    IsTrainer: boolean
+    IsSpotter: boolean
 }
 
 export interface IUserData {
@@ -25,18 +34,6 @@ export interface IUserStats {
     statName: string;
     score: string;
   }
-export interface IProfileData {
-    TrueName: string
-    UserLocation: string
-    UserBio: string
-    UserLocationPublic: boolean
-    UserPrimarySport: string
-    UserSecondarySport: string
-    ProfilePicture: string
-    IsTrainer: boolean
-    IsSpotter: boolean
-
-}
 
 export interface Friend {
     id: number

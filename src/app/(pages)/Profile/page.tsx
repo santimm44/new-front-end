@@ -1,10 +1,10 @@
 "use client";
 import { getProfileItemsByUser } from "@/lib/DataServices";
-import { IProfileData } from "@/lib/Interfaces";
+import { IuserCreateInfo } from "@/lib/Interfaces";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  const [profileItems, setProfileItems] = useState<IProfileData | null>(null);
+  const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
@@ -24,7 +24,7 @@ const Page = () => {
 
         if (storedUsernameOrEmail) {
           try {
-            const profileData: IProfileData | null = await getProfileItemsByUser(
+            const profileData: IuserCreateInfo | null = await getProfileItemsByUser(
               storedUsernameOrEmail,
               storedToken
             );

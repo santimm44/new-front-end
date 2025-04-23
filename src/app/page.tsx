@@ -1,7 +1,8 @@
 "use client";
 import BgImage from "@/assets/A close up of a dumbbell with a nice gym background.jpg";
+import ProfileImage from "@/assets/Stock_Profile-removebg-preview.png";
 import Logo from "@/assets/spot-me-high-resolution-logo.png"
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Itoken } from "@/lib/Interfaces";
@@ -24,9 +25,14 @@ export default function Home() {
   const [userLocationPublic, setUserLocationPublic] = useState<boolean>();
   const [isTrainer, setIsTrainer] = useState<boolean>();
   const [isSpotter, setIsSpotter] = useState<boolean>();
+  const [profilePicture, setProfilePicture] = useState<StaticImageData | string | null>(ProfileImage);
 
   const [switchBool, setSwitchBool] = useState<boolean>(false);
   const [switchCreateAccount, setSwitchCreateAccount] = useState<boolean>(false);
+
+  const states = ["CA", "NY", "TX", "FL", "IL"];
+  const sports = ["Powerlifting", "Bodybuilding", "CrossFit", "Strongman", "Olympic Lifting"];
+
 
   const router = useRouter();
 
@@ -50,6 +56,7 @@ export default function Home() {
     setIsTrainer(false);
     setIsSpotter(false);
     setUserLocationPublic(true);
+    setProfilePicture(ProfileImage);
   };
 
 
@@ -87,7 +94,8 @@ export default function Home() {
       primarySport: primarySport,
       secondarySport: secondarySport,
       isSpotter: isSpotter,
-      isTrainer: isTrainer
+      isTrainer: isTrainer,
+      profilePicture: profilePicture
     };
     const userLoginData = {
       emailOrUsername: username, 
@@ -355,6 +363,85 @@ export default function Home() {
                     className="w-full bg-white lg:w-[80%]"
                   />
                 </div>
+                <h2 className="text-2xl font-bold mb-4">Create Account - Step 2</h2>
+
+          <Label>Primary Sport</Label>
+          <select
+            value={primarySport}
+            onChange={(e) => setPrimarySport(e.target.value)}
+            className="w-full p-2 mb-2 border rounded"
+          >
+            <option value="">Select a sport</option>
+            {sports.map((sport) => (
+              <option key={sport} value={sport}>
+                {sport}
+              </option>
+            ))}
+          </select>
+
+          <Label>Secondary Sport</Label>
+          <select
+            value={secondarySport}
+            onChange={(e) => setSecondarySport(e.target.value)}
+            className="w-full p-2 mb-2 border rounded"
+          >
+            <option value="">Select a sport</option>
+            {sports.map((sport) => (
+              <option key={sport} value={sport}>
+                {sport}
+              </option>
+            ))}
+          </select>
+
+          <Label>Bio</Label>
+          <textarea
+            value={userBio}
+            onChange={(e) => setUserBio(e.target.value)}
+            placeholder="Tell us a bit about yourself..."
+            className="w-full border p-2 rounded mb-2 h-24"
+          />
+
+          <Label>City</Label>
+          <Input value={userLocation} onChange={(e) => setUserLocation(e.target.value)} className="mb-2" />
+
+
+          <div className="flex items-center mb-4">
+            <input
+              type="checkbox"
+              checked={userLocationPublic}
+              onChange={(e) => setUserLocationPublic(e.target.checked)}
+              className="mr-2"
+            />
+            <Label>Make Location Public</Label>
+          </div>
+
+          <Label className="block mb-2">Are you a...</Label>
+          <div className="flex gap-4 mb-4">
+            <Button
+              variant={isSpotter ? "default" : "outline"}
+              onClick={() => {
+                setIsSpotter(true);
+                setIsTrainer(false);
+              }}
+            >
+              Spotter
+            </Button>
+            <Button
+              variant={isTrainer ? "default" : "outline"}
+              onClick={() => {
+                setIsTrainer(true);
+                setIsSpotter(false);
+              }}
+            >
+              Trainer
+            </Button>
+          </div>
+
+        
+
+          <Button className="w-full" onClick={handleSubmit}>
+            Create Account
+          </Button>
 
               </div>
               <div className="flex justify-center">

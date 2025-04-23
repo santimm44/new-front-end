@@ -1,4 +1,4 @@
-import { IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
+import { IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -145,7 +145,7 @@ export const getProfileItemsByUser = async (emailOrUsername: string, token: stri
 }
 
 
-export const updateProfileItem = async (profile:IProfileData , token:string) => {
+export const updateProfileItem = async (profile:IuserCreateInfo , token:string) => {
   const res = await fetch(url + "User/UpdateUserInfo", {
     method: "PUT",
     headers: {
