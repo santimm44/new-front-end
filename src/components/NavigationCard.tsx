@@ -52,7 +52,7 @@ const NavigationCard = () => {
 
   return (
     <>
-      {/* Mobile Menu Toggle Button - Only visible on small screens */}
+      {/* Mobile Menu Toggle Button */}
 
       <div className="md:hidden fixed top-4 left-4 z-20">
         <button
@@ -67,7 +67,7 @@ const NavigationCard = () => {
         </button>
       </div>
 
-      {/* Sidebar - Full screen on mobile when open, sticky full-height on desktop */}
+      {/* Sidebar */}
       <div
         className={`md:sticky md:top-0 md:left-0 md:h-screen md:w-[30%] lg:w-[20%]
                     flex justify-center items-stretch

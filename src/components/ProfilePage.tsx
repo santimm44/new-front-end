@@ -4,6 +4,7 @@ import { IuserCreateInfo } from "@/lib/Interfaces";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SettingsImage from "@/assets/settings.png";
+import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png"
 
 const Page = () => {
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(null);
@@ -85,7 +86,7 @@ const Page = () => {
           <div className="w-full sm:w-auto flex flex-col mx-auto sm:flex-row items-center mb-6 sm:mb-0">
             <div className="relative mb-4 sm:mb-0">
               <Image
-                src={''}
+                src={ProfilePicture}
                 alt="User Profile"
                 className="h-40 w-40 sm:h-52 sm:w-52 lg:h-60 lg:w-60 rounded-full border-2 border-black object-cover"
               />
@@ -96,7 +97,9 @@ const Page = () => {
               <p>
                 Location:
               </p>
-              <p>Speciality:</p>
+              <p>Primary Sport: </p>
+              <p>Secondary Sport: </p>
+                <p>Bio: </p>
             </div>
           </div>
 
