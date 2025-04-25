@@ -2,9 +2,11 @@
 import { getProfileItemsByUser } from "@/lib/DataServices";
 import { IuserCreateInfo } from "@/lib/Interfaces";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import SettingsImage from "@/assets/settings.png";
 import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
+import { Button } from "@/components/ui/button";
+
 
 const Page = () => {
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(null);
@@ -13,9 +15,21 @@ const Page = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [toggleSettings, setToggleSettings] = useState<boolean>(false);
+  const [toggleStats, setToggleStats] = useState<boolean>(true);
+  const [toggleFriends, setToggleFriends] = useState<boolean>(false);
 
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);
+  };
+
+  const handleToggleStats = () => {
+    setToggleStats(true);
+    setToggleFriends(false);
+  };
+
+  const handleToggleFriends = () => {
+    setToggleFriends(true);
+    setToggleStats(false);
   };
 
   useEffect(() => {
@@ -87,7 +101,7 @@ const Page = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <main className="max-w-4xl mx-auto">
+      <main className="max-w-5xl mx-auto">
         {/* Header with settings button */}
         <div className="relative w-full p-4 flex justify-between items-center border-b border-gray-200">
           <h1 className="text-xl font-bold">{profileItems.username}</h1>
@@ -154,8 +168,28 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="text-center mt-4">
-            Posts Section: 
+          <div className="mt-4 flex justify-center gap-4">
+            <Button
+            onClick={handleToggleStats}
+            className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
+              toggleStats
+                ? "bg-[#FC6F2F] !text-white"
+                : "bg-white text-[#FC6F2F] border-2"
+            } rounded-3xl`}
+          >
+            Posts
+          </Button>
+
+          <Button
+            onClick={handleToggleFriends}
+            className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
+              toggleFriends
+                 ? "bg-[#FC6F2F] !text-white"
+                : "bg-white text-[#FC6F2F] border-2 "
+            } rounded-3xl`}
+          >
+            Friends
+          </Button>
           </div>
         </div>
       </main>
