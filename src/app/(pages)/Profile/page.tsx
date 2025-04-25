@@ -1,15 +1,19 @@
 "use client";
-import { getProfileItemsByUser } from "@/lib/DataServices";
-import { IuserCreateInfo } from "@/lib/Interfaces";
+import { getFriendsData, getProfileItemsByUser } from "@/lib/DataServices";
+import { IuserCreateInfo, UserModel } from "@/lib/Interfaces";
 import Image from "next/image";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SettingsImage from "@/assets/settings.png";
 import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
 import { Button } from "@/components/ui/button";
-
+import SpotterIcon from "@/assets/binoculars.png";
+import TrainerIcon from "@/assets/muscle.png";
 
 const Page = () => {
-  const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(null);
+  const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(
+    null
+  );
+  const [friends, setFriends] = useState<UserModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
@@ -32,8 +36,17 @@ const Page = () => {
     setToggleStats(false);
   };
 
+  const getToken = (): string => {
+    return token || "";
+  };
+
+  const getCurrentUserId = (): number => {
+    return profileItems?.id || 0;
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log(usernameOrEmail);
       setLoading(true);
       setError(null);
 
@@ -46,12 +59,21 @@ const Page = () => {
 
         if (storedUsernameOrEmail) {
           try {
-            const profileData: IuserCreateInfo | null = await getProfileItemsByUser(
-              storedUsernameOrEmail,
-              storedToken
-            );
+            const profileData: IuserCreateInfo | null =
+              await getProfileItemsByUser(storedUsernameOrEmail, storedToken);
+
             if (profileData) {
               setProfileItems(profileData);
+
+              try {
+                const friendsData = await getFriendsData(
+                  profileData.id,
+                  storedToken
+                );
+                setFriends(friendsData);
+              } catch (friendsErr) {
+                console.error("Error fetching friends data:", friendsErr);
+              }
             } else {
               setError("Failed to fetch profile data.");
             }
@@ -78,7 +100,9 @@ const Page = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-pulse text-xl font-semibold">Loading profile...</div>
+        <div className="animate-pulse text-xl font-semibold">
+          Loading profile...
+        </div>
       </div>
     );
   }
@@ -94,7 +118,9 @@ const Page = () => {
   if (!profileItems) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-500 text-xl font-semibold">No profile data available.</div>
+        <div className="text-gray-500 text-xl font-semibold">
+          No profile data available.
+        </div>
       </div>
     );
   }
@@ -118,7 +144,7 @@ const Page = () => {
         {/* Profile section */}
         <div className="p-4">
           <div className="flex flex-col md:flex-row">
-            <div className="flex justify-center md:justify-start md:flex-shrink-0 mb-6 md:mb-0">
+            <div className="flex justify-center md:justify-start mb-6 md:mb-0">
               <div className="relative">
                 <Image
                   src={ProfilePicture}
@@ -132,16 +158,21 @@ const Page = () => {
             {/* Profile details */}
             <div className="md:ml-4 flex-grow">
               <div className="flex flex-col">
-                <h2 className="text-xl font-bold mb-2">{profileItems.trueName}</h2>
+                <h2 className="text-xl font-bold mb-2">
+                  {profileItems.trueName}
+                </h2>
                 <div className="text-sm text-gray-600 mb-4">
                   <p className="mb-1">
-                    <span className="font-semibold">Location:</span> {profileItems.userLocation}
+                    <span className="font-semibold">Location:</span>{" "}
+                    {profileItems.userLocation}
                   </p>
                   <p className="mb-1">
-                    <span className="font-semibold">Primary Sport:</span> {profileItems.userPrimarySport}
+                    <span className="font-semibold">Primary Sport:</span>{" "}
+                    {profileItems.userPrimarySport}
                   </p>
                   <p className="mb-1">
-                    <span className="font-semibold">Secondary Sport:</span> {profileItems.userSecondarySport}
+                    <span className="font-semibold">Secondary Sport:</span>{" "}
+                    {profileItems.userSecondarySport}
                   </p>
                 </div>
               </div>
@@ -149,20 +180,21 @@ const Page = () => {
               {/* Bio */}
               <div className="bg-[#FFE9D1] p-4 rounded-lg shadow-sm mt-2">
                 <h3 className="font-semibold mb-2 text-2xl">Bio</h3>
-                <p className="text-sm whitespace-pre-wrap break-words">{profileItems.userBio}</p>
+                <p className="text-sm whitespace-pre-wrap break-words">
+                  {profileItems.userBio}
+                </p>
               </div>
             </div>
           </div>
 
-          
           <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
             <div className="grid grid-cols-2 text-center">
               <div className="p-2">
                 <div className="font-bold text-xl">0</div>
-                <div className=" text-[#FC6F2F]">Posts</div>
+                <div className="text-[#FC6F2F]">Posts</div>
               </div>
               <div className="p-2">
-                <div className="font-bold text-xl">0</div>
+                <div className="font-bold text-xl">{friends.length}</div>
                 <div className="text-[#FC6F2F]">Friends</div>
               </div>
             </div>
@@ -170,27 +202,48 @@ const Page = () => {
 
           <div className="mt-4 flex justify-center gap-4">
             <Button
-            onClick={handleToggleStats}
-            className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
-              toggleStats
-                ? "bg-[#FC6F2F] !text-white"
-                : "bg-white text-[#FC6F2F] border-2"
-            } rounded-3xl`}
-          >
-            Posts
-          </Button>
+              onClick={handleToggleStats}
+              className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
+                toggleStats
+                  ? "bg-[#FC6F2F] !text-white"
+                  : "bg-white text-[#FC6F2F] border-2"
+              } rounded-3xl`}
+            >
+              Posts
+            </Button>
 
-          <Button
-            onClick={handleToggleFriends}
-            className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
-              toggleFriends
-                 ? "bg-[#FC6F2F] !text-white"
-                : "bg-white text-[#FC6F2F] border-2 "
-            } rounded-3xl`}
-          >
-            Friends
-          </Button>
+            <Button
+              onClick={handleToggleFriends}
+              className={`h-12 w-[100px] lg:w-[120px] text-white hover:text-lg sm:hover:text-xl sm:text-lg cursor-pointer ${
+                toggleFriends
+                  ? "bg-[#FC6F2F] !text-white"
+                  : "bg-white text-[#FC6F2F] border-2 "
+              } rounded-3xl`}
+            >
+              Friends
+            </Button>
           </div>
+          {toggleFriends && (
+            <div className="mt-4">
+              <h2 className="text-lg font-bold mb-3">My Friends:</h2>
+              {friends.length === 0 ? (
+                <p>You don't have any friends yet.</p>
+              ) : (
+                <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
+                  {friends.map((friend) => (
+                    <li
+                      key={friend.id}
+                      className="p-2 border rounded-lg text-center max-w-full bg-[#FFE9D1]"
+                    >
+                      <p className="text-sm font-semibold">@{friend.username}</p>
+                      <p className="">{friend.trueName}</p>
+                      {friend.isSpotter === true ? <div> <p className="text-gray-700">Spotter</p> <Image className="h-10 w-10" src={SpotterIcon} alt='Spotter Icon' /> </div>: <div> <p className="text-gray-700">Trainer</p> <Image className="h-10 w-10" src={TrainerIcon} alt='Trainer Icon' /> </div>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       </main>
     </div>

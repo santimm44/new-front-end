@@ -1,14 +1,15 @@
 
 
 export interface Itoken {
-    token: string
+    token: string;
 }
 
 export interface IUserInfo {
-    emailOrUsername: string
-    password: string
+    emailOrUsername: string;
+    password: string;
 }
 export interface IuserCreateInfo {
+    id: number,
     username: string,
     password: string,
     email: string,
@@ -22,12 +23,12 @@ export interface IuserCreateInfo {
     isSpotter: boolean,
     isTrainer: boolean,
     profilePicture: string,
-    trueName: string
+    trueName: string,
   }
 
 export interface IUserData {
-    id: number
-    username: string
+    id: number;
+    username: string;
 }
 
 export interface IUserStats {
@@ -37,7 +38,16 @@ export interface IUserStats {
   }
 
 export interface Friend {
-    id: number
+    id: number;
     name: string;
     lastMessage?: string; 
+  }
+
+ export interface UserModel {
+    id: number;
+    username: string;
+    trueName: string;
+    isSpotter: boolean;
+    isTrainer: boolean;
+    profilePicture: string;
   }

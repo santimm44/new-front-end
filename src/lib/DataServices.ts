@@ -166,3 +166,24 @@ export const updateProfileItem = async (profile:IuserCreateInfo , token:string) 
   return data.success
 }
 
+export const getFriendsData = async (userId: number, token: string) => {
+  
+  const res = await fetch(`${url}Friendship/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  });
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return [];
+  }
+  
+  const data = await res.json();
+  return data;
+};
+
