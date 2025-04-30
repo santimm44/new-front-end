@@ -8,8 +8,12 @@ import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
 import { Button } from "@/components/ui/button";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
+import { DeleteIcon, MessageSquare, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 
 const Page = () => {
+  const router = useRouter();
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(
     null
   );
@@ -22,9 +26,23 @@ const Page = () => {
   const [toggleStats, setToggleStats] = useState<boolean>(true);
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
 
+  const handleMessageFriend = (friendId: number) => {
+    router.push(`/DirectMessages?friendId=${friendId}`);
+  };
+
+  const handleViewFriendProfile = (friendId: number) => {
+    router.push(`/Profile?friendId=${friendId}`);
+  };
+
+  const handleRemoveFriend = (friendId: number) => {
+    console.log("Removing friend with ID:", friendId);
+  
+  };
+
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);
   };
+
 
   const handleToggleStats = () => {
     setToggleStats(true);
@@ -229,16 +247,38 @@ const Page = () => {
               {friends.length === 0 ? (
                 <p>You don't have any friends yet.</p>
               ) : (
-                <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
+                <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
                   {friends.map((friend) => (
                     <li
                       key={friend.id}
                       className="p-2 border rounded-lg text-center max-w-full bg-[#FFE9D1]"
                     >
-                      <p className="text-sm font-semibold">@{friend.username}</p>
-                      <p className="">{friend.trueName}</p>
-                      {friend.isSpotter === true ? <div> <p className="text-gray-700">Spotter</p> <Image className="h-10 w-10" src={SpotterIcon} alt='Spotter Icon' /> </div>: <div> <p className="text-gray-700">Trainer</p> <Image className="h-10 w-10" src={TrainerIcon} alt='Trainer Icon' /> </div>}
+                      <p className="text-sm">{friend.trueName}</p>
+                      <p className="text-sm font-semibold mb-2">@{friend.username}</p>
+                    
+                      {friend.isSpotter === true ? <div className="flex justify-evenly items-center"> <p className="text-gray-700">Spotter</p> <Image className="h-10 w-10" src={SpotterIcon} alt='Spotter Icon' /> </div>: <div className="flex justify-evenly items-center"> <p className="text-gray-700">Trainer</p> <Image className="h-10 w-10" src={TrainerIcon} alt='Trainer Icon' /> </div>}
+                      <div className="mt-2 flex justify-evenly">
+                      <Button
+                          className="bg-white text-black hover:text-xl p-2 rounded-full cursor-pointer"
+                          onClick={() => handleMessageFriend(friend.id)}
+                        >
+                          <MessageSquare size={20} />
+                        </Button>
+                        <Button
+                          className="bg-white text-black p-2 rounded-full cursor-pointer"
+                          onClick={() => handleViewFriendProfile(friend.id)}
+                        >
+                          <User size={20} />
+                        </Button>
+                        <Button
+                          className="bg-white text-black p-2 rounded-full cursor-pointer"
+                          onClick={() => handleRemoveFriend(friend.id)}
+                        >
+                          <DeleteIcon size={20} />
+                        </Button>
+                      </div>
                     </li>
+                    
                   ))}
                 </ul>
               )}

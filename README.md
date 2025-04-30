@@ -17,7 +17,16 @@
 ## Ssantiago Pushing to publish branch
 
 
-
+<SidebarItem
+                href="#"
+                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
+                onClick={() => {handleOpenMatch()}}
+              >
+                 <div className="flex items-center">
+                    <Image className="h-10 w-10 mr-2" src={MatchIcon} alt='Match Icon' />
+                    Requests
+                </div>
+              </SidebarItem>
 
 
 
