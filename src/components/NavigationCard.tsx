@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
 import HomeIcon from "@/assets/home.png";
 import UserIcon from "@/assets/user.png";
-import MatchIcon from "@/assets/link.png";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
 import MessageIcon from "@/assets/paper-plane.png";
@@ -30,9 +29,6 @@ const NavigationCard = () => {
     router.push('/DirectMessages');
   }
 
-  const handleOpenMatch = () => {
-    router.push('/Match');
-  }
 
   const handleOpenProfile = () => {
     router.push('/Profile');
