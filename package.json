@@ -10,15 +10,15 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
-    "@microsoft/signalr": "^8.0.7",
     "@headlessui/react": "^2.2.2",
+    "@microsoft/signalr": "^8.0.7",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "flowbite-react": "^0.11.5",
     "lucide-react": "^0.484.0",
-    "next": "15.2.4",
+    "next": "^15.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
