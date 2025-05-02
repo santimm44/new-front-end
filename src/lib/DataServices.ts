@@ -1,4 +1,4 @@
-import { IuserCreateInfo, IUserData, IUserInfo, IUserStats } from "./Interfaces";
+import { IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -92,6 +92,25 @@ export const createAccount = async (user: IuserCreateInfo) => {
 
 // Data fetches 
 
+export const getAllUsers = async (token: string): Promise<UserModel[]> => {
+  const res = await fetch(url + "User/GetAllUsers", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.error("GetAllUsers Error:", errorData.message);
+    return [];
+  }
+
+  const data = await res.json();
+  return data;
+};
+
 export const getStatsByUsername = async (username: string): Promise<IUserStats[]> => {
   const res = await fetch(`${url}UserStats/GetStatsByUsername/${username}`);
   if (!res.ok) {
@@ -165,4 +184,25 @@ export const updateProfileItem = async (profile:IuserCreateInfo , token:string) 
   // return true we have successfully added our blog to our backend DB
   return data.success
 }
+
+export const getFriendsData = async (userId: number, token: string) => {
+  
+  const res = await fetch(`${url}Friendship/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  });
+  
+  if (!res.ok) {
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return [];
+  }
+  
+  const data = await res.json();
+  return data;
+};
 

@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
 import HomeIcon from "@/assets/home.png";
 import UserIcon from "@/assets/user.png";
-import MatchIcon from "@/assets/link.png";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
 import MessageIcon from "@/assets/paper-plane.png";
@@ -30,9 +29,6 @@ const NavigationCard = () => {
     router.push('/DirectMessages');
   }
 
-  const handleOpenMatch = () => {
-    router.push('/Match');
-  }
 
   const handleOpenProfile = () => {
     router.push('/Profile');
@@ -52,7 +48,7 @@ const NavigationCard = () => {
 
   return (
     <>
-      {/* Mobile Menu Toggle Button - Only visible on small screens */}
+      {/* Mobile Menu Toggle Button */}
 
       <div className="md:hidden fixed top-4 left-4 z-20">
         <button
@@ -67,7 +63,7 @@ const NavigationCard = () => {
         </button>
       </div>
 
-      {/* Sidebar - Full screen on mobile when open, sticky full-height on desktop */}
+      {/* Sidebar */}
       <div
         className={`md:sticky md:top-0 md:left-0 md:h-screen md:w-[30%] lg:w-[20%]
                     flex justify-center items-stretch
@@ -99,16 +95,7 @@ const NavigationCard = () => {
                     Profile
                 </div>
               </SidebarItem>
-              <SidebarItem
-                href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
-                onClick={() => {handleOpenMatch()}}
-              >
-                 <div className="flex items-center">
-                    <Image className="h-10 w-10 mr-2" src={MatchIcon} alt='Match Icon' />
-                    Match
-                </div>
-              </SidebarItem>
+              
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
