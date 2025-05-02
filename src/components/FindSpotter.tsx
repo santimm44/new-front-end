@@ -37,7 +37,6 @@ const FindSpotter = () => {
     if (!user) return;
 
     const newPost = {
-      userId: user.id,
       username: user.username,
       profilePicture: user.profilePicture,
       userLocation: user.userLocationPublic ? user.userLocation : "Private",

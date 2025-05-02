@@ -4,7 +4,7 @@ import {
   getFriendsData,
   getProfileItemsByUser,
 } from "@/lib/DataServices";
-import { IuserCreateInfo, UserModel } from "@/lib/Interfaces";
+import { IProfileData, IuserCreateInfo, UserModel } from "@/lib/Interfaces";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SettingsImage from "@/assets/settings.png";
@@ -72,10 +72,9 @@ const ProfilePage = () => {
   const getToken = (): string => {
     return token || "";
   };
+  getToken();
 
-  const getCurrentUserId = (): number => {
-    return profileItems?.id || 0;
-  };
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -92,7 +91,7 @@ const ProfilePage = () => {
 
         if (storedUsernameOrEmail) {
           try {
-            const profileData: IuserCreateInfo | null =
+            const profileData: IProfileData | null =
               await getProfileItemsByUser(storedUsernameOrEmail, storedToken);
 
             if (profileData) {

@@ -25,6 +25,24 @@ export interface IuserCreateInfo {
     trueName: string,
   }
 
+export interface IProfileData{
+  id: number,
+  username: string,
+  password: string,
+  email: string,
+  dateOfBirth: string,
+  phoneNumber: string,
+  userBio: string,
+  userLocation: string,
+  userLocationPublic: boolean,
+  userPrimarySport: string,
+  userSecondarySport: string,
+  isSpotter: boolean,
+  isTrainer: boolean,
+  profilePicture: string,
+  trueName: string,
+}
+
 export interface IUserData {
     id: number;
     username: string;

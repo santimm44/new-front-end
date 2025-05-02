@@ -112,7 +112,11 @@ export default function Home() {
         username != "" &&
         email != "" &&
         phoneNumber != "" &&
-        birthdate != ""
+        birthdate != "" && 
+        userLocation != "" &&
+        userBio != "" && 
+        userPrimarySport != "" && 
+        userSecondarySport != ""
 
       ) {
         console.log("Email: ", email);
