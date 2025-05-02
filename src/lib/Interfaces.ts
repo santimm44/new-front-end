@@ -82,10 +82,11 @@ export interface Friend {
       startTime: string
       endTime: string
     }[]
-    createAt: string
+    
   }
 
   export interface IMatchTrainerCard {
+    id: number
     username: string
     userLocation: string
     userLocationPublic: boolean

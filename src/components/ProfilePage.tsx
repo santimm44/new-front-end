@@ -47,8 +47,8 @@ const ProfilePage = () => {
     router.push(`/DirectMessages?friendId=${friendId}`);
   };
 
-  const handleViewFriendProfile = (friendId: number) => {
-    router.push(`/Profile?friendId=${friendId}`);
+  const handleViewFriendProfile = (friend: number) => {
+    router.push(`/profile/${friend}`);
   };
 
   const handleRemoveFriend = (friendId: number) => {

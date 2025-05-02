@@ -18,6 +18,8 @@ const FindSpotter = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isPostCreated, setIsPostCreated] = useState<boolean>(false);
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,6 +34,7 @@ const FindSpotter = () => {
 
     fetchUser();
   }, []);
+
 
   const handlePost = async () => {
     if (!user) return;
@@ -73,14 +76,19 @@ const FindSpotter = () => {
     } finally {
       setLoading(false);
     }
+    setIsPostCreated(true);
+    console.log(isPostCreated);
+    handlePost();
+    console.log()
   };
 
   return (
     <div className="p-4 max-w-xl mx-auto">
       <h1 className="text-2xl font-semibold mb-4">Create a New Post</h1>
 
+      
       {user && (
-        <div className="flex items-center gap-4 mb-4">
+        <div className=" min-h-screen flex items-center gap-4 mb-4">
           <Image
             src={ProfilePicture}
             alt="Profile"
@@ -157,7 +165,7 @@ const FindSpotter = () => {
       >
         {loading ? "Posting..." : "Post"}
       </button>
-    </div>
+      </div>
   );
 }
 

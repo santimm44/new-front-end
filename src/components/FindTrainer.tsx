@@ -4,13 +4,13 @@ import { getProfileItemsByUser } from "@/lib/DataServices";
 import { useEffect, useState } from "react";
 import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
 import Image from "next/image";
-import { IMatchPost } from "@/lib/Interfaces";
+import { IMatchTrainerCard } from "@/lib/Interfaces";
 
 
 const hours = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`); // Change to AM and PM format
 
 const FindTrainer = () => {
-  const [user, setUser] = useState<IMatchPost | null>(null);
+  const [user, setUser] = useState<IMatchTrainerCard | null>(null);
   const [myName, setMyName] = useState("");
   const [content, setContent] = useState("");
   const [sport, setSport] = useState("");

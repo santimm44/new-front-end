@@ -1,4 +1,4 @@
-import { IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
+import { IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -206,3 +206,26 @@ export const getFriendsData = async (userId: number, token: string) => {
   return data;
 };
 
+export const getUserById = async (userId: number, token: string): Promise<IProfileData | null> => {
+  try {
+    const res = await fetch(`${url}User/GetUserById/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("GetUserById Error:", errorData.message);
+      return null;
+    }
+  
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    return null;
+  }
+};
