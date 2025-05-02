@@ -69,7 +69,7 @@ export interface Friend {
     profilePicture: string;
   }
 
-  export interface IMatchPost {
+  export interface IMatchSpotterCard {
     username: string
     userLocation: string
     userLocationPublic: boolean
@@ -82,5 +82,15 @@ export interface Friend {
       startTime: string
       endTime: string
     }[]
+    createAt: string
+  }
+
+  export interface IMatchTrainerCard {
+    username: string
+    userLocation: string
+    userLocationPublic: boolean
+    profilePicture: string
+    myName: string
+    payment: string
     createAt: string
   }
