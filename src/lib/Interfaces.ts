@@ -9,7 +9,6 @@ export interface IUserInfo {
     password: string;
 }
 export interface IuserCreateInfo {
-    id: number,
     username: string,
     password: string,
     email: string,

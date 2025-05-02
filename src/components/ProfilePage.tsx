@@ -1,9 +1,6 @@
 "use client";
 import {
-<<<<<<< HEAD
-=======
   //getAllUsers,
->>>>>>> c2b41f953b48b4ed9c8b4e1a43884bf3414a73f0
   getFriendsData,
   getProfileItemsByUser,
 } from "@/lib/DataServices";
