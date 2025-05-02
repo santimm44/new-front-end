@@ -1,4 +1,3 @@
-import { StringDecoder } from "string_decoder";
 
 
 export interface Itoken {
@@ -80,8 +79,8 @@ export interface Friend {
     sport: string
     date: string
     time: {
-      startTime: String
+      startTime: string
       endTime: string
-    }
+    }[]
     createAt: string
   }
