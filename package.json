@@ -18,7 +18,6 @@
     "clsx": "^2.1.1",
     "flowbite-react": "^0.11.5",
     "lucide-react": "^0.484.0",
-    "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
