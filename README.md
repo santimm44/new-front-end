@@ -5,17 +5,15 @@
 * Account Recovery Page
 
 * Create Interfaces in line with back end
-    - Edit and Delete Settings
-    - Add, Edit, Delete Scores
-    - Add and Delete Friends
+  * Edit and Delete Settings
+  * Add, Edit, Delete Scores
+  * Add and Delete Friends
 
 * Styling for Modals
 
-* Match Page Startup 
-
+* Match Page Startup
 
 ## Ssantiago Pushing to publish branch
-
 
 <SidebarItem
                 href="#"
@@ -27,10 +25,6 @@
                     Requests
                 </div>
               </SidebarItem>
-
-
-
-
 
 "use client";
 import React, { useState } from "react";
@@ -64,7 +58,6 @@ const mockFriends = [
     specialty: "Weightlifting",
   }
 ]
-  
 
 // NOTE Need to change default profile picture to User's uploaded picture and set inputs for profile in settings
 const Page = () => {
@@ -84,16 +77,16 @@ const Page = () => {
 
   const [friends, setFriends] = useState(mockFriends);
   const [friendSearch, setFriendSearch] = useState<string>("");
-  
+
   const [edit, setEdit] = useState<boolean>(false);
   const [statTitle, setStatTitle] = useState<string>("");
   const [statDescription, setStatDescription] = useState<string>("");
   const [statCategories, setStatCategories] = useState<string>("Categories");
-  
+
   const [statsItems, setStatsItems] = useState<IUserStats[]>(Stats);
-  
+
   // ------------ Toggle Logic -------------------
-  
+
   const handleInfiniteLoop = () => {
     console.log(statTitle + statDescription) //Redundant code to trick ESlint Compiler to think it is being used
     console.log(setEdit(true)) //Redundant code to trick ESlint Compiler to think it is being used
@@ -211,10 +204,10 @@ const Page = () => {
 
   return (
     <main className="flex flex-col">
-      {/* Main content area */}
+      {/*Main content area */}
       <div className="w-full px-4 sm:px-6 md:px-8 py-6">
         <div className="flex flex-col sm:flex-row justify-between items-center">
-          {/* Profile Image and Details */}
+          {/* Profile Image and Details*/}
           <div className="w-full sm:w-auto flex flex-col mx-auto sm:flex-row items-center mb-6 sm:mb-0">
             <div className="relative mb-4 sm:mb-0">
               <Image
@@ -750,3 +743,5 @@ const Page = () => {
 };
 
 export default Page;
+
+* Santiafo has a new branch
