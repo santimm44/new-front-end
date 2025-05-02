@@ -1,3 +1,4 @@
+import { StringDecoder } from "string_decoder";
 
 
 export interface Itoken {
@@ -67,4 +68,20 @@ export interface Friend {
     isSpotter: boolean;
     isTrainer: boolean;
     profilePicture: string;
+  }
+
+  export interface IMatchPost {
+    username: string
+    userLocation: string
+    userLocationPublic: boolean
+    profilePicture: string
+    myName: string
+    content: string
+    sport: string
+    date: string
+    time: {
+      startTime: String
+      endTime: string
+    }
+    createAt: string
   }
