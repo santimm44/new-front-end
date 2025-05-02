@@ -9,7 +9,7 @@ import {
 import Logo from "@/assets/spot-me-high-resolution-logo.png";
 import Image from "next/image";
 import { Menu, X } from "lucide-react"; // Import icons for mobile toggle
-import HomeIcon from "@/assets/home.png";
+
 import UserIcon from "@/assets/user.png";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
@@ -42,9 +42,7 @@ const NavigationCard = () => {
     router.push('/FindTrainer');
   }
 
-  const handleOpenHome = () => {
-    router.push('/Home');
-  }
+  
 
   return (
     <>
@@ -75,16 +73,7 @@ const NavigationCard = () => {
           </div>
           <SidebarItems className="flex-grow">
             <SidebarItemGroup className="flex flex-col h-full justify-start">
-              <SidebarItem
-                href="#"
-                className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px] mt-2"
-                onClick={() => handleOpenHome()}
-              >
-                <div className="flex items-center">
-                    <Image className="h-10 w-10 mr-2" src={HomeIcon} alt='Home Icon' />
-                    Home
-                </div>
-              </SidebarItem>
+
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1] hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
@@ -95,7 +84,7 @@ const NavigationCard = () => {
                     Profile
                 </div>
               </SidebarItem>
-              
+
               <SidebarItem
                 href="#"
                 className="[&:hover]:bg-white !text-black text-xl bg-[#FFE9D1]  hover:!text-[#FC6F2F] hover:text-2xl h-[48px]"
@@ -135,4 +124,3 @@ const NavigationCard = () => {
 };
 
 export default NavigationCard;
-
