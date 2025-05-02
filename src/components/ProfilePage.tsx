@@ -1,6 +1,5 @@
 "use client";
 import {
-  getAllUsers,
   getFriendsData,
   getProfileItemsByUser,
 } from "@/lib/DataServices";
@@ -30,7 +29,7 @@ const ProfilePage = () => {
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<string>("");
   const [allUsers, setAllUsers] = useState<UserModel[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  
 
   const filteredFriends = friends.filter(
     (user) =>
@@ -40,6 +39,7 @@ const ProfilePage = () => {
 
   const toggleFriend = () => {
     console.log(allUsers);
+    setAllUsers(allUsers);
   };
 
   const handleMessageFriend = (friendId: number) => {
