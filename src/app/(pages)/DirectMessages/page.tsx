@@ -16,7 +16,7 @@ interface TFriends {
   username: string
 }
 
-const page = () => {
+const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [connection, setConnection] = useState<HubConnection | null>(null);
@@ -82,7 +82,7 @@ const page = () => {
         connection.off("ReceiveMessage");
       }
     };
-  }, []);
+  }, [connection]);
 
 
   const sendMessage = async () => {
@@ -164,7 +164,7 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
 
 // "use client";
 // import React, { useState } from "react";

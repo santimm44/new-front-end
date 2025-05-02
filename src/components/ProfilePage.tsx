@@ -1,6 +1,6 @@
 "use client";
 import {
-  getAllUsers,
+  //getAllUsers,
   getFriendsData,
   getProfileItemsByUser,
 } from "@/lib/DataServices";
@@ -270,7 +270,7 @@ const ProfilePage = () => {
                     key={friend.id}
                     className="p-4 border-b flex items-center justify-between"
                   >
-        
+
                     <div className="flex items-center">
                       <Image
                         src={ProfilePicture}
@@ -298,7 +298,7 @@ const ProfilePage = () => {
 
               <h2 className="text-lg font-bold mb-3">My Friends:</h2>
               {friends.length === 0 ? (
-                <p>You don't have any friends yet.</p>
+                <p>You don&apos;t have any friends yet.</p>
               ) : (
                 <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
                   {friends.map((friend) => (
