@@ -96,10 +96,10 @@ export default function Home() {
       trueName: trueName
     };
     const userLoginData = {
-      emailOrUsername: username, 
+      emailOrUsername: username,
       password: password,
     };
-  
+
     if (switchBool) {
       // Create Account Logic Here
       if (password !== confirmPassword) {
@@ -112,10 +112,10 @@ export default function Home() {
         username != "" &&
         email != "" &&
         phoneNumber != "" &&
-        birthdate != "" && 
+        birthdate != "" &&
         userLocation != "" &&
-        userBio != "" && 
-        userPrimarySport != "" && 
+        userBio != "" &&
+        userPrimarySport != "" &&
         userSecondarySport != ""
 
       ) {
@@ -131,9 +131,9 @@ export default function Home() {
         console.log("secondarySport: ", userSecondarySport);
         console.log("isSpotter: ", isSpotter);
         console.log("isTrainer: ", isTrainer)
-  
+
         const result = await createAccount(userData);
-  
+
         if (result) {
           alert("Account Created!");
           handleSwitch();
@@ -143,16 +143,16 @@ export default function Home() {
       }
     } else {
       // Login Logic here
-      const response: Itoken | null = await login(userLoginData); 
-  
+      const response: Itoken | null = await login(userLoginData);
+
       if (response && response.token) {
         if (typeof window !== "undefined") {
           localStorage.setItem("Token", response.token);
-          localStorage.setItem("username", username); 
+          localStorage.setItem("username", username);
           console.log("Token stored:", response.token);
           console.log("Username stored:", username);
-          await getLoggedInUserData(username); 
-          router.push("/Dashboard");
+          await getLoggedInUserData(username);
+          router.push("/Profile");
         }
       } else {
         alert("Invalid Username or Password!");
