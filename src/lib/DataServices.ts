@@ -165,14 +165,15 @@ export const getProfileItemsByUser = async (emailOrUsername: string, token: stri
 }
 
 
-export const updateProfileItem = async (profile:IuserCreateInfo , token:string) => {
-  const res = await fetch(url + "User/UpdateUserInfo", {
+
+export const updateProfileItem = async (item:IuserCreateInfo , token:string) => {
+  const res = await fetch(url + `User/UpdateUserInfo/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
-    body:JSON.stringify(profile)
+    body:JSON.stringify(item)
   });
   if(!res.ok){
     const errorData = await res.json();
@@ -181,7 +182,6 @@ export const updateProfileItem = async (profile:IuserCreateInfo , token:string) 
     return false;
   }
   const data = await res.json();
-  // return true we have successfully added our blog to our backend DB
   return data.success
 }
 

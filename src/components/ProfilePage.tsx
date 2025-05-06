@@ -3,6 +3,7 @@ import {
   //getAllUsers,
   getFriendsData,
   getProfileItemsByUser,
+  // updateProfileItem,
 } from "@/lib/DataServices";
 import { IProfileData, IuserCreateInfo, UserModel } from "@/lib/Interfaces";
 import Image from "next/image";
@@ -14,12 +15,24 @@ import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
 import { DeleteIcon, MessageSquare, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import {
+  Dropdown,
+  DropdownItem,
+  FileInput,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  TextInput,
+} from "flowbite-react";
 
 const ProfilePage = () => {
   const router = useRouter();
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(
     null
   );
+  const [profileItemsTwo, setProfileItemsTwo] = useState<IProfileData>()
   const [friends, setFriends] = useState<UserModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,8 +43,9 @@ const ProfilePage = () => {
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<string>("");
   const [allUsers, setAllUsers] = useState<UserModel[]>([]);
-  
+  const [city, setCity] = useState<string>("");
 
+  // Filter Friends
   const filteredFriends = friends.filter(
     (user) =>
       user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
@@ -43,6 +57,8 @@ const ProfilePage = () => {
     setAllUsers(allUsers);
   };
 
+  // Dynamic Routing
+
   const handleMessageFriend = (friendId: number) => {
     router.push(`/DirectMessages?friendId=${friendId}`);
   };
@@ -51,10 +67,12 @@ const ProfilePage = () => {
     router.push(`/profile/${friend}`);
   };
 
+  // Remove Friend
   const handleRemoveFriend = (friendId: number) => {
     console.log("Removing friend with ID:", friendId);
   };
 
+  // Toggles
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);
   };
@@ -69,12 +87,13 @@ const ProfilePage = () => {
     setToggleStats(false);
   };
 
+  // Get Token
   const getToken = (): string => {
     return token || "";
   };
   getToken();
 
-  
+  // Fetch Data
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -129,6 +148,121 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
+  // Saving Changes
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [birthdate, setBirthdate] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [userPrimarySport, setUserPrimarySport] = useState<string>("");
+  const [userSecondarySport, setUserSecondarySport] = useState<string>("");
+  const [userBio, setUserBio] = useState<string>("");
+  const [userLocation, setUserLocation] = useState<string>("");
+  const [userLocationPublic, setUserLocationPublic] = useState<boolean>(false);
+  const [isTrainer, setIsTrainer] = useState<boolean>(false);
+  const [isSpotter, setIsSpotter] = useState<boolean>(false);
+  const [profilePicture, setProfilePicture] = useState<string>("");
+  const [trueName, setTrueName] = useState<string>("");
+  const [state, setState] = useState<string>("")
+
+  const handleEdit = (items: IuserCreateInfo) => {
+    setToggleSettings(true);
+    setUsername(items.username);
+    setPassword(items.password);
+    setEmail(items.email);
+    setBirthdate(items.dateOfBirth);
+    setPhoneNumber(items.phoneNumber);
+    setUserPrimarySport(items.userPrimarySport);
+    setUserSecondarySport(items.userSecondarySport);
+    setUserBio(items.userBio);
+    setUserLocation(items.userLocation);
+    setUserLocationPublic(items.userLocationPublic);
+    setIsTrainer(items.isTrainer);
+    setIsSpotter(items.isSpotter);
+    setProfilePicture(items.profilePicture);
+    setTrueName(items.trueName);
+  };
+  
+
+  
+
+  const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
+  const updateProfileItem = async (item:IuserCreateInfo , token:string) => {
+    const userId = profileItemsTwo?.id
+    setProfileItemsTwo(profileItemsTwo);
+    console.log("Updating user with ID:", userId);
+    console.log("Payload:", item);
+    const res = await fetch(url + `User/UpdateUserInfo/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body:JSON.stringify(item)
+    });
+    if(!res.ok){
+      const errorData = await res.json();
+      const message = errorData.message;
+      console.log(message);
+      return false;
+    }
+    const data = await res.json();
+    return data.success
+  }
+
+  const handleSave = async () => {
+    
+    if (!usernameOrEmail || !token) {
+      alert("Missing username/email or authentication token");
+      return;
+    }
+
+    const item: IuserCreateInfo = {
+      username: username ?? "",
+      password: password ?? "",
+      email: email ?? "",
+      dateOfBirth: birthdate ?? "",
+      phoneNumber: phoneNumber ?? "",
+      userPrimarySport: userPrimarySport ?? "",
+      userSecondarySport: userSecondarySport ?? "",
+      userBio: userBio ?? "",
+      userLocation: userLocation ?? "",
+      userLocationPublic: userLocationPublic ?? false,
+      isTrainer: isTrainer ?? false,
+      isSpotter: isSpotter ?? false,
+      profilePicture: profilePicture ?? "",
+      trueName: trueName ?? "",
+    };
+    setToggleSettings(false);
+    handleEdit(item) // Edit out later
+
+    let result = false;
+    result = await updateProfileItem(item, token);
+    
+
+    if (result) {
+      const userProfileItems = await getProfileItemsByUser(usernameOrEmail, token);
+      setProfileItems(userProfileItems);
+      setToggleSettings(false); 
+    } else {
+      alert(`Items not updating or Editing`);
+    }
+  }
+
+  
+
+useEffect(() => {
+  if (profileItems) {
+    setTrueName(profileItems.trueName || "");
+    setEmail(profileItems.email || "");
+    setUserBio(profileItems.userBio || "");
+    setUserLocation(profileItems.userLocation || "");
+    setBirthdate(profileItems.dateOfBirth || "");
+    setPhoneNumber(profileItems.phoneNumber || "");
+    setUsername(profileItems.username || "")
+  }
+}, [profileItems]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -156,6 +290,9 @@ const ProfilePage = () => {
       </div>
     );
   }
+
+  
+
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -185,6 +322,189 @@ const ProfilePage = () => {
                   className="h-24 w-24 md:h-32 md:w-32 rounded-full border border-gray-200 object-cover"
                 />
               </div>
+              <Modal
+                className="bg-[#16697A]"
+                show={toggleSettings}
+                onClose={() => setToggleSettings(false)}
+              >
+                <ModalHeader>Settings</ModalHeader>
+                <ModalBody>
+                  <form className="flex max-w-md flex-col gap-2">
+                    <div>
+                      <div className="mb-2 block">
+                        <Label htmlFor="Title">Name</Label>
+                      </div>
+                      <TextInput
+                        id="Name"
+                        type="text"
+                        value={trueName}
+                        placeholder="Name"
+                        required
+                        onChange={(e) => setTrueName(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="block">
+                      <Label htmlFor="descrption">Email</Label>
+                    </div>
+                    <TextInput
+                      id="Email"
+                      placeholder="Email"
+                      value={email}
+                      type="text"
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <div className="block">
+                      <Label htmlFor="descrption">Bio</Label>
+                    </div>
+                    <TextInput
+                      id="Bio"
+                      placeholder="Bio"
+                      value={userBio}
+                      type="text"
+                      required
+                      onChange={(e) => setUserBio(e.target.value)}
+                    />
+                    <div className=" block">
+                      <Label htmlFor="Title">Location</Label>
+                    </div>
+                    <TextInput
+                      id="City"
+                      type="text"
+                      value={city}
+                      placeholder="City"
+                      required
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                    <div>
+                      <Dropdown label={state} dismissOnClick={true}>
+                        <div className="h-[300px] overflow-y-auto">
+                          <DropdownItem
+                            onChange={() => setState("Washington")}
+                            onClick={() => setUserLocation(`${city}, ${state}`)}
+                          >
+                            Washington
+                          </DropdownItem>
+                          <DropdownItem
+                             onChange={() => setState("WV")}
+                             onClick={() => setUserLocation(`${city}, ${state}`)}
+                          >
+                            West Virginia
+                          </DropdownItem>
+                          <DropdownItem
+                             onChange={() => setState("WI")}
+                             onClick={() => setUserLocation(`${city}, ${state}`)}
+                          >
+                            Wisconsin
+                          </DropdownItem>
+                          <DropdownItem
+                            onClick={() => setUserLocation(city + ", WY")}
+                          >
+                            Wyoming
+                          </DropdownItem>
+                        </div>
+                      </Dropdown>
+
+                      <div className="mb-2 block">
+                        <Label htmlFor="descrption">Preferred Sports </Label>
+                      </div>
+                      <div className="flex justify-evenly items-center">
+                        <Dropdown
+                          label={userPrimarySport}
+                          dismissOnClick={true}
+                        >
+                          <div className="h-[300px] overflow-y-auto">
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserPrimarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                          </div>
+                        </Dropdown>
+
+                        <Dropdown
+                          label={userSecondarySport}
+                          dismissOnClick={true}
+                        >
+                          <div className="h-[300px] overflow-y-auto">
+                            <DropdownItem
+                              onClick={() => setUserSecondarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserSecondarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserSecondarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserSecondarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => setUserSecondarySport("Boxing")}
+                            >
+                              Boxing
+                            </DropdownItem>
+                          </div>
+                        </Dropdown>
+                      </div>
+                      <div className="mb-2 block">
+                        <Label htmlFor="Image">Profile Picture</Label>
+                      </div>
+                      <FileInput
+                        id="Picture"
+                        accept="image/png, image/jpg"
+                        placeholder="Chose Picture"
+                      />
+                    </div>
+                  </form>
+                </ModalBody>
+                <ModalFooter>
+                  <Button className="bg-[#82C0CC] text-xl" onClick={handleSave}>
+                    Save
+                  </Button>
+                  <Button
+                    className="bg-red-500 text-xl"
+                    onClick={() => setToggleSettings(false)}
+                  >
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </div>
 
             {/* Profile details */}
@@ -270,7 +590,6 @@ const ProfilePage = () => {
                     key={friend.id}
                     className="p-4 border-b flex items-center justify-between"
                   >
-
                     <div className="flex items-center">
                       <Image
                         src={ProfilePicture}
