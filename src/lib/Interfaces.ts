@@ -50,13 +50,13 @@ export interface IUserData {
 
 export interface IUserStats {
   id: number,
-  UserId: number,
-   Username: string,
-   TrueName: string,
-   DateCreated: string,
+  userId: number,
+   username: string,
+   trueName: string,
+   dateCreated: string,
    description: string,
-  IsPublished: boolean,
-  IsDeleted: boolean,
+  isPublished: boolean,
+  isDeleted: boolean,
   }
 
 export interface Friend {
