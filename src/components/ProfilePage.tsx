@@ -5,7 +5,12 @@ import {
   getProfileItemsByUser,
   // updateProfileItem,
 } from "@/lib/DataServices";
-import { IProfileData, IuserCreateInfo, UserModel } from "@/lib/Interfaces";
+import {
+  IProfileData,
+  IuserCreateInfo,
+  IUserStats,
+  UserModel,
+} from "@/lib/Interfaces";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import SettingsImage from "@/assets/settings.png";
@@ -32,8 +37,9 @@ const ProfilePage = () => {
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(
     null
   );
-  const [profileItemsTwo, setProfileItemsTwo] = useState<IProfileData>()
+  const [profileItemsTwo, setProfileItemsTwo] = useState<IProfileData>();
   const [friends, setFriends] = useState<UserModel[]>([]);
+  const [posts, setPosts] = useState<IUserStats[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
@@ -44,14 +50,18 @@ const ProfilePage = () => {
   const [searchUser, setSearchUser] = useState<string>("");
   const [allUsers, setAllUsers] = useState<UserModel[]>([]);
   const [city, setCity] = useState<string>("");
+  const [filterFriendModal, setFilterFriendModal] = useState<boolean>(false);
 
   // Filter Friends
-  const filteredFriends = friends.filter(
-    (user) =>
-      user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
-      user.trueName.toLowerCase().includes(searchUser.toLowerCase())
-  );
+  const filteredFriends = friends
+    .filter(
+      (user) =>
+        user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
+        user.trueName.toLowerCase().includes(searchUser.toLowerCase())
+    )
+    .slice(0, 4);
 
+  // Toggle friend (remove from list)
   const toggleFriend = () => {
     console.log(allUsers);
     setAllUsers(allUsers);
@@ -75,6 +85,10 @@ const ProfilePage = () => {
   // Toggles
   const handleToggleSettings = () => {
     setToggleSettings(!toggleSettings);
+  };
+
+  const handleFilterFriendsModal = () => {
+    setFilterFriendModal(!filterFriendModal);
   };
 
   const handleToggleStats = () => {
@@ -163,7 +177,7 @@ const ProfilePage = () => {
   const [isSpotter, setIsSpotter] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<string>("");
   const [trueName, setTrueName] = useState<string>("");
-  const [state, setState] = useState<string>("")
+  const [state, setState] = useState<string>("");
 
   const handleEdit = (items: IuserCreateInfo) => {
     setToggleSettings(true);
@@ -182,13 +196,11 @@ const ProfilePage = () => {
     setProfilePicture(items.profilePicture);
     setTrueName(items.trueName);
   };
-  
 
-  
-
-  const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
-  const updateProfileItem = async (item:IuserCreateInfo , token:string) => {
-    const userId = profileItemsTwo?.id
+  const url =
+    "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
+  const updateProfileItem = async (item: IuserCreateInfo, token: string) => {
+    const userId = profileItemsTwo?.id;
     setProfileItemsTwo(profileItemsTwo);
     console.log("Updating user with ID:", userId);
     console.log("Payload:", item);
@@ -196,72 +208,71 @@ const ProfilePage = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
+        Authorization: "Bearer " + token,
       },
-      body:JSON.stringify(item)
+      body: JSON.stringify(item),
     });
-    if(!res.ok){
+    if (!res.ok) {
       const errorData = await res.json();
       const message = errorData.message;
       console.log(message);
       return false;
     }
     const data = await res.json();
-    return data.success
-  }
+    return data.success;
+  };
 
   const handleSave = async () => {
-    
     if (!usernameOrEmail || !token) {
       alert("Missing username/email or authentication token");
       return;
     }
 
     const item: IuserCreateInfo = {
-      username: username ?? "",
-      password: password ?? "",
-      email: email ?? "",
-      dateOfBirth: birthdate ?? "",
-      phoneNumber: phoneNumber ?? "",
-      userPrimarySport: userPrimarySport ?? "",
-      userSecondarySport: userSecondarySport ?? "",
-      userBio: userBio ?? "",
-      userLocation: userLocation ?? "",
-      userLocationPublic: userLocationPublic ?? false,
-      isTrainer: isTrainer ?? false,
-      isSpotter: isSpotter ?? false,
-      profilePicture: profilePicture ?? "",
-      trueName: trueName ?? "",
+      username: username,
+      password: password,
+      email: email,
+      dateOfBirth: birthdate,
+      phoneNumber: phoneNumber,
+      userPrimarySport: userPrimarySport,
+      userSecondarySport: userSecondarySport,
+      userBio: userBio,
+      userLocation: userLocation,
+      userLocationPublic: userLocationPublic,
+      isTrainer: isTrainer,
+      isSpotter: isSpotter,
+      profilePicture: profilePicture,
+      trueName: trueName,
     };
     setToggleSettings(false);
-    handleEdit(item) // Edit out later
+    handleEdit(item); // Edit out later
 
     let result = false;
     result = await updateProfileItem(item, token);
-    
 
     if (result) {
-      const userProfileItems = await getProfileItemsByUser(usernameOrEmail, token);
+      const userProfileItems = await getProfileItemsByUser(
+        usernameOrEmail,
+        token
+      );
       setProfileItems(userProfileItems);
-      setToggleSettings(false); 
+      setToggleSettings(false);
     } else {
       alert(`Items not updating or Editing`);
     }
-  }
+  };
 
-  
-
-useEffect(() => {
-  if (profileItems) {
-    setTrueName(profileItems.trueName || "");
-    setEmail(profileItems.email || "");
-    setUserBio(profileItems.userBio || "");
-    setUserLocation(profileItems.userLocation || "");
-    setBirthdate(profileItems.dateOfBirth || "");
-    setPhoneNumber(profileItems.phoneNumber || "");
-    setUsername(profileItems.username || "")
-  }
-}, [profileItems]);
+  useEffect(() => {
+    if (profileItems) {
+      setTrueName(profileItems.trueName || "");
+      setEmail(profileItems.email || "");
+      setUserBio(profileItems.userBio || "");
+      setUserLocation(profileItems.userLocation || "");
+      setBirthdate(profileItems.dateOfBirth || "");
+      setPhoneNumber(profileItems.phoneNumber || "");
+      setUsername(profileItems.username || "");
+    }
+  }, [profileItems]);
 
   if (loading) {
     return (
@@ -290,9 +301,6 @@ useEffect(() => {
       </div>
     );
   }
-
-  
-
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -388,14 +396,14 @@ useEffect(() => {
                             Washington
                           </DropdownItem>
                           <DropdownItem
-                             onChange={() => setState("WV")}
-                             onClick={() => setUserLocation(`${city}, ${state}`)}
+                            onChange={() => setState("WV")}
+                            onClick={() => setUserLocation(`${city}, ${state}`)}
                           >
                             West Virginia
                           </DropdownItem>
                           <DropdownItem
-                             onChange={() => setState("WI")}
-                             onClick={() => setUserLocation(`${city}, ${state}`)}
+                            onChange={() => setState("WI")}
+                            onClick={() => setUserLocation(`${city}, ${state}`)}
                           >
                             Wisconsin
                           </DropdownItem>
@@ -545,9 +553,80 @@ useEffect(() => {
                 <div className="font-bold text-xl">0</div>
                 <div className="text-[#FC6F2F]">Posts</div>
               </div>
-              <div className="p-2">
-                <div className="font-bold text-xl">{friends.length}</div>
-                <div className="text-[#FC6F2F]">Friends</div>
+              <div className="relative">
+                <div
+                  onClick={handleFilterFriendsModal}
+                  className="p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <div className="font-bold text-xl">{friends.length}</div>
+                  <div className="text-orange-500">Friends</div>
+                </div>
+
+                {/* Modal overlay */}
+                {filterFriendModal && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4">
+                      <div className="p-4 border-b flex justify-between items-center">
+                        <h2 className="text-xl font-bold">Friends</h2>
+                        <button
+                          onClick={handleFilterFriendsModal}
+                          className="text-gray-500 hover:text-gray-700"
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      <div className="p-4">
+                        <input
+                          type="text"
+                          placeholder="Search by username or name"
+                          value={searchUser}
+                          onChange={(e) => setSearchUser(e.target.value)}
+                          className="border rounded p-2 w-full mb-4"
+                        />
+
+                        <div className="h-80 overflow-y-auto">
+                          {filteredFriends.length > 0 ? (
+                            filteredFriends.map((friend) => (
+                              <div
+                                key={friend.id}
+                                className="p-4 border-b flex items-center justify-between"
+                              >
+                                <div className="flex items-center">
+                                  <Image
+                                    src={ProfilePicture}
+                                    alt={friend.username}
+                                    width={40}
+                                    height={40}
+                                    className="rounded-full"
+                                  />
+                                  <div className="ml-4">
+                                    <p className="font-bold">
+                                      {friend.trueName}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                      @{friend.username}
+                                    </p>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={() => toggleFriend()}
+                                  className="bg-red-600 text-white py-2 px-4 rounded-3xl"
+                                >
+                                  Unfriend
+                                </button>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="py-6 text-center text-gray-500">
+                              No friends found
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -563,6 +642,35 @@ useEffect(() => {
             >
               Posts
             </Button>
+            {toggleStats && (
+              <div className="mt-15">
+                <Button className="bg-[#FC6F2F] text-white rounded-2xl px-4 py-4">
+                  {" "}
+                  Add Stat +{" "}
+                </Button>
+
+                {posts.length === 0 ? (
+                  <p>You don&apos;t have any posts yet.</p>
+                ) : (
+                  <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
+                    {posts.map((posts) => (
+                      <li
+                        key={posts.id}
+                        className="p-2 border rounded-lg text-center max-w-full bg-[#FFE9D1]"
+                      >
+                        <p className="text-sm">{posts.sport}</p>
+                        <p className="text-sm font-semibold mb-2">
+                          @{posts.statName}
+                        </p>
+                        <p> {posts.score}</p>
+
+                        <div className="mt-2"></div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
 
             <Button
               onClick={handleToggleFriends}
@@ -577,44 +685,6 @@ useEffect(() => {
           </div>
           {toggleFriends && (
             <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Search by username or name"
-                value={searchUser}
-                onChange={(e) => setSearchUser(e.target.value)}
-                className="border rounded p-2 w-full"
-              />
-              <div>
-                {filteredFriends.map((friend) => (
-                  <div
-                    key={friend.id}
-                    className="p-4 border-b flex items-center justify-between"
-                  >
-                    <div className="flex items-center">
-                      <Image
-                        src={ProfilePicture}
-                        alt={friend.username}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                      <div className="ml-4">
-                        <p className="font-bold">{friend.trueName}</p>
-                        <p className="text-sm text-gray-500">
-                          @{friend.username}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      onClick={() => toggleFriend}
-                      className="bg-red-600 text-white py-2 px-4 rounded-3xl"
-                    >
-                      Unfriend
-                    </Button>
-                  </div>
-                ))}
-              </div>
-
               <h2 className="text-lg font-bold mb-3">My Friends:</h2>
               {friends.length === 0 ? (
                 <p>You don&apos;t have any friends yet.</p>

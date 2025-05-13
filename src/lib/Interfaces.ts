@@ -49,6 +49,7 @@ export interface IUserData {
 }
 
 export interface IUserStats {
+    id: number
     sport: string;
     statName: string;
     score: string;

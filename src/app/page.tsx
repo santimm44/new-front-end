@@ -255,7 +255,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="email"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%] "
+                    className="block text-xl font-semibold mb-1 w-full "
                   >
                     Email
                   </Label>
@@ -266,7 +266,7 @@ export default function Home() {
                     placeholder="Enter Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full bg-white"
                   />
                 </div>
               </div>
@@ -274,7 +274,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="PhoneNumber"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%] "
+                    className="block text-xl font-semibold mb-1 w-full "
                   >
                     PhoneNumber
                   </Label>
@@ -285,7 +285,7 @@ export default function Home() {
                     placeholder="Enter PhoneNumber"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full bg-white"
                   />
                 </div>
               </div>
@@ -293,7 +293,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="username"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
+                    className="block text-xl font-semibold mb-1 w-full"
                   >
                     Username
                   </Label>
@@ -304,7 +304,7 @@ export default function Home() {
                     placeholder="Enter Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full bg-white"
                   />
                 </div>
               </div>
@@ -312,7 +312,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="birthdate"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
+                    className="block text-xl font-semibold mb-1 w-full"
                   >
                     Date of Birth
                   </Label>
@@ -323,7 +323,7 @@ export default function Home() {
                     placeholder="mm/dd/yyyy"
                     value={birthdate}
                     onChange={handleBirthdateChange}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full p-2 mb-2 border rounded bg-white"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="create-password"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
+                    className="block text-xl font-semibold mb-1 w-full"
                   >
                     Password
                   </Label>
@@ -343,7 +343,7 @@ export default function Home() {
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-white lg:w-[80%]"
+                    className="w-full p-2 mb-2 border rounded bg-white"
                   />
                 </div>
               </div>
@@ -351,7 +351,7 @@ export default function Home() {
                 <div className="lg:flex lg:justify-center">
                   <Label
                     htmlFor="confirm-password"
-                    className="block text-xl font-semibold mb-1 lg:w-[80%]"
+                    className="block text-xl font-semibold mb-1 w-full"
                   >
                     Confirm Password
                   </Label>
@@ -363,7 +363,7 @@ export default function Home() {
                     placeholder="Re-enter Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-white lg:w-[80%] mb-2"
+                    className="w-full p-2 mb-2 border rounded bg-white"
                   />
                 </div>
 
