@@ -54,7 +54,7 @@ export interface IUserStats {
    Username: string,
    TrueName: string,
    DateCreated: string,
-   Description: string,
+   description: string,
   IsPublished: boolean,
   IsDeleted: boolean,
   }

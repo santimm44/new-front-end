@@ -152,7 +152,7 @@ export const CreatePost = async (post:IUserStats, token:string) => {
 
 
 export const updatePost = async (post:IUserStats, token:string) => {
-  const res = await fetch(url + "Blog/EditBlog", {
+  const res = await fetch(url + "Post/UpdatePost", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
