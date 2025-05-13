@@ -76,10 +76,10 @@ const ProfilePage = () => {
   const handlePostDelete = async (items: IUserStats) => {
     items.isDeleted = true;
 
-    let result = await DeletePost(items, getToken());
+    const result = await DeletePost(items, getToken());
 
     if (result) {
-      let userPostItems = await getPostsByUserId(postUserId, getToken());
+      const userPostItems = await getPostsByUserId(postUserId, getToken());
       setPosts(userPostItems);
     } else {
       alert("Post Item(s) were not deleted");
@@ -122,7 +122,7 @@ const ProfilePage = () => {
     let result = false;
 
     if (edit) {
-      // Now implementing the edit logic
+      // Edit Logic
       result = await updatePost(item, getToken());
     } else {
       // Add logic
@@ -130,7 +130,7 @@ const ProfilePage = () => {
     }
 
     if (result) {
-      let userPostsItems = await getPostsByUserId(postUserId, getToken());
+      const userPostsItems = await getPostsByUserId(postUserId, getToken());
       setPosts(userPostsItems);
     } else {
       alert(`Post Items were not ${edit ? "Updated" : "Added"}`);
@@ -151,7 +151,7 @@ const ProfilePage = () => {
     };
 
     fetchPosts();
-  }, [postUserId]); // Dependency on postUserId
+  }, [postUserId]);
 
   // Filter Friends
   const filteredFriends = friends.filter(
