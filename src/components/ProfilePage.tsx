@@ -59,7 +59,7 @@ const ProfilePage = () => {
         user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
         user.trueName.toLowerCase().includes(searchUser.toLowerCase())
     )
-    .slice(0, 4);
+    
 
   // Toggle friend (remove from list)
   const toggleFriend = () => {
@@ -550,30 +550,30 @@ const ProfilePage = () => {
           <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
             <div className="grid grid-cols-2 text-center">
               <div className="p-2">
-                <div className="font-bold text-xl">0</div>
-                <div className="text-[#FC6F2F]">Posts</div>
+                <div className="font-bold text-2xl">0</div>
+                <div className="text-[#FC6F2F] text-xl">Posts</div>
               </div>
               <div className="relative">
                 <div
                   onClick={handleFilterFriendsModal}
                   className="p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition-colors"
                 >
-                  <div className="font-bold text-xl">{friends.length}</div>
-                  <div className="text-orange-500">Friends</div>
+                  <div className="font-bold text-2xl">{friends.length}</div>
+                  <div className="text-orange-500 text-xl">Friends</div>
                 </div>
 
                 {/* Modal overlay */}
                 {filterFriendModal && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                  <div className="fixed inset-0 bg-[#FFE9D1] flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4">
                       <div className="p-4 border-b flex justify-between items-center">
                         <h2 className="text-xl font-bold">Friends</h2>
-                        <button
+                        <Button
                           onClick={handleFilterFriendsModal}
                           className="text-gray-500 hover:text-gray-700"
                         >
                           ✕
-                        </button>
+                        </Button>
                       </div>
 
                       <div className="p-4">
