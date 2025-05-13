@@ -1,10 +1,12 @@
 "use client";
 import {
   CreatePost,
+  DeletePost,
   //getAllUsers,
   getFriendsData,
   getPostsByUserId,
   getProfileItemsByUser,
+  updatePost,
   // updateProfileItem,
 } from "@/lib/DataServices";
 import {
@@ -35,8 +37,6 @@ import {
 } from "flowbite-react";
 import { format } from "date-fns";
 
-
-
 const ProfilePage = () => {
   const router = useRouter();
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>(
@@ -56,7 +56,6 @@ const ProfilePage = () => {
   const [city, setCity] = useState<string>("");
   const [filterFriendModal, setFilterFriendModal] = useState<boolean>(false);
 
-
   const [postsModal, setPostsModal] = useState<boolean>(false);
   const [postId, setPostId] = useState<number>(0);
   const [postUserId, setPostUserId] = useState<number>(0);
@@ -68,78 +67,92 @@ const ProfilePage = () => {
 
   const [posts, setPosts] = useState<IUserStats[]>([]);
 
+  // Posts
 
+  const handlePostPublish = async (items:IUserStats) => {
+    items.IsPublished = !items.IsPublished;
 
+    let result = await updatePost(items, getToken());
 
-// Posts
-
-const handleShow = () => {
-  setPostsModal(true);
-  setEdit(false);
-  setPostId(0);
-  setPostUserId(postUserId);
-  setPostUsername(postUsername)
-  setPostDescription("");
-  setPostTruename(postTruename)
-}
-
-const handlePostEdit = (items: IUserStats) => {
-  setPostsModal(true);
-  setEdit(true);
-  setPostId(items.id);
-  setPostUserId(items.UserId);
-  setPostTruename(items.TrueName);
-  setPostUsername(items.Username)
-  setPostDescription(items.Description);
-  
-}
-
-const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
-
-  const item: IUserStats = {
-    id: postId,
-    UserId: postUserId,
-    Username: postUsername,
-    TrueName: postTruename,
-    DateCreated: format(new Date(), 'MM-dd-yyyy'),
-    Description: postDescription,
-    IsPublished: e.currentTarget.textContent === 'Save' ? false : true,
-    IsDeleted: false
-  
-  }
-  setPostsModal(false);
-
-  let result = false;
-
-  if(edit){
-    // Our Edit Login Will go here
-  
-  }else{
-    // Our Add Logic will go here
-    result = await CreatePost(item);
+    if(result){
+      let userPostItems = await getPostsByUserId(postUserId, getToken());
+      setPosts(userPostItems);
+    }else{
+      alert("Post was not published");
+    }
   }
 
-  if(result){
-    let userPostsItems = await getPostsByUserId(postUserId);
-    setPosts(userPostsItems); 
-  }else{
-    alert(`Blog Items were not ${edit ? 'Updated' : 'Added'}`);
+  const handlePostDelete = async (items:IUserStats) => {
+    items.IsDeleted = true;
+
+    let result = await DeletePost(items, getToken());
+
+    if(result){
+      let userPostItems = await getPostsByUserId(postUserId, getToken());
+      setPosts(userPostItems)
+    }else{
+      alert("Post Item(s) were not deleted")
+    }
   }
-}
+  const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPostDescription(e.target.value);
 
+  const handleShow = () => {
+    setPostsModal(true);
+    setEdit(false);
+    setPostId(0);
+    setPostUserId(postUserId);
+    setPostUsername(postUsername);
+    setPostDescription("");
+    setPostTruename(postTruename);
+  };
 
+  const handlePostEdit = (items: IUserStats) => {
+    setPostsModal(true);
+    setEdit(true);
+    setPostId(items.id);
+    setPostUserId(items.UserId);
+    setPostTruename(items.TrueName);
+    setPostUsername(items.Username);
+    setPostDescription(items.Description);
+  };
 
+  const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const item: IUserStats = {
+      id: postId,
+      UserId: postUserId,
+      Username: postUsername,
+      TrueName: postTruename,
+      DateCreated: format(new Date(), "MM-dd-yyyy"),
+      Description: postDescription,
+      IsPublished: e.currentTarget.textContent === "Save" ? false : true,
+      IsDeleted: false,
+    };
+    setPostsModal(false);
 
-  
+    let result = false;
+
+    if (edit) {
+      // Our Edit Login Will go here
+    } else {
+      // Our Add Logic will go here
+      result = await CreatePost(item, getToken());
+    }
+
+    if (result) {
+      let userPostsItems = await getPostsByUserId(postUserId, getToken());
+      setPosts(userPostsItems);
+    } else {
+      alert(`Post Items were not ${edit ? "Updated" : "Added"}`);
+    }
+  };
 
   // Filter Friends
-  const filteredFriends = friends
-    .filter(
-      (user) =>
-        user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
-        user.trueName.toLowerCase().includes(searchUser.toLowerCase())
-    )
-    
+  const filteredFriends = friends.filter(
+    (user) =>
+      user.username.toLowerCase().includes(searchUser.toLowerCase()) ||
+      user.trueName.toLowerCase().includes(searchUser.toLowerCase())
+  );
 
   // Toggle friend (remove from list)
   const toggleFriend = () => {
@@ -724,10 +737,40 @@ const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
             </Button>
             {toggleStats && (
               <div className="mt-15">
-                <Button className="bg-[#FC6F2F] text-white rounded-2xl px-4 py-4">
-                  {" "}
-                  Add Stat +{" "}
-                </Button>
+                <Button onClick={handleShow}>Add Post</Button>
+                <Modal show={postsModal} onClose={() => setPostsModal(false)}>
+                  <ModalHeader>
+                    {edit ? "Edit Post Post" : "Add Post Post"}
+                  </ModalHeader>
+                  <ModalBody>
+                    <form className="flex max-w-md flex-col gap-4">
+                      
+                      <div>
+                        <div className="mb-2 block">
+                          <Label htmlFor="descrption">Description</Label>
+                        </div>
+                        <TextInput
+                          id="Description"
+                          placeholder="Description"
+                          type="text"
+                          required
+                          onChange={handleDescription}
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                       
+                      </div>
+                    </form>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={handlePostSave}>Save and publish</Button>
+                    <Button onClick={handlePostSave}>Save</Button>
+                    <Button color="gray" onClick={() => setPostsModal(false)}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </Modal>
 
                 {posts.length === 0 ? (
                   <p>You don&apos;t have any posts yet.</p>
@@ -738,11 +781,11 @@ const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
                         key={posts.id}
                         className="p-2 border rounded-lg text-center max-w-full bg-[#FFE9D1]"
                       >
-                        <p className="text-sm">{posts.sport}</p>
+                        <p className="text-sm">{posts.TrueName}</p>
                         <p className="text-sm font-semibold mb-2">
-                          @{posts.statName}
+                          @{posts.Username}
                         </p>
-                        <p> {posts.score}</p>
+                        <p> {posts.Description}</p>
 
                         <div className="mt-2"></div>
                       </li>

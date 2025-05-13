@@ -111,31 +111,85 @@ export const getAllUsers = async (token: string): Promise<UserModel[]> => {
   return data;
 };
 
-export const getPostsByUserId = async (userId: number): Promise<IUserStats[]> => {
-  const res = await fetch(`${url}Post/GetPostsByUserId/${userId}`);
-  if (!res.ok) {
-    console.error("Failed to fetch posts");
+export const getPostsByUserId = async (userId: number, token: string) => {
+  console.log(userId);
+  const res = await fetch(url + "Post/GetPostsByUserId/" + userId, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
     return [];
   }
-  return await res.json();
-};
+  const data = await res.json();
+  console.log(data);
+  return data;
+}
 
-export const CreatePost = async (post: IUserStats): Promise<boolean> => {
-  const res = await fetch(`${url}Post/CreatePost`, {
+export const CreatePost = async (post:IUserStats, token:string) => {
+  const res = await fetch(url + "Post/CreatePost", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(post),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(post)
   });
-  return res.ok;
-};
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
 
 
-export const deleteStat = async (id: number): Promise<boolean> => {
-  const res = await fetch(`${url}UserStats/DeleteStat/${id}`, {
+export const updatePost = async (post:IUserStats, token:string) => {
+  const res = await fetch(url + "Blog/EditBlog", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(post)
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
+
+export const DeletePost = async (post:IUserStats, token:string) => {
+  const res = await fetch(url + "Post/DeletePost", {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(post)
   });
-  return res.ok;
-};
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
+
+
 
 export const getProfileItemsByUser = async (emailOrUsername: string, token: string) => {
   const res = await fetch(url + "User/GetUserInfoByEmailOrUsername/" + emailOrUsername, {
@@ -221,3 +275,7 @@ export const getUserById = async (userId: number, token: string): Promise<IProfi
     return null;
   }
 };
+
+export const getToken = () => {
+  return localStorage.getItem("Token") ?? "";
+}
