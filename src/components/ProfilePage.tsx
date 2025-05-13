@@ -29,6 +29,7 @@ import {
   DropdownItem,
   FileInput,
   Label,
+  ListGroup,
   Modal,
   ModalBody,
   ModalFooter,
@@ -69,31 +70,31 @@ const ProfilePage = () => {
 
   // Posts
 
-  const handlePostPublish = async (items:IUserStats) => {
+  const handlePostPublish = async (items: IUserStats) => {
     items.IsPublished = !items.IsPublished;
 
     let result = await updatePost(items, getToken());
 
-    if(result){
+    if (result) {
       let userPostItems = await getPostsByUserId(postUserId, getToken());
       setPosts(userPostItems);
-    }else{
+    } else {
       alert("Post was not published");
     }
-  }
+  };
 
-  const handlePostDelete = async (items:IUserStats) => {
+  const handlePostDelete = async (items: IUserStats) => {
     items.IsDeleted = true;
 
     let result = await DeletePost(items, getToken());
 
-    if(result){
+    if (result) {
       let userPostItems = await getPostsByUserId(postUserId, getToken());
-      setPosts(userPostItems)
-    }else{
-      alert("Post Item(s) were not deleted")
+      setPosts(userPostItems);
+    } else {
+      alert("Post Item(s) were not deleted");
     }
-  }
+  };
   const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPostDescription(e.target.value);
 
@@ -101,7 +102,6 @@ const ProfilePage = () => {
     setPostsModal(true);
     setEdit(false);
     setPostId(0);
-    setPostUserId(postUserId);
     setPostUsername(postUsername);
     setPostDescription("");
     setPostTruename(postTruename);
@@ -110,8 +110,7 @@ const ProfilePage = () => {
   const handlePostEdit = (items: IUserStats) => {
     setPostsModal(true);
     setEdit(true);
-    setPostId(items.id);
-    setPostUserId(items.UserId);
+    setPostId(items.id)
     setPostTruename(items.TrueName);
     setPostUsername(items.Username);
     setPostDescription(items.Description);
@@ -133,9 +132,10 @@ const ProfilePage = () => {
     let result = false;
 
     if (edit) {
-      // Our Edit Login Will go here
+      // Now implementing the edit logic
+      result = await updatePost(item, getToken());
     } else {
-      // Our Add Logic will go here
+      // Add logic
       result = await CreatePost(item, getToken());
     }
 
@@ -146,6 +146,24 @@ const ProfilePage = () => {
       alert(`Post Items were not ${edit ? "Updated" : "Added"}`);
     }
   };
+
+  // Fetch posts on component mount
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // Make sure postUserId is properly set before component mounts
+        if (postUserId) {
+          const userPostsItems = await getPostsByUserId(postUserId, getToken());
+          console.log("Fetched posts:", userPostsItems); // Debug logging
+          setPosts(userPostsItems);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, [postUserId]); // Dependency on postUserId
 
   // Filter Friends
   const filteredFriends = friends.filter(
@@ -222,6 +240,7 @@ const ProfilePage = () => {
 
             if (profileData) {
               setProfileItems(profileData);
+              setPostUserId(profileData.id);
 
               try {
                 const friendsData = await getFriendsData(
@@ -643,7 +662,7 @@ const ProfilePage = () => {
           <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
             <div className="grid grid-cols-2 text-center">
               <div className="p-2">
-                <div className="font-bold text-2xl">0</div>
+                <div className="font-bold text-2xl">{posts.length}</div>
                 <div className="text-[#FC6F2F] text-xl">Posts</div>
               </div>
               <div className="relative">
@@ -737,61 +756,77 @@ const ProfilePage = () => {
             </Button>
             {toggleStats && (
               <div className="mt-15">
-                <Button onClick={handleShow}>Add Post</Button>
+                <Button className="bg-emerald-400" onClick={handleShow}>Add Post</Button>
                 <Modal show={postsModal} onClose={() => setPostsModal(false)}>
-                  <ModalHeader>
-                    {edit ? "Edit Post Post" : "Add Post Post"}
-                  </ModalHeader>
+                  <ModalHeader>{edit ? "Edit Post" : "Add Post"}</ModalHeader>
                   <ModalBody>
                     <form className="flex max-w-md flex-col gap-4">
-                      
                       <div>
                         <div className="mb-2 block">
-                          <Label htmlFor="descrption">Description</Label>
+                          <Label htmlFor="description">Description</Label>
                         </div>
                         <TextInput
-                          id="Description"
+                          id="description"
                           placeholder="Description"
                           type="text"
+                          value={postDescription}
                           required
                           onChange={handleDescription}
                         />
                       </div>
-
-                      <div className="flex items-center gap-2">
-                       
-                      </div>
                     </form>
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={handlePostSave}>Save and publish</Button>
-                    <Button onClick={handlePostSave}>Save</Button>
-                    <Button color="gray" onClick={() => setPostsModal(false)}>
+                    <Button className="bg-[#FC6F2F] " onClick={(e) => handlePostSave(e)}>
+                      Post
+                    </Button>
+                    <Button className="bg-white"color="gray" onClick={() => setPostsModal(false)}>
                       Cancel
                     </Button>
                   </ModalFooter>
                 </Modal>
 
-                {posts.length === 0 ? (
-                  <p>You don&apos;t have any posts yet.</p>
-                ) : (
-                  <ul className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
-                    {posts.map((posts) => (
-                      <li
-                        key={posts.id}
-                        className="p-2 border rounded-lg text-center max-w-full bg-[#FFE9D1]"
-                      >
-                        <p className="text-sm">{posts.TrueName}</p>
-                        <p className="text-sm font-semibold mb-2">
-                          @{posts.Username}
-                        </p>
-                        <p> {posts.Description}</p>
-
-                        <div className="mt-2"></div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ListGroup>
+                  {posts && posts.length > 0 ? (
+                    posts.map((item, idx) => (
+                      <div key={idx}>
+                        {item.IsPublished && !item.IsDeleted && (
+                          <div className="flex flex-col p-10 border border-gray-200 rounded-lg mb-4 shadow-sm">
+                            <h2 className="text-3xl font-bold">
+                              {item.Username}
+                            </h2>
+                            <h3 className="text-xl text-gray-600 mb-2">
+                              {item.TrueName}
+                            </h3>
+                            <p className="mb-4">{item.Description}</p>
+                            <div className="flex flex-row space-x-3">
+                              <Button
+                                color="blue"
+                                onClick={() => handlePostEdit(item)}
+                              >
+                                Edit
+                              </Button>
+                              <Button
+                                color="red"
+                                onClick={() => handlePostDelete(item)}
+                              >
+                                Delete
+                              </Button>
+                              <Button
+                                color="yellow"
+                                onClick={() => handlePostPublish(item)}
+                              >
+                                Unpublish
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4">No posts available</div>
+                  )}
+                </ListGroup>
               </div>
             )}
 
