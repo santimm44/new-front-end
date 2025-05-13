@@ -1,7 +1,9 @@
 "use client";
 import {
+  CreatePost,
   //getAllUsers,
   getFriendsData,
+  getPostsByUserId,
   getProfileItemsByUser,
   // updateProfileItem,
 } from "@/lib/DataServices";
@@ -31,6 +33,9 @@ import {
   ModalHeader,
   TextInput,
 } from "flowbite-react";
+import { format } from "date-fns";
+
+
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -39,7 +44,6 @@ const ProfilePage = () => {
   );
   const [profileItemsTwo, setProfileItemsTwo] = useState<IProfileData>();
   const [friends, setFriends] = useState<UserModel[]>([]);
-  const [posts, setPosts] = useState<IUserStats[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
@@ -51,6 +55,82 @@ const ProfilePage = () => {
   const [allUsers, setAllUsers] = useState<UserModel[]>([]);
   const [city, setCity] = useState<string>("");
   const [filterFriendModal, setFilterFriendModal] = useState<boolean>(false);
+
+
+  const [postsModal, setPostsModal] = useState<boolean>(false);
+  const [postId, setPostId] = useState<number>(0);
+  const [postUserId, setPostUserId] = useState<number>(0);
+  const [postUsername, setPostUsername] = useState<string>("");
+  const [postTruename, setPostTruename] = useState<string>("");
+  const [postDescription, setPostDescription] = useState<string>("");
+
+  const [edit, setEdit] = useState<boolean>(false);
+
+  const [posts, setPosts] = useState<IUserStats[]>([]);
+
+
+
+
+// Posts
+
+const handleShow = () => {
+  setPostsModal(true);
+  setEdit(false);
+  setPostId(0);
+  setPostUserId(postUserId);
+  setPostUsername(postUsername)
+  setPostDescription("");
+  setPostTruename(postTruename)
+}
+
+const handlePostEdit = (items: IUserStats) => {
+  setPostsModal(true);
+  setEdit(true);
+  setPostId(items.id);
+  setPostUserId(items.UserId);
+  setPostTruename(items.TrueName);
+  setPostUsername(items.Username)
+  setPostDescription(items.Description);
+  
+}
+
+const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const item: IUserStats = {
+    id: postId,
+    UserId: postUserId,
+    Username: postUsername,
+    TrueName: postTruename,
+    DateCreated: format(new Date(), 'MM-dd-yyyy'),
+    Description: postDescription,
+    IsPublished: e.currentTarget.textContent === 'Save' ? false : true,
+    IsDeleted: false
+  
+  }
+  setPostsModal(false);
+
+  let result = false;
+
+  if(edit){
+    // Our Edit Login Will go here
+  
+  }else{
+    // Our Add Logic will go here
+    result = await CreatePost(item);
+  }
+
+  if(result){
+    let userPostsItems = await getPostsByUserId(postUserId);
+    setPosts(userPostsItems); 
+  }else{
+    alert(`Blog Items were not ${edit ? 'Updated' : 'Added'}`);
+  }
+}
+
+
+
+
+  
 
   // Filter Friends
   const filteredFriends = friends

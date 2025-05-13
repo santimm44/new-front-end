@@ -49,10 +49,14 @@ export interface IUserData {
 }
 
 export interface IUserStats {
-    id: number
-    sport: string;
-    statName: string;
-    score: string;
+  id: number,
+  UserId: number,
+   Username: string,
+   TrueName: string,
+   DateCreated: string,
+   Description: string,
+  IsPublished: boolean,
+  IsDeleted: boolean,
   }
 
 export interface Friend {

@@ -111,32 +111,24 @@ export const getAllUsers = async (token: string): Promise<UserModel[]> => {
   return data;
 };
 
-export const getStatsByUsername = async (username: string): Promise<IUserStats[]> => {
-  const res = await fetch(`${url}UserStats/GetStatsByUsername/${username}`);
+export const getPostsByUserId = async (userId: number): Promise<IUserStats[]> => {
+  const res = await fetch(`${url}Post/GetPostsByUserId/${userId}`);
   if (!res.ok) {
-    console.error("Failed to fetch stats");
+    console.error("Failed to fetch posts");
     return [];
   }
   return await res.json();
 };
 
-export const addStat = async (stat: IUserStats): Promise<boolean> => {
-  const res = await fetch(`${url}UserStats/AddStat`, {
+export const CreatePost = async (post: IUserStats): Promise<boolean> => {
+  const res = await fetch(`${url}Post/CreatePost`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(stat),
+    body: JSON.stringify(post),
   });
   return res.ok;
 };
 
-// export const editStat = async (stat: IUserStats): Promise<boolean> => {
-  //const res = await fetch(`${url}UserStats/EditStat/${stat.id}`, {
-   // method: "PUT",
-   // headers: { "Content-Type": "application/json" },
-   // body: JSON.stringify(stat),
-  //});
-//  return res.ok;
-// };
 
 export const deleteStat = async (id: number): Promise<boolean> => {
   const res = await fetch(`${url}UserStats/DeleteStat/${id}`, {
