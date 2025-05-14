@@ -57,6 +57,8 @@ export interface IUserStats {
    description: string,
   isPublished: boolean,
   isDeleted: boolean,
+  sport: string,
+  stat: string
   }
 
 export interface Friend {

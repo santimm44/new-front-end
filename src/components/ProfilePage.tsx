@@ -62,15 +62,125 @@ const ProfilePage = () => {
   const [postUsername, setPostUsername] = useState<string>("");
   const [postTruename, setPostTruename] = useState<string>("");
   const [postDescription, setPostDescription] = useState<string>("");
+  const [postSport, setPostSport] = useState<string>("Sport");
+  const [postStat, setPostStat] = useState<string>("");
 
   const [edit, setEdit] = useState<boolean>(false);
 
   const [posts, setPosts] = useState<IUserStats[]>([]);
 
+  // Sports
+
+  const sportCategories = [
+    {
+      category: "Team Sports",
+      sports: [
+        "American Football",
+        "Baseball",
+        "Basketball",
+        "Cricket",
+        "Field Hockey",
+        "Ice Hockey",
+        "Lacrosse",
+        "Rugby",
+        "Soccer/Football",
+        "Softball",
+        "Volleyball",
+        "Water Polo",
+      ],
+    },
+    {
+      category: "Racket Sports",
+      sports: [
+        "Badminton",
+        "Padel",
+        "Pickleball",
+        "Racquetball",
+        "Squash",
+        "Table Tennis/Ping Pong",
+        "Tennis",
+      ],
+    },
+    {
+      category: "Combat Sports",
+      sports: [
+        "Boxing",
+        "Brazilian Jiu-Jitsu",
+        "Fencing",
+        "Judo",
+        "Karate",
+        "Kickboxing",
+        "Mixed Martial Arts (MMA)",
+        "Muay Thai",
+        "Taekwondo",
+        "Wrestling",
+      ],
+    },
+    {
+      category: "Gym & Fitness",
+      sports: [
+        "Bodybuilding",
+        "Calisthenics",
+        "CrossFit",
+        "Functional Training",
+        "HIIT (High-Intensity Interval Training)",
+        "Olympic Weightlifting",
+        "Pilates",
+        "Powerlifting",
+        "Strength Training",
+        "Yoga",
+      ],
+    },
+    {
+      category: "Endurance & Cardio",
+      sports: [
+        "Cycling",
+        "Duathlon",
+        "Marathon Running",
+        "Rowing",
+        "Swimming",
+        "Trail Running",
+        "Triathlon",
+      ],
+    },
+    {
+      category: "Outdoor Recreation",
+      sports: [
+        "Archery",
+        "Canoeing/Kayaking",
+        "Climbing/Bouldering",
+        "Golf",
+        "Hiking",
+        "Mountain Biking",
+        "Sailing",
+        "Skateboarding",
+        "Skiing",
+        "Snowboarding",
+        "Surfing",
+      ],
+    },
+    {
+      category: "Other Sports",
+      sports: [
+        "Bowling",
+        "Dance",
+        "Darts",
+        "Diving",
+        "Equestrian",
+        "Figure Skating",
+        "Gymnastics",
+        "Handball",
+        "Parkour",
+      ],
+    },
+  ];
+
   // Posts
 
   const filteredPosts = useMemo(() => {
-    return posts.filter(item => item.isPublished === true && item.isDeleted === false);
+    return posts.filter(
+      (item) => item.isPublished === true && item.isDeleted === false
+    );
   }, [posts]);
 
   const handlePostDelete = async (items: IUserStats) => {
@@ -88,6 +198,9 @@ const ProfilePage = () => {
   const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPostDescription(e.target.value);
 
+  const handleStat = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPostStat(e.target.value);
+
   const handleShow = () => {
     setPostsModal(true);
     setEdit(false);
@@ -95,6 +208,8 @@ const ProfilePage = () => {
     setPostUsername(postUsername);
     setPostDescription("");
     setPostTruename(postTruename);
+    setPostSport("Sport");
+    setPostStat("");
   };
 
   const handlePostEdit = (items: IUserStats) => {
@@ -104,6 +219,8 @@ const ProfilePage = () => {
     setPostTruename(items.trueName);
     setPostUsername(items.username);
     setPostDescription(items.description);
+    setPostSport(items.sport);
+    setPostStat(items.stat);
   };
 
   const handlePostSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,6 +233,8 @@ const ProfilePage = () => {
       description: postDescription,
       isPublished: e.currentTarget.textContent === "Save" ? false : true,
       isDeleted: false,
+      sport: postSport,
+      stat: postStat,
     };
     setPostsModal(false);
 
@@ -602,11 +721,14 @@ const ProfilePage = () => {
                   </form>
                 </ModalBody>
                 <ModalFooter>
-                  <Button className="bg-[#82C0CC] text-xl" onClick={handleSave}>
+                  <Button
+                    className="bg-[#82C0CC] text-xl cursor-pointer"
+                    onClick={handleSave}
+                  >
                     Save
                   </Button>
                   <Button
-                    className="bg-red-500 text-xl"
+                    className="bg-red-500 text-xl cursor-pointer"
                     onClick={() => setToggleSettings(false)}
                   >
                     Cancel
@@ -650,7 +772,7 @@ const ProfilePage = () => {
           <div className="mt-6 bg-white rounded-lg shadow-sm p-4">
             <div className="grid grid-cols-2 text-center">
               <div className="p-2">
-              <div className="font-bold text-2xl">{filteredPosts.length}</div>
+                <div className="font-bold text-2xl">{filteredPosts.length}</div>
                 <div className="text-[#FC6F2F] text-xl">Posts</div>
               </div>
               <div className="relative">
@@ -670,7 +792,7 @@ const ProfilePage = () => {
                         <h2 className="text-xl font-bold">Friends</h2>
                         <Button
                           onClick={handleFilterFriendsModal}
-                          className="text-gray-500 hover:text-gray-700"
+                          className="text-gray-500 hover:text-gray-700 cursor-pointer"
                         >
                           ✕
                         </Button>
@@ -711,7 +833,7 @@ const ProfilePage = () => {
                                 </div>
                                 <button
                                   onClick={() => toggleFriend()}
-                                  className="bg-red-600 text-white py-2 px-4 rounded-3xl"
+                                  className="bg-red-600 text-white py-2 px-4 rounded-3xl cursor-pointer"
                                 >
                                   Unfriend
                                 </button>
@@ -758,38 +880,86 @@ const ProfilePage = () => {
           {toggleStats && (
             <div className="mt-5">
               <div className="flex justify-center">
-                <Button className="bg-emerald-400" onClick={handleShow}>
+                <Button
+                  className="bg-emerald-400 cursor-pointer"
+                  onClick={handleShow}
+                >
                   Add Post +
                 </Button>
               </div>
               <Modal show={postsModal} onClose={() => setPostsModal(false)}>
-                <ModalHeader>{edit ? "Edit Post" : "Add Post"}</ModalHeader>
-                <ModalBody>
-                  <form className="flex max-w-md flex-col gap-4">
+                <ModalHeader className="!bg-white [&>h3]:!text-black">
+                  {edit ? "Edit Post" : "Add Post"}
+                </ModalHeader>
+                <ModalBody className="!bg-white">
+                  <form className="flex max-w-md flex-col gap-4 ">
                     <div>
                       <div className="mb-2 block">
-                        <Label htmlFor="description">Description</Label>
+                        <Label className="!text-black text-xl">
+                          Select Sport
+                        </Label>
                       </div>
-                      <TextInput
-                        id="description"
-                        placeholder="Description"
+
+                      <Dropdown
+                        label={postSport}
+                        className="!bg-[#FFE9D1] !text-black !w-full text-xl mb-2 "
+                        dismissOnClick={true}
+                      >
+                        <div className="h-[300px] rounded-2xl overflow-y-auto !text-black">
+                          {sportCategories.flatMap((category) =>
+                            category.sports.map((sport, index) => (
+                              <DropdownItem
+                                key={index}
+                                className="!text-black hover:!text-[#FC6F2F] hover:!bg-white"
+                                onClick={() => setPostSport(sport)}
+                              >
+                                {sport}
+                              </DropdownItem>
+                            ))
+                          )}
+                        </div>
+                      </Dropdown>
+
+                      <div className="mb-2 block">
+                        <Label className="!text-black text-xl" htmlFor="stat">
+                          Stat
+                        </Label>
+                      </div>
+                      <input
                         type="text"
+                        className="w-full h-10 rounded-lg p-2 mb-2 border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+                        placeholder="Stat"
+                        value={postStat}
+                        onChange={handleStat}
+                      />
+
+                      <div className="mb-2 block">
+                        <Label
+                          className="!text-black text-xl"
+                          htmlFor="description"
+                        >
+                          Stat Score
+                        </Label>
+                      </div>
+                      <input
+                        type="text"
+                        className="w-full h-10 rounded-lg p-2 border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+                        placeholder="Enter Score"
                         value={postDescription}
-                        required
                         onChange={handleDescription}
                       />
                     </div>
                   </form>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter className="!bg-white">
                   <Button
-                    className="bg-[#FC6F2F] "
+                    className="bg-[#FC6F2F] cursor-pointer text-white"
                     onClick={(e) => handlePostSave(e)}
                   >
                     Post
                   </Button>
                   <Button
-                    className="bg-white"
+                    className="bg-black cursor-pointer text-white"
                     color="gray"
                     onClick={() => setPostsModal(false)}
                   >
@@ -798,47 +968,50 @@ const ProfilePage = () => {
                 </ModalFooter>
               </Modal>
 
-              {/* Debug section to show raw posts data */}
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-  {posts && posts.length > 0 ? (
-    posts
-      .filter(item => item.isPublished === true && item.isDeleted === false)
-      .map((item) => (
-        <div
-          key={item.id}
-          className="p-6 border border-gray-200 rounded-2xl shadow-md bg-white"
-        >
-          <h2 className="text-xl font-bold text-[#FC6F2F]">
-            {item.username || "No username"}
-          </h2>
-          <h3 className="text-md text-gray-600 mb-2">
-            {item.trueName || "No true name"}
-          </h3>
-          <p className="text-gray-800">{item.description || "No description"}</p>
-         
-          <div className="flex justify-center mt-4 gap-10">
-            <Button
-              className="bg-blue-500"
-              onClick={() => handlePostEdit(item)}
-            >
-              Edit
-            </Button>
-            <Button
-              className="bg-red-500"
-              onClick={() => handlePostDelete(item)}
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
-      ))
-  ) : (
-    <div className="col-span-full p-6 text-center bg-gray-50 rounded-lg">
-      <p className="text-gray-500">No posts available</p>
-    </div>
-  )}
-</div>
+                {posts && posts.length > 0 ? (
+                  posts
+                    .filter(
+                      (item) =>
+                        item.isPublished === true && item.isDeleted === false
+                    )
+                    .map((item) => (
+                      <div
+                        key={item.id}
+                        className="p-6 border border-gray-200 rounded-2xl shadow-md bg-white"
+                      >
+                        <h2 className="text-xl font-bold text-center text-[#FC6F2F]">
+                          {item.sport || "No sport"}
+                        </h2>
+                        <h3 className="text-md text-center text-gray-600 mb-2">
+                          {item.stat || "No stat"}
+                        </h3>
+                        <p className="text-gray-800 text-center">
+                          {item.description || "No description"}
+                        </p>
+
+                        <div className="flex justify-center mt-4 gap-10">
+                          <Button
+                            className="bg-blue-500 cursor-pointer"
+                            onClick={() => handlePostEdit(item)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            className="bg-red-500 cursor-pointer"
+                            onClick={() => handlePostDelete(item)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <div className="col-span-full p-6 text-center bg-gray-50 rounded-lg">
+                    <p className="text-gray-500">No posts available</p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {toggleFriends && (
