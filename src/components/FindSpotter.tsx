@@ -1,164 +1,202 @@
-"use client";
-
-import { getProfileItemsByUser } from "@/lib/DataServices";
-import { useEffect, useState } from "react";
-import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
-import Image from "next/image";
-import { IMatchSpotterCard } from "@/lib/Interfaces";
-
+"use client"
+import { getProfileItemsByUser, getToken } from '@/lib/DataServices';
+import { IMatchSpotterCard, IProfileData, IuserCreateInfo } from '@/lib/Interfaces';
+import { Button, Label } from 'flowbite-react';
+import React, { useEffect, useState } from 'react'
 
 const hours = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`); // Change to AM and PM format
 
+
 const FindSpotter = () => {
-  const [user, setUser] = useState<IMatchSpotterCard | null>(null);
-  const [myName, setMyName] = useState("");
-  const [content, setContent] = useState("");
-  const [sport, setSport] = useState("");
-  const [date, setDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isPostCreated, setIsPostCreated] = useState<boolean>(false);
+
+    const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>();
+    const [usernameOrEmail, setUsernameOrEmail] = useState<string | null>(null);
+    const [profileCardId, setProfileCardId] = useState<number>(0);
+    const [token, setToken] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    const [myName, setMyName] = useState<string>("");
+    const [content, setContent] = useState<string>("");
+    const [sport, setSport] = useState<string>("");
+    const [date, setDate] = useState<string>("");
+    const [startTime, setStartTime] = useState<string>("");
+    const [endTime, setEndTime] = useState<string>("");
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [edit, setEdit] = useState<boolean>(false);
+    const [match, setMatch] = useState<boolean>(false);
+    const [next, setNext] = useState<boolean>(false);
+    const [profileModal, setProfileModal] = useState<boolean>(false);
+    const [profilePosts, setProfilePost] = useState<IMatchSpotterCard[]>([]);
 
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      const emailOrUsername = localStorage.getItem("userEmailOrUsername");
+    useEffect(() => {
+        const fetchUserData = async () => {
+          console.log(usernameOrEmail);
+          setLoading(true);
+          setError(null);
+    
+          const storedToken = localStorage.getItem("Token");
+          setToken(storedToken);
+    
+          if (storedToken) {
+            const storedUsernameOrEmail = localStorage.getItem("username");
+            setUsernameOrEmail(storedUsernameOrEmail);
+    
+            if (storedUsernameOrEmail) {
+              try {
+                const profileData: IProfileData | null =
+                  await getProfileItemsByUser(storedUsernameOrEmail, storedToken);
+    
+                if (profileData) {
+                  setProfileItems(profileData);
+                  setProfileCardId(profileData.id);
+    
+                  
+                } else {
+                  setError("Failed to fetch profile data.");
+                }
+              } catch (err: unknown) {
+                console.error("Error fetching profile data:", err);
+                if (err instanceof Error) {
+                  setError(`An unexpected error occurred: ${err.message}`);
+                } else {
+                  setError("An unexpected error occurred.");
+                }
+              }
+            } else {
+              setError("Username or email not found in local storage.");
+            }
+          } else {
+            setError("Authentication token not found.");
+          }
+          setLoading(false);
+        };
+    
+        fetchUserData();
+      }, []);
 
-      if (token && emailOrUsername) {
-        const data = await getProfileItemsByUser(emailOrUsername, token);
-        setUser(data);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-
-  const handlePost = async () => {
-    if (!user) return;
-
-    const newPost = {
-      username: user.username,
-      profilePicture: user.profilePicture,
-      userLocation: user.userLocationPublic ? user.userLocation : "Private",
-      myName,
-      content,
-      sport,
-      date,
-      time: `${startTime} - ${endTime}`,
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      setLoading(true);
-      const response = await fetch("", { // Fill in when the backend is complete
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPost),
-      });
-
-      if (!response.ok) throw new Error("Failed to post");
-      console.log("Post saved!");
+      const handlePostEdit = (items: IMatchSpotterCard) => {
+        setProfileModal(true);
+        setEdit(true);
+        setMyName(items.myName);
+        setDate(items.date);
+        setContent(items.content);
+        setSport(items.sport);
+        setStartTime(items.startTime);
+        setEndTime(items.endTime);
+      };
 
      
-      setMyName("");
-      setContent("");
-      setSport("");
-      setDate("");
-      setStartTime("");
-      setEndTime("");
-    } catch (error) {
-      console.error("Error posting:", error);
-    } finally {
-      setLoading(false);
-    }
-    setIsPostCreated(true);
-    console.log(isPostCreated);
-    handlePost();
-    console.log()
-  };
+    
+      const handlePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        const item: IMatchSpotterCard = {
+          myName: myName,
+          content: content,
+          sport: sport,
+          startTime: startTime,
+          endTime: endTime,
+          date: date
+        };
 
-  return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-semibold mb-4">Create a New Post</h1>
+        setProfileModal(false);
+    
+        let result = false;
+    
+        if (edit) {
+          // Edit Logic
+          // result = await updateProfileCard(item, getToken());
+        } else {
+          // Add logic
+         // result = await CreateProfileCard(item, getToken());
+        }
+    
+        if (result) {
+          //const userPostsItems = await getCardByUserId(profileCardId, getToken());
+         // setProfilePost(userPostsItems);
+        } else {
+          alert(`Profile Items were not ${edit ? "Updated" : "Added"}`);
+        }
+      };
 
-      
-      {user && (
-        <div className=" min-h-screen flex items-center gap-4 mb-4">
-          <Image
-            src={ProfilePicture}
-            alt="Profile"
-            className="w-12 h-12 rounded-full object-cover"
+      const handleMyName = (e: React.ChangeEvent<HTMLInputElement>) =>
+          setMyName(e.target.value);
+
+      const handleSport = (e: React.ChangeEvent<HTMLInputElement>) =>
+          setSport(e.target.value);
+
+      const handleDate = (e: React.ChangeEvent<HTMLInputElement>) =>
+          setDate(e.target.value);
+
+      const handleStartTime = (e: React.ChangeEvent<HTMLInputElement>) =>
+          setStartTime(e.target.value);
+
+      const handleEndTime = (e: React.ChangeEvent<HTMLInputElement>) =>
+          setEndTime(e.target.value);
+
+          
+
+return (
+  <div className='max-w-5xl'>
+    {!profilePosts ? (
+      <div>
+        <p className="text-lg font-semibold mb-2">Create Post Here:</p>
+
+        <div className="space-y-4">
+          <Label>Name</Label>
+          <input
+            type="text"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            placeholder="Enter Name"
+            value={myName}
+            onChange={handleMyName}
           />
-          <div>
-            <p className="font-medium">{user.username}</p>
-            <p className="text-sm text-gray-500">
-              {user.userLocationPublic ? user.userLocation : "Private Location"}
-            </p>
-          </div>
+
+          <Label>Sport</Label>
+          <input
+            type="text"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            placeholder="Enter Sport"
+            value={sport}
+            onChange={handleSport}
+          />
+
+          <Label>Days Available</Label>
+          <input
+            type="text"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            placeholder="Day Available - Ex. Monday/Wednesday/Friday"
+            value={date}
+            onChange={handleDate}
+          />
+
+          <Label>Start Time</Label>
+          <input
+            type="text"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            placeholder="Enter Start Time"
+            value={startTime}
+            onChange={handleStartTime}
+          />
+
+          <Label>End Time</Label>
+          <input
+            type="text"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            placeholder="Enter End Time"
+            value={endTime}
+            onChange={handleEndTime}
+          />
+
+          <Label>Content</Label>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Tell us a bit about yourself..."
+            className="w-full border p-2 rounded mb-2 h-24 bg-white"
+          />
         </div>
-      )}
-
-      <input
-        type="text"
-        placeholder="Name"
-        className="w-full border border-gray-300 rounded-lg p-2 mb-3"
-        value={myName}
-        onChange={(e) => setMyName(e.target.value)}
-      />
-
-      <input
-        type="text"
-        placeholder="Sport"
-        className="w-full border border-gray-300 rounded-lg p-2 mb-3"
-        value={sport}
-        onChange={(e) => setSport(e.target.value)}
-      />
-
-      <input
-        type="text"
-        placeholder="Days Available"
-        className="w-full border border-gray-300 rounded-lg p-2 mb-3"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-
-      <div className="flex gap-3 mb-3">
-        <select
-          className="w-1/2 border border-gray-300 rounded-lg p-2"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-        >
-          <option value="">Start Time</option>
-          {hours.map((hour) => (
-            <option key={hour} value={hour}>{hour}</option>
-          ))}
-        </select>
-
-        <select
-          className="w-1/2 border border-gray-300 rounded-lg p-2"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-        >
-          <option value="">End Time</option>
-          {hours.map((hour) => (
-            <option key={hour} value={hour}>{hour}</option>
-          ))}
-        </select>
-      </div>
-
-      <textarea
-        placeholder="About Yourself"
-        className="w-full border border-gray-300 rounded-lg p-2 h-32 resize-none mb-4"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-
-      <button
+        <button
         onClick={handlePost}
         className="w-full bg-[#FC6F2F] text-white py-2 rounded-lg disabled:opacity-50"
         disabled={loading || !myName || !content || !startTime || !endTime || !date}
@@ -166,7 +204,18 @@ const FindSpotter = () => {
         {loading ? "Posting..." : "Post"}
       </button>
       </div>
-  );
+    ) : (
+      <div className='max-w-5xl'>
+        <div>
+          <Button>
+            Edit Matchmaking Profile
+          </Button>
+        </div>
+      </div>
+    )}
+  </div>
+);
 }
+  
 
-export default FindSpotter;
+export default FindSpotter

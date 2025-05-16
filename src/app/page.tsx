@@ -109,6 +109,7 @@ export default function Home() {
       }
       if (
         password != "" &&
+        confirmPassword != "" &&
         username != "" &&
         email != "" &&
         phoneNumber != "" &&
@@ -116,7 +117,9 @@ export default function Home() {
         userLocation != "" &&
         userBio != "" &&
         userPrimarySport != "" &&
-        userSecondarySport != ""
+        userSecondarySport != "" 
+
+        
 
       ) {
         console.log("Email: ", email);
@@ -257,7 +260,7 @@ export default function Home() {
                     htmlFor="email"
                     className="block text-xl font-semibold mb-1 w-full "
                   >
-                    Email
+                    Email * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
@@ -276,13 +279,13 @@ export default function Home() {
                     htmlFor="PhoneNumber"
                     className="block text-xl font-semibold mb-1 w-full "
                   >
-                    PhoneNumber
+                    PhoneNumber * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
                   <Input
                     id="PhoneNumber"
-                    placeholder="Enter PhoneNumber"
+                    placeholder="Enter Phone Number"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     className="w-full bg-white"
@@ -295,7 +298,7 @@ export default function Home() {
                     htmlFor="username"
                     className="block text-xl font-semibold mb-1 w-full"
                   >
-                    Username
+                    Username * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
@@ -314,7 +317,7 @@ export default function Home() {
                     htmlFor="birthdate"
                     className="block text-xl font-semibold mb-1 w-full"
                   >
-                    Date of Birth
+                    Date of Birth * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
@@ -323,7 +326,7 @@ export default function Home() {
                     placeholder="mm/dd/yyyy"
                     value={birthdate}
                     onChange={handleBirthdateChange}
-                    className="w-full p-2 mb-2 border rounded bg-white"
+                    className="w-full bg-white"
                   />
                 </div>
               </div>
@@ -333,7 +336,7 @@ export default function Home() {
                     htmlFor="create-password"
                     className="block text-xl font-semibold mb-1 w-full"
                   >
-                    Password
+                    Password * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
@@ -343,7 +346,7 @@ export default function Home() {
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-2 mb-2 border rounded bg-white"
+                    className="w-full bg-white"
                   />
                 </div>
               </div>
@@ -353,7 +356,7 @@ export default function Home() {
                     htmlFor="confirm-password"
                     className="block text-xl font-semibold mb-1 w-full"
                   >
-                    Confirm Password
+                    Confirm Password * 
                   </Label>
                 </div>
                 <div className="flex justify-center">
@@ -363,12 +366,13 @@ export default function Home() {
                     placeholder="Re-enter Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full p-2 mb-2 border rounded bg-white"
+                    className="w-full bg-white mb-2"
                   />
                 </div>
+      
 
           <Label className="text-xl font-semibold mb-1">Name</Label>
-          <Input value={trueName} onChange={(e) => setTrueName(e.target.value)} className="mb-2 bg-white" />
+          <Input placeholder="Enter Name" value={trueName} onChange={(e) => setTrueName(e.target.value)} className="mb-2 bg-white" />
 
           <Label className="text-xl font-semibold mb-1">Primary Sport</Label>
           <select

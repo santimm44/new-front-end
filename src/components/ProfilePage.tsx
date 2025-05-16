@@ -195,6 +195,7 @@ const ProfilePage = () => {
       alert("Post Item(s) were not deleted");
     }
   };
+  
   const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPostDescription(e.target.value);
 

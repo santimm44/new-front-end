@@ -76,20 +76,13 @@ export interface Friend {
     profilePicture: string;
   }
 
-  export interface IMatchSpotterCard {
-    username: string
-    userLocation: string
-    userLocationPublic: boolean
-    profilePicture: string
+  export interface IMatchSpotterCard{
     myName: string
     content: string
     sport: string
     date: string
-    time: {
-      startTime: string
-      endTime: string
-    }[]
-    
+    startTime: string
+    endTime: string
   }
 
   export interface IMatchTrainerCard {

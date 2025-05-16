@@ -1,4 +1,4 @@
-import { IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
+import { IMatchSpotterCard, IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -212,14 +212,14 @@ export const getProfileItemsByUser = async (emailOrUsername: string, token: stri
 
 
 
-export const updateProfileItem = async (item:IuserCreateInfo , token:string) => {
-  const res = await fetch(url + `User/UpdateUserInfo/`, {
+export const updateProfile = async (post:IuserCreateInfo, token:string) => {
+  const res = await fetch(`${url}UpdateUserInfo/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
-    body:JSON.stringify(item)
+    body:JSON.stringify(post)
   });
   if(!res.ok){
     const errorData = await res.json();
@@ -275,6 +275,48 @@ export const getUserById = async (userId: number, token: string): Promise<IProfi
     return null;
   }
 };
+
+
+// Spotter Cards
+
+export const CreateProfilePost = async (post:IMatchSpotterCard, token:string) => {
+  const res = await fetch(url + "Post/CreatePost", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(post)
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
+
+
+export const updateProfilePost = async (post:IMatchSpotterCard, token:string) => {
+  const res = await fetch(url + "Post/UpdatePost", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(post)
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
 
 export const getToken = () => {
   return localStorage.getItem("Token") ?? "";
