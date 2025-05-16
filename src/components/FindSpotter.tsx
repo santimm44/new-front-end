@@ -3,6 +3,8 @@ import { getProfileItemsByUser, getToken } from '@/lib/DataServices';
 import { IMatchSpotterCard, IProfileData, IuserCreateInfo } from '@/lib/Interfaces';
 import { Button, Label } from 'flowbite-react';
 import React, { useEffect, useState } from 'react'
+import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
+import Image from 'next/image';
 
 const hours = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`); // Change to AM and PM format
 
@@ -28,6 +30,16 @@ const FindSpotter = () => {
     const [next, setNext] = useState<boolean>(false);
     const [profileModal, setProfileModal] = useState<boolean>(false);
     const [profilePosts, setProfilePost] = useState<IMatchSpotterCard[]>([]);
+
+
+const handleNext = () => {
+ // Next Logic
+};
+
+const handleMatch = () => {
+ // Match Logic 
+  handleNext(); 
+};
 
 
     useEffect(() => {
@@ -119,6 +131,10 @@ const FindSpotter = () => {
         }
       };
 
+      const handleToggleSettings = () => {
+        setProfileModal(!profileModal);
+      };
+
       const handleMyName = (e: React.ChangeEvent<HTMLInputElement>) =>
           setMyName(e.target.value);
 
@@ -137,84 +153,147 @@ const FindSpotter = () => {
           
 
 return (
-  <div className='max-w-5xl'>
-    {!profilePosts ? (
-      <div>
-        <p className="text-lg font-semibold mb-2">Create Post Here:</p>
+  <div className="px-4 py-8">
+  {!profilePosts ? (
+    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+      <p className="text-2xl font-bold text-gray-800">Create Spotter Profile</p>
 
-        <div className="space-y-4">
+      <div className="space-y-4">
+        <div>
           <Label>Name</Label>
           <input
             type="text"
-            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
             placeholder="Enter Name"
             value={myName}
             onChange={handleMyName}
           />
+        </div>
 
+        <div>
           <Label>Sport</Label>
           <input
             type="text"
-            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
             placeholder="Enter Sport"
             value={sport}
             onChange={handleSport}
           />
+        </div>
 
+        <div>
           <Label>Days Available</Label>
           <input
             type="text"
-            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
-            placeholder="Day Available - Ex. Monday/Wednesday/Friday"
+            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
+            placeholder="e.g. Monday/Wednesday/Friday"
             value={date}
             onChange={handleDate}
           />
+        </div>
 
-          <Label>Start Time</Label>
-          <input
-            type="text"
-            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
-            placeholder="Enter Start Time"
-            value={startTime}
-            onChange={handleStartTime}
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label>Start Time</Label>
+            <input
+              type="text"
+              className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
+              placeholder="Enter Start Time"
+              value={startTime}
+              onChange={handleStartTime}
+            />
+          </div>
 
-          <Label>End Time</Label>
-          <input
-            type="text"
-            className="w-full h-10 rounded-lg p-2 border border-gray-300 text-xl bg-[#FFE9D1] text-black placeholder-gray-400"
-            placeholder="Enter End Time"
-            value={endTime}
-            onChange={handleEndTime}
-          />
+          <div>
+            <Label>End Time</Label>
+            <input
+              type="text"
+              className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
+              placeholder="Enter End Time"
+              value={endTime}
+              onChange={handleEndTime}
+            />
+          </div>
+        </div>
 
-          <Label>Content</Label>
+        <div>
+          <Label>Bio / Content</Label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Tell us a bit about yourself..."
-            className="w-full border p-2 rounded mb-2 h-24 bg-white"
+            className="w-full border p-2 rounded h-24 bg-white text-gray-800"
           />
         </div>
-        <button
+      </div>
+
+      <button
         onClick={handlePost}
-        className="w-full bg-[#FC6F2F] text-white py-2 rounded-lg disabled:opacity-50"
+        className="w-full bg-[#FC6F2F] text-white py-2 rounded-lg font-semibold text-lg hover:bg-[#e25f20] transition disabled:opacity-50"
         disabled={loading || !myName || !content || !startTime || !endTime || !date}
       >
         {loading ? "Posting..." : "Post"}
       </button>
-      </div>
-    ) : (
-      <div className='max-w-5xl'>
-        <div>
-          <Button>
-            Edit Matchmaking Profile
-          </Button>
+    </div>
+  ) : (
+    <div className="bg-gray-50 min-h-screen">
+      <main className="max-w-5xl mx-auto p-4">
+        <div className="flex justify-end mb-4">
+          <Button onClick={handleToggleSettings}>Edit Matchmaking Profile</Button>
         </div>
-      </div>
-    )}
-  </div>
-);
+
+        <div className="max-w-3xl mx-auto bg-[#FFE9D1] rounded-2xl shadow-lg p-6 space-y-6">
+          {/* Profile Image */}
+          <div className="flex justify-center">
+            <Image
+              src={ProfilePicture}
+              alt="Profile Picture"
+              className="h-40 w-40 object-cover rounded-full border-4 border-white shadow-md"
+            />
+          </div>
+
+          {/* Basic Info */}
+          <div className="text-center space-y-1">
+            <h2 className="text-2xl font-bold text-gray-800">@username</h2>
+            <p className="text-xl text-gray-700">{myName}</p>
+            <p className="text-md text-gray-600">Location: City, State</p>
+          </div>
+
+          {/* Schedule Info */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base">
+            <div><strong>Days Available:</strong> {date}</div>
+            <div><strong>Sports:</strong> {sport}</div>
+            <div><strong>Start Time:</strong> {startTime}</div>
+            <div><strong>End Time:</strong> {endTime}</div>
+          </div>
+
+          {/* Bio Section */}
+          <div className="bg-white rounded-lg p-4 text-gray-800">
+            <h3 className="font-semibold mb-1">About Me:</h3>
+            <p className="whitespace-pre-line">{content}</p>
+          </div>
+
+          {/* Match Controls */}
+          <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
+            <button
+              onClick={handleNext}
+              className="w-full sm:w-auto px-6 py-2 rounded-xl bg-red-400 text-white font-semibold hover:bg-red-500 transition"
+            >
+              Next
+            </button>
+            <button
+              onClick={handleMatch}
+              className="w-full sm:w-auto px-6 py-2 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition"
+            >
+              Match
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  )}
+</div>
+)
 }
   
 
