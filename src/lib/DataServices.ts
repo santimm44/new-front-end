@@ -213,7 +213,7 @@ export const getProfileItemsByUser = async (emailOrUsername: string, token: stri
 
 
 export const updateProfile = async (post:IuserCreateInfo, token:string) => {
-  const res = await fetch(`${url}UpdateUserInfo/${userId}`, {
+  const res = await fetch(`${url}UpdateUserInfo/`, { // {userId}
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

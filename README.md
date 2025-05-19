@@ -1,18 +1,23 @@
 ### Profile Page To Do List
 
-* Create verification for creating account like with email, username, and phone number
+* Profile Picture on Create Account and Profile
 
-* Account Recovery Page
+* Add Spotter/Trainer Card to Backend once complete
+  - Filter each page by isSpotter or isTrainer and possibly state for now
+  - Pull userId from every user with a post, filter by isSpotter or isTrainer, and display on correct page.
+  - If user hits Match, it will add them to their friends list and then display the next user in line to match with
+  - If User hits Next, it will just display the next user in line
 
-* Create Interfaces in line with back end
-  * Edit and Delete Settings
-  * Add, Edit, Delete Scores
-  * Add and Delete Friends
+* Edit Profile Data 
+  - Input fields
+  - Profile Picture
+  - Dropdowns
 
-* Styling for Modals
+* Clean Up Create Account UI and validate the required data
 
-* Match Page Startup
+* Dynamic Routing for Messaging and Profiles
 
+* 
 ## Ssantiago Pushing to publish branch
 
 <SidebarItem

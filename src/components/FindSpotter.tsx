@@ -99,10 +99,9 @@ const handleMatch = () => {
         setEndTime(items.endTime);
       };
 
-     
     
       const handlePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        const item: IMatchSpotterCard = {
+        const items: IMatchSpotterCard = {
           myName: myName,
           content: content,
           sport: sport,
@@ -153,7 +152,7 @@ const handleMatch = () => {
           
 
 return (
-  <div className="px-4 py-8">
+  <div className="px-4 py-8 bg-gray-50">
   {!profilePosts ? (
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
       <p className="text-2xl font-bold text-gray-800">Create Spotter Profile</p>
@@ -242,13 +241,15 @@ return (
           <Button onClick={handleToggleSettings}>Edit Matchmaking Profile</Button>
         </div>
 
-        <div className="max-w-3xl mx-auto bg-[#FFE9D1] rounded-2xl shadow-lg p-6 space-y-6">
+
+
+        <div className="max-w-5xl mx-auto bg-[#FFE9D1] rounded-2xl shadow-lg p-6 md:space-y-12 space-y-2 md:mt-20 mt-10">
           {/* Profile Image */}
           <div className="flex justify-center">
             <Image
               src={ProfilePicture}
               alt="Profile Picture"
-              className="h-40 w-40 object-cover rounded-full border-4 border-white shadow-md"
+              className="md:h-50 md:w-50 h-24 w-24 object-cover rounded-full border-4 border-white shadow-md"
             />
           </div>
 
@@ -261,16 +262,16 @@ return (
 
           {/* Schedule Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base">
-            <div><strong>Days Available:</strong> {date}</div>
-            <div><strong>Sports:</strong> {sport}</div>
-            <div><strong>Start Time:</strong> {startTime}</div>
-            <div><strong>End Time:</strong> {endTime}</div>
+            <div><strong>Days Available:</strong> {date} Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor</div>
+            <div><strong>Sports:</strong> {sport} Lorem ipsum dolor</div>
+            <div><strong>Start Time:</strong> {startTime} Lorem ipsum dolor</div>
+            <div><strong>End Time:</strong> {endTime} Lorem ipsum dolor</div>
           </div>
 
           {/* Bio Section */}
           <div className="bg-white rounded-lg p-4 text-gray-800">
             <h3 className="font-semibold mb-1">About Me:</h3>
-            <p className="whitespace-pre-line">{content}</p>
+            <p className="whitespace-pre-line">{content} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
 
           {/* Match Controls */}
