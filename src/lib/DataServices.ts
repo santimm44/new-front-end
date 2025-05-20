@@ -279,14 +279,56 @@ export const getUserById = async (userId: number, token: string): Promise<IProfi
 
 // Spotter Cards
 
-export const CreateProfilePost = async (post:IMatchSpotterCard, token:string) => {
-  const res = await fetch(url + "Post/CreatePost", {
+
+export const GetAllMatches = async (token: string): Promise<IMatchSpotterCard[]> => {
+  const res = await fetch(url + "Match/GetAllMatches", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.error("GetAllUsers Error:", errorData.message);
+    return [];
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+
+
+export const GetMatchesByUserId = async (userId: number, token: string) => {
+  console.log(userId);
+  const res = await fetch(url + "Match/GetMatchesByUserId/" + userId, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return [];
+  }
+  const data = await res.json();
+  console.log(data);
+  return data;
+}
+
+export const CreateMatch = async (match:IMatchSpotterCard, token:string) => {
+  const res = await fetch(url + "Match/CreateMatch", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
-    body:JSON.stringify(post)
+    body:JSON.stringify(match)
   });
   if(!res.ok){
     const errorData = await res.json();
@@ -299,8 +341,8 @@ export const CreateProfilePost = async (post:IMatchSpotterCard, token:string) =>
 }
 
 
-export const updateProfilePost = async (post:IMatchSpotterCard, token:string) => {
-  const res = await fetch(url + "Post/UpdatePost", {
+export const UpdateMatch = async (post:IMatchSpotterCard, token:string) => {
+  const res = await fetch(url + "Match/UpdateMatch", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

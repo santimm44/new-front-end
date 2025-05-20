@@ -77,11 +77,12 @@ export interface Friend {
   }
 
   export interface IMatchSpotterCard{
+    id?: number | null; 
     userId: number
     myName: string
-    content: string
-    sport: string
-    date: string
+    userContent: string
+    userSport: string
+    daysAvailable: string
     startTime: string
     endTime: string
   }
