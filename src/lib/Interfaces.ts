@@ -77,6 +77,7 @@ export interface Friend {
   }
 
   export interface IMatchSpotterCard{
+    userId: number
     myName: string
     content: string
     sport: string

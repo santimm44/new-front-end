@@ -101,7 +101,9 @@ const handleMatch = () => {
 
     
       const handlePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log(profileCardId);
         const items: IMatchSpotterCard = {
+          userId: profileCardId,
           myName: myName,
           content: content,
           sport: sport,
@@ -153,7 +155,7 @@ const handleMatch = () => {
 
 return (
   <div className="px-4 py-8 bg-gray-50">
-  {!profilePosts ? (
+  {profilePosts ? (
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
       <p className="text-2xl font-bold text-gray-800">Create Spotter Profile</p>
 
