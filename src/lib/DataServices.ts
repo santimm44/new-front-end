@@ -1,4 +1,4 @@
-import { IMatchSpotterCard, IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
+import { Friendship, IMatchSpotterCard, IProfileData, IuserCreateInfo, IUserData, IUserInfo, IUserStats, UserModel } from "./Interfaces";
 
 const url = "https://fullstackwebapp-bxcja2evd2hef3b9.westus-01.azurewebsites.net/";
 let userData: IUserData;
@@ -251,6 +251,75 @@ export const getFriendsData = async (userId: number, token: string) => {
   const data = await res.json();
   return data;
 };
+
+export const AddFriend = async (friend: Friendship, token: string) => {
+  const res = await fetch(url + "friendship/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body:JSON.stringify(friend)
+
+  });
+  if(!res.ok){
+    const errorData = await res.json();
+    const message = errorData.message;
+    console.log(message);
+    return false;
+  }
+  const data = await res.json();
+  return data.success
+}
+export const DeleteFriend = async (friend: Friendship, token: string) => {
+  console.log("Sending DELETE request with body:", friend);
+  
+  const res = await fetch(
+    `${url}Friendship/remove`,
+    {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        userId: friend.userId,
+        friendId: friend.friendId
+      })
+    }
+  );
+
+  console.log("Response status:", res.status);
+  console.log("Response ok:", res.ok);
+
+  if (!res.ok) {
+    let errorMessage = `HTTP ${res.status}: ${res.statusText}`;
+    
+    try {
+      const errorData = await res.json();
+      console.log("Error response data:", errorData);
+      console.log("Validation errors:", errorData.errors);
+      errorMessage = errorData.message || errorData.Message || errorMessage;
+    } catch {
+      console.log("Could not parse error response as JSON");
+    }
+    
+    console.log("Failed to delete friend:", errorMessage);
+    return false;
+  }
+
+  try {
+    const data = await res.json();
+    console.log("Success response data:", data);
+    return data.success || data.Success || true;
+  } catch {
+    console.log("Could not parse success response, but request was successful");
+    return true;
+  }
+};
+
+
 
 export const getUserById = async (userId: number, token: string): Promise<IProfileData | null> => {
   try {

@@ -1,6 +1,7 @@
 "use client";
 import {
   CreatePost,
+  DeleteFriend,
   DeletePost,
   //getAllUsers,
   getFriendsData,
@@ -52,7 +53,7 @@ const ProfilePage = () => {
   const [toggleStats, setToggleStats] = useState<boolean>(true);
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<string>("");
-  const [allUsers, setAllUsers] = useState<UserModel[]>([]);
+  // const [allUsers, setAllUsers] = useState<UserModel[]>([]);
   const [city, setCity] = useState<string>("");
   const [filterFriendModal, setFilterFriendModal] = useState<boolean>(false);
 
@@ -281,10 +282,48 @@ const ProfilePage = () => {
   );
 
   // Toggle friend (remove from list)
-  const toggleFriend = () => {
-    console.log(allUsers);
-    setAllUsers(allUsers);
+  const handleDeleteFriend = async (friendId: number) => {
+  console.log("Attempting to delete friend:");
+  console.log("Current user ID (postUserId):", postUserId);
+  console.log("Friend ID to remove:", friendId);
+
+
+  if (!postUserId) {
+    console.error("No user ID found");
+    alert("Error: User not logged in properly");
+    return;
+  }
+
+  const friendship = {
+    userId: postUserId, 
+    friendId: friendId,
   };
+
+  console.log("Friendship object being sent:", friendship);
+  console.log("Token exists:", !!getToken());
+
+  try {
+    const result = await DeleteFriend(friendship, getToken());
+    console.log("DeleteFriend API result:", result);
+    
+    if (result) {
+      // Updates Local Friends List
+      setFriends(prev => {
+        const updatedFriends = prev.filter(friend => friend.id !== friendId);
+        console.log("Updated friends list:", updatedFriends);
+        return updatedFriends;
+      });
+      alert("Friend removed successfully.");
+    } else {
+      alert("Failed to remove friend. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error removing friend:", error);
+    alert("An error occurred while removing the friend.");
+  }
+};
+
+
 
   // Dynamic Routing
 
@@ -833,7 +872,10 @@ const ProfilePage = () => {
                                   </div>
                                 </div>
                                 <button
-                                  onClick={() => toggleFriend()}
+                                  onClick={() => {
+                                  console.log("Clicked unfriend for:", friend.id);
+                                  handleDeleteFriend(friend.id);
+                                }}
                                   className="bg-red-600 text-white py-2 px-4 rounded-3xl cursor-pointer"
                                 >
                                   Unfriend

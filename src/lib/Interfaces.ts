@@ -4,6 +4,11 @@ export interface Itoken {
     token: string;
 }
 
+export interface Friendship {
+  userId: number
+  friendId: number
+}
+
 export interface IUserInfo {
     emailOrUsername: string;
     password: string;
