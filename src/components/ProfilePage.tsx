@@ -583,10 +583,12 @@ const ProfilePage = () => {
             <div className="flex justify-center md:justify-start mb-6 md:mb-0">
               <div className="relative">
                 <Image
-                  src={ProfilePicture}
+                  src={profileItems.profilePicture}
                   priority
                   alt="User Profile"
-                  className="h-24 w-24 md:h-32 md:w-32 rounded-full border border-gray-200 object-cover"
+                  width={150}
+                  height={150}
+                  className="rounded-full border border-gray-200 object-cover"
                 />
               </div>
               <Modal
