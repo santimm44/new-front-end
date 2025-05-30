@@ -1,10 +1,21 @@
 @import "tailwindcss";
 @plugin "flowbite-react/plugin/tailwindcss";
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredStrategy: 'pseudoelements';
+
+}
 @source "../../.flowbite-react/class-list.json";
 
+.background-dots {
+  background-color: #ede7e3;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 2px, transparent 1px);
+  background-size: 12px 12px;
+}
+
 :root {
-    --orange: #FFA62B;
-    --darkblue: #16697A;
-    --lightblue: #82C0CC;
-    --tan: #EDE7E3;
-  }
+  --orange: #ffa62b;
+  --darkblue: #16697a;
+  --lightblue: #82c0cc;
+  --tan: #ede7e3;
+}
