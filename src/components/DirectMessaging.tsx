@@ -148,13 +148,16 @@ const DirectMessaging = () => {
         {friends.map((friendList, index) => {
           return (
             <div key={index} className=''>
-              <button className='hover:bg-blue-200 border-t pt-2 pb-2 w-full' onClick={() => {
+              <button className='mt-6 bg-gradient-to-br from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-6 shadow-xl border border-white/20 w-full cursor-pointer' onClick={() => {
                 enterChatRoom(friendList.id, friendList.username)
                 setCurrentFriend(friendList.username)
                 setRecipientID(friendList.id)
                 //setReceiverConnectionId(friendList.id.toString())
               }}>
+                <h3 className='font-bold mb-3 text-2xl text-gray-800 flex items-center gap-2'>
+
                 {friendList.username}
+                </h3>
               </button>
             </div>
           )
