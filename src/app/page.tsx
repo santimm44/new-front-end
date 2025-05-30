@@ -47,7 +47,7 @@ export default function Home() {
   const [switchCreateAccount, setSwitchCreateAccount] = useState<boolean>(false);
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
-  const sports = ["Powerlifting", "Bodybuilding", "CrossFit", "Strongman", "Olympic Lifting"];
+  const sports = ["American Football", "Baseball", "Basketball", "Cricket", "Field Hockey", "Ice Hockey", "Lacrosse", "Rugby", "Soccer/Football", "Softball", "Volleyball", "Water Polo", "Badminton", "Padel", "Pickleball", "Racquetball", "Squash", "Table Tennis/Ping Pong", "Tennis", "Boxing", "Brazilian Jiu-Jitsu", "Fencing", "Judo", "Karate", "Kickboxing", "Mixed Martial Arts (MMA)", "Muay Thai", "Taekwondo", "Wrestling", "Bodybuilding", "Calisthenics", "CrossFit", "Functional Training", "HIIT (High-Intensity Interval Training)", "Olympic Weightlifting", "Pilates", "Powerlifting", "Strength Training", "Yoga", "Cycling", "Duathlon", "Marathon Running", "Rowing", "Swimming", "Trail Running", "Triathlon", "Archery", "Canoeing/Kayaking", "Climbing/Bouldering", "Golf", "Hiking", "Mountain Biking", "Sailing", "Skateboarding", "Skiing", "Snowboarding", "Surfing", "Bowling", "Dance", "Darts", "Diving", "Equestrian", "Figure Skating", "Gymnastics", "Handball", "Parkour"];
 
   const router = useRouter();
 
