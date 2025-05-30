@@ -23,12 +23,7 @@ import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
 import SpotterIcon from "@/assets/binoculars.png";
 import TrainerIcon from "@/assets/muscle.png";
 import { useRouter } from "next/navigation";
-import {
-  Dropdown,
-  DropdownItem,
-  FileInput,
-  Modal,
-} from "flowbite-react";
+import { Dropdown, DropdownItem, FileInput, Modal } from "flowbite-react";
 import { format } from "date-fns";
 
 const ProfilePage = () => {
@@ -47,7 +42,7 @@ const ProfilePage = () => {
   const [toggleFriends, setToggleFriends] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<string>("");
   // const [allUsers, setAllUsers] = useState<UserModel[]>([]);
-  
+
   const [filterFriendModal, setFilterFriendModal] = useState<boolean>(false);
 
   const [postsModal, setPostsModal] = useState<boolean>(false);
@@ -64,6 +59,74 @@ const ProfilePage = () => {
   const [posts, setPosts] = useState<IUserStats[]>([]);
 
   // Sports
+  const sports = [
+    "American Football",
+    "Baseball",
+    "Basketball",
+    "Cricket",
+    "Field Hockey",
+    "Ice Hockey",
+    "Lacrosse",
+    "Rugby",
+    "Soccer/Football",
+    "Softball",
+    "Volleyball",
+    "Water Polo",
+    "Badminton",
+    "Padel",
+    "Pickleball",
+    "Racquetball",
+    "Squash",
+    "Table Tennis/Ping Pong",
+    "Tennis",
+    "Boxing",
+    "Brazilian Jiu-Jitsu",
+    "Fencing",
+    "Judo",
+    "Karate",
+    "Kickboxing",
+    "Mixed Martial Arts (MMA)",
+    "Muay Thai",
+    "Taekwondo",
+    "Wrestling",
+    "Bodybuilding",
+    "Calisthenics",
+    "CrossFit",
+    "Functional Training",
+    "HIIT (High-Intensity Interval Training)",
+    "Olympic Weightlifting",
+    "Pilates",
+    "Powerlifting",
+    "Strength Training",
+    "Yoga",
+    "Cycling",
+    "Duathlon",
+    "Marathon Running",
+    "Rowing",
+    "Swimming",
+    "Trail Running",
+    "Triathlon",
+    "Archery",
+    "Canoeing/Kayaking",
+    "Climbing/Bouldering",
+    "Golf",
+    "Hiking",
+    "Mountain Biking",
+    "Sailing",
+    "Skateboarding",
+    "Skiing",
+    "Snowboarding",
+    "Surfing",
+    "Bowling",
+    "Dance",
+    "Darts",
+    "Diving",
+    "Equestrian",
+    "Figure Skating",
+    "Gymnastics",
+    "Handball",
+    "Parkour",
+  ];
 
   const sportCategories = [
     {
@@ -189,7 +252,7 @@ const ProfilePage = () => {
       alert("Post Item(s) were not deleted");
     }
   };
-  
+
   const handleDescription = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPostDescription(e.target.value);
 
@@ -276,47 +339,45 @@ const ProfilePage = () => {
 
   // Toggle friend (remove from list)
   const handleDeleteFriend = async (friendId: number) => {
-  console.log("Attempting to delete friend:");
-  console.log("Current user ID (postUserId):", postUserId);
-  console.log("Friend ID to remove:", friendId);
+    console.log("Attempting to delete friend:");
+    console.log("Current user ID (postUserId):", postUserId);
+    console.log("Friend ID to remove:", friendId);
 
-
-  if (!postUserId) {
-    console.error("No user ID found");
-    alert("Error: User not logged in properly");
-    return;
-  }
-
-  const friendship = {
-    userId: postUserId, 
-    friendId: friendId,
-  };
-
-  console.log("Friendship object being sent:", friendship);
-  console.log("Token exists:", !!getToken());
-
-  try {
-    const result = await DeleteFriend(friendship, getToken());
-    console.log("DeleteFriend API result:", result);
-    
-    if (result) {
-      // Updates Local Friends List
-      setFriends(prev => {
-        const updatedFriends = prev.filter(friend => friend.id !== friendId);
-        console.log("Updated friends list:", updatedFriends);
-        return updatedFriends;
-      });
-      alert("Friend removed successfully.");
-    } else {
-      alert("Failed to remove friend. Please try again.");
+    if (!postUserId) {
+      console.error("No user ID found");
+      alert("Error: User not logged in properly");
+      return;
     }
-  } catch (error) {
-    console.error("Error removing friend:", error);
-    alert("An error occurred while removing the friend.");
-  }
-};
 
+    const friendship = {
+      userId: postUserId,
+      friendId: friendId,
+    };
 
+    console.log("Friendship object being sent:", friendship);
+    console.log("Token exists:", !!getToken());
+
+    try {
+      const result = await DeleteFriend(friendship, getToken());
+      console.log("DeleteFriend API result:", result);
+
+      if (result) {
+        // Updates Local Friends List
+        setFriends((prev) => {
+          const updatedFriends = prev.filter(
+            (friend) => friend.id !== friendId
+          );
+          console.log("Updated friends list:", updatedFriends);
+          return updatedFriends;
+        });
+      } else {
+        alert("Failed to remove friend. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error removing friend:", error);
+      alert("An error occurred while removing the friend.");
+    }
+  };
 
   // Dynamic Routing
 
@@ -429,7 +490,6 @@ const ProfilePage = () => {
   const [isSpotter, setIsSpotter] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<string>("");
   const [trueName, setTrueName] = useState<string>("");
-  
 
   const handleEdit = (items: IuserCreateInfo) => {
     setToggleSettings(true);
@@ -520,9 +580,13 @@ const ProfilePage = () => {
       setEmail(profileItems.email || "");
       setUserBio(profileItems.userBio || "");
       setUserLocation(profileItems.userLocation || "");
-      setBirthdate(profileItems.dateOfBirth || "");
       setPhoneNumber(profileItems.phoneNumber || "");
-      setUsername(profileItems.username || "");
+      setUserPrimarySport(profileItems.userPrimarySport || "");
+      setUserSecondarySport(profileItems.userSecondarySport || "");
+      setIsSpotter(profileItems.isSpotter || false);
+      setIsTrainer(profileItems.isTrainer || false);
+      setUserLocationPublic(profileItems.userLocationPublic || false);
+      setProfilePicture(profileItems.profilePicture || "");
     }
   }, [profileItems]);
 
@@ -555,512 +619,585 @@ const ProfilePage = () => {
   }
 
   return (
-  <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <main className="max-w-6xl mx-auto">
-      {/* Modern Header with glassmorphism effect */}
-      <div className="relative w-full p-6 flex justify-between items-center bg-white/80  border-b border-white/20 shadow-lg">
-        <h1 className="text-2xl font-bold bg-[#FF8C42] bg-clip-text text-transparent">
-          {profileItems.username}
-        </h1>
-        <div className="relative">
-          <button
-            onClick={handleToggleSettings}
-            className="p-3 bg-[#FF8C42] rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all cursor-pointer group"
-          >
-            <Image
-              src={SettingsImage}
-              alt="Settings"
-              className="h-6 w-6 filter brightness-0 invert group-hover:rotate-45 transition-transform"
-            />
-          </button>
-        </div>
-      </div>
-
-      {/* Profile section with modern cards */}
-      <div className="p-6">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Profile Picture Card */}
-          <div className="flex justify-center lg:justify-start">
-            <div className="relative">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <main className="max-w-6xl mx-auto">
+        {/* Header with Username and Settings */}
+        <div className="relative w-full p-6 flex justify-between items-center bg-white/80  border-b border-white/20 shadow-lg">
+          <h1 className="text-2xl font-bold bg-[#FF8C42] bg-clip-text text-transparent">
+            {profileItems.username}
+          </h1>
+          <div className="relative">
+            <button
+              onClick={handleToggleSettings}
+              className="p-3 bg-[#FF8C42] rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all cursor-pointer group"
+            >
               <Image
-                src={profileItems.profilePicture}
-                priority
-                alt="User Profile"
-                width={180}
-                height={180}
-                className="rounded-full border-4 border-white object-cover shadow-2xl"
+                src={SettingsImage}
+                alt="Settings"
+                className="h-6 w-6 invert group-hover:rotate-45 transition-transform"
               />
-            </div>
+            </button>
           </div>
+        </div>
 
-          {/* Profile Details Card */}
-          <div className="flex-grow">
-            <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">
-                {profileItems.trueName}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
-                  <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
-                  <span className="font-semibold text-gray-700">Location:</span>
-                  <span className="text-gray-600">{profileItems.userLocation}</span>
-                </div>
-                <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
-                  <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
-                  <span className="font-semibold text-gray-700">Primary:</span>
-                  <span className="text-gray-600">{profileItems.userPrimarySport}</span>
-                </div>
-                <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
-                  <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
-                  <span className="font-semibold text-gray-700">Secondary:</span>
-                  <span className="text-gray-600">{profileItems.userSecondarySport}</span>
-                </div>
+        {/* Profile section with modern cards */}
+        <div className="p-6">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Profile Picture Card */}
+            <div className="flex justify-center lg:justify-start">
+              <div className="relative w-[180px] h-[180px] rounded-full border-4 border-white shadow-2xl overflow-hidden">
+                <Image
+                  src={profileItems.profilePicture}
+                  priority
+                  alt="User Profile"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
 
-            {/* Bio Card */}
-            <div className="mt-6 bg-gradient-to-br from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-6 shadow-xl border border-white/20">
-              <h3 className="font-bold mb-3 text-2xl text-gray-800 flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-[#FC6F2F] to-[#FF8C42] rounded-full"></div>
-                Bio
-              </h3>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap break-words">
-                {profileItems.userBio}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="mt-8 grid grid-cols-2 gap-6">
-          <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 text-center group hover:scale-105 transition-transform">
-            <div className="font-bold text-4xl text-gray-800 mb-2">{filteredPosts.length}</div>
-            <div className="text-[#FC6F2F] text-xl font-semibold">Posts</div>
-          </div>
-          
-          <div className="relative">
-            <div
-              onClick={handleFilterFriendsModal}
-              className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 text-center cursor-pointer group hover:scale-105 transition-all"
-            >
-              <div className="font-bold text-4xl text-gray-800 mb-2">{friends.length}</div>
-              <div className="text-[#FC6F2F] text-xl font-semibold">Friends</div>
-            </div>
-
-            {/* Enhanced Friends Modal */}
-            {filterFriendModal && (
-              <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-                  <div className="p-6 bg-[#FF8C42] text-white flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">Friends</h2>
-                    <button
-                      onClick={handleFilterFriendsModal}
-                      className="p-2 hover:bg-white/20 rounded-full transition-colors text-2xl"
-                    >
-                      ×
-                    </button>
+            {/* Profile Details Card */}
+            <div className="flex-grow">
+              <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800">
+                  {profileItems.trueName}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
+                    <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
+                    <span className="font-semibold text-gray-700">
+                      Location:
+                    </span>
+                    <span className="text-gray-600">
+                      {profileItems.userLocation}
+                    </span>
                   </div>
+                  <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
+                    <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
+                    <span className="font-semibold text-gray-700">
+                      Primary:
+                    </span>
+                    <span className="text-gray-600">
+                      {profileItems.userPrimarySport}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-xl">
+                    <div className="w-2 h-2 bg-[#FC6F2F] rounded-full"></div>
+                    <span className="font-semibold text-gray-700">
+                      Secondary:
+                    </span>
+                    <span className="text-gray-600">
+                      {profileItems.userSecondarySport}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-                  <div className="p-6">
-                    <input
-                      type="text"
-                      placeholder="Search by username or name"
-                      value={searchUser}
-                      onChange={(e) => setSearchUser(e.target.value)}
-                      className="border-2 border-gray-200 rounded-xl p-3 w-full mb-4 focus:border-[#FC6F2F] focus:outline-none transition-colors"
-                    />
+              {/* Bio Card */}
+              <div className="mt-6 bg-gradient-to-br from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-6 shadow-xl border border-white/20">
+                <h3 className="font-bold mb-3 text-2xl text-gray-800 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#FC6F2F] to-[#FF8C42] rounded-full"></div>
+                  Bio
+                </h3>
+                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap break-words">
+                  {profileItems.userBio}
+                </p>
+              </div>
+            </div>
+          </div>
 
-                    <div className="h-80 overflow-y-auto">
-                      {filteredFriends.length > 0 ? (
-                        filteredFriends.map((friend) => (
-                          <div
-                            key={friend.id}
-                            className="p-4 border-b border-gray-100 flex items-center justify-between hover:bg-gray-50 rounded-xl transition-colors"
-                          >
-                            <div className="flex items-center">
-                              <Image
-                                src={ProfilePicture}
-                                alt={friend.username}
-                                width={50}
-                                height={50}
-                                className="rounded-full border-2 border-[#FFE9D1]"
-                              />
-                              <div className="ml-4">
-                                <p className="font-bold text-gray-800">{friend.trueName}</p>
-                                <p className="text-sm text-gray-500">@{friend.username}</p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => {
-                                console.log("Clicked unfriend for:", friend.id);
-                                handleDeleteFriend(friend.id);
-                              }}
-                              className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-full font-medium transition-all transform hover:scale-105 cursor-pointer"
+          {/* Stats Cards */}
+          <div className="mt-8 grid grid-cols-2 gap-6">
+            <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 text-center group hover:scale-105 transition-transform">
+              <div className="font-bold text-4xl text-gray-800 mb-2">
+                {filteredPosts.length}
+              </div>
+              <div className="text-[#FC6F2F] text-xl font-semibold">Posts</div>
+            </div>
+
+            <div className="relative">
+              <div
+                onClick={handleFilterFriendsModal}
+                className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 text-center cursor-pointer group hover:scale-105 transition-all"
+              >
+                <div className="font-bold text-4xl text-gray-800 mb-2">
+                  {friends.length}
+                </div>
+                <div className="text-[#FC6F2F] text-xl font-semibold">
+                  Friends
+                </div>
+              </div>
+
+              {/* Enhanced Friends Modal */}
+              {filterFriendModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                  <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+                    <div className="p-6 bg-[#FF8C42] text-white flex justify-between items-center">
+                      <h2 className="text-2xl font-bold">Friends</h2>
+                      <button
+                        onClick={handleFilterFriendsModal}
+                        className="p-2 hover:bg-white/20 rounded-full transition-colors text-2xl"
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    <div className="p-6">
+                      <input
+                        type="text"
+                        placeholder="Search by username or name"
+                        value={searchUser}
+                        onChange={(e) => setSearchUser(e.target.value)}
+                        className="border-2 border-gray-200 rounded-xl p-3 w-full mb-4 focus:border-[#FC6F2F] focus:outline-none transition-colors"
+                      />
+
+                      <div className="h-80 overflow-y-auto">
+                        {filteredFriends.length > 0 ? (
+                          filteredFriends.map((friend) => (
+                            <div
+                              key={friend.id}
+                              className="p-4 border-b border-gray-100 flex items-center justify-between hover:bg-gray-50 rounded-xl transition-colors"
                             >
-                              Unfriend
-                            </button>
+                              <div className="flex items-center">
+                                <Image
+                                  src={ProfilePicture}
+                                  alt={friend.username}
+                                  width={50}
+                                  height={50}
+                                  className="rounded-full border-2 border-[#FFE9D1]"
+                                />
+                                <div className="ml-4">
+                                  <p className="font-bold text-gray-800">
+                                    {friend.trueName}
+                                  </p>
+                                  <p className="text-sm text-gray-500">
+                                    @{friend.username}
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => {
+                                  console.log(
+                                    "Clicked unfriend for:",
+                                    friend.id
+                                  );
+                                  handleDeleteFriend(friend.id);
+                                }}
+                                className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-full font-medium transition-all transform hover:scale-105 cursor-pointer"
+                              >
+                                Unfriend
+                              </button>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="py-8 text-center text-gray-500">
+                            <div className="text-4xl mb-2">👥</div>
+                            <p>No friends found</p>
                           </div>
-                        ))
-                      ) : (
-                        <div className="py-8 text-center text-gray-500">
-                          <div className="text-4xl mb-2">👥</div>
-                          <p>No friends found</p>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Modern Toggle Buttons */}
-        <div className="mt-8 flex justify-center gap-2 bg-white/80  rounded-2xl p-2 shadow-xl border border-white/20 w-fit mx-auto">
-          <button
-            onClick={handleToggleStats}
-            className={`px-8 py-3 rounded-xl font-semibold transition-all cursor-pointer ${
-              toggleStats
-                ? "bg-[#FF8C42] text-white shadow-lg"
-                : "text-[#FC6F2F] hover:bg-[#FFE9D1]/50"
-            }`}
-          >
-            Posts
-          </button>
-          <button
-            onClick={handleToggleFriends}
-            className={`px-8 py-3 rounded-xl font-semibold transition-all cursor-pointer ${
-              toggleFriends
-                ? "bg-[#FF8C42] text-white shadow-lg"
-                : "text-[#FC6F2F] hover:bg-[#FFE9D1]/50"
-            }`}
-          >
-            Friends
-          </button>
-        </div>
-
-        {/* Posts Section */}
-        {toggleStats && (
-          <div className="mt-8">
-            <div className="flex justify-center mb-8">
-              <button
-                className="bg-[#FF8C42] hover:from-[#E55A2B] hover:to-[#FC6F2F] text-white font-semibold py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all cursor-pointer text-lg"
-                onClick={handleShow}
-              >
-                <span className="flex items-center gap-3">
-                  <span className="text-2xl font-bold">+</span>
-                  Add New Post
-                </span>
-              </button>
+              )}
             </div>
+          </div>
 
-            {/* Modern Settings Modal */}
-            <Modal
-              className="!bg-black/50 backdrop-blur-sm"
-              show={toggleSettings}
-              onClose={() => setToggleSettings(false)}
+          {/* Modern Toggle Buttons */}
+          <div className="mt-8 flex justify-center gap-2 bg-white/80  rounded-2xl p-2 shadow-xl border border-white/20 w-fit mx-auto">
+            <button
+              onClick={handleToggleStats}
+              className={`px-8 py-3 rounded-xl font-semibold transition-all cursor-pointer ${
+                toggleStats
+                  ? "bg-[#FF8C42] text-white shadow-lg"
+                  : "text-[#FC6F2F] hover:bg-[#FFE9D1]/50"
+              }`}
             >
-              <div className="bg-white rounded-3xl overflow-hidden shadow-2xl">
-                <div className="bg-[#FF8C42] p-6">
-                  <h2 className="text-2xl font-bold text-white">Profile Settings</h2>
-                </div>
-                <div className="p-6">
-                  <form className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              Posts
+            </button>
+            <button
+              onClick={handleToggleFriends}
+              className={`px-8 py-3 rounded-xl font-semibold transition-all cursor-pointer ${
+                toggleFriends
+                  ? "bg-[#FF8C42] text-white shadow-lg"
+                  : "text-[#FC6F2F] hover:bg-[#FFE9D1]/50"
+              }`}
+            >
+              Friends
+            </button>
+          </div>
+
+          {/* Posts Section */}
+          {toggleStats && (
+            <div className="mt-8">
+              <div className="flex justify-center mb-8">
+                <button
+                  className="bg-[#FF8C42] hover:from-[#E55A2B] hover:to-[#FC6F2F] text-white font-semibold py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all cursor-pointer text-lg"
+                  onClick={handleShow}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="text-2xl font-bold">+</span>
+                    Add New Post
+                  </span>
+                </button>
+              </div>
+
+              {/* Modern Settings Modal */}
+              <Modal
+                className="!bg-black/50 !rounded-3xl"
+                show={toggleSettings}
+                onClose={() => setToggleSettings(false)}
+              >
+                <div className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-2xl mx-auto">
+                  <div className="bg-[#FF8C42] p-6">
+                    <h2 className="text-2xl font-bold text-white">
+                      Profile Settings
+                    </h2>
+                  </div>
+                  <div className="p-6">
+                    <form className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            value={trueName}
+                            placeholder="Your name"
+                            onChange={(e) => setTrueName(e.target.value)}
+                            className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            value={email}
+                            placeholder="your.email@example.com"
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
+                          />
+                        </div>
+                      </div>
+
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Bio
+                        </label>
+                        <textarea
+                          value={userBio}
+                          placeholder="Tell us about yourself..."
+                          onChange={(e) => setUserBio(e.target.value)}
+                          rows={3}
+                          className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30 resize-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Location
+                        </label>
                         <input
                           type="text"
-                          value={trueName}
-                          placeholder="Your name"
-                          onChange={(e) => setTrueName(e.target.value)}
+                          value={userLocation}
+                          placeholder="City, Country"
+                          onChange={(e) => setUserLocation(e.target.value)}
                           className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
                         />
                       </div>
+
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Preferred Sports
+                        </label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <select
+                            value={userPrimarySport}
+                            onChange={(e) =>
+                              setUserPrimarySport(e.target.value)
+                            }
+                            className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30 cursor-pointer"
+                          >
+                            <option value="">Select Primary Sport</option>
+                            {sports.map((sport) => (
+                              <option key={sport} value={sport}>
+                                {sport}
+                              </option>
+                            ))}
+                          </select>
+
+                          <select
+                            value={userSecondarySport}
+                            onChange={(e) =>
+                              setUserSecondarySport(e.target.value)
+                            }
+                            className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30 cursor-pointer"
+                          >
+                            <option value="">Select Secondary Sport</option>
+                            {sports.map((sport) => (
+                              <option key={sport} value={sport}>
+                                {sport}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Profile Picture
+                        </label>
+                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-[#FC6F2F] transition-colors">
+                          <div className="text-4xl mb-2">📷</div>
+                          <FileInput
+                            id="Picture"
+                            accept="image/png, image/jpg"
+                            className="text-sm text-gray-500"
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+                    <button
+                      onClick={() => setToggleSettings(false)}
+                      className="px-6 py-2 text-gray-600 font-medium rounded-xl hover:bg-gray-200 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSave}
+                      className="px-6 py-2 bg-[#FF8C42] text-white font-medium rounded-xl hover:bg-[#E55A2B] transition-all shadow-lg hover:shadow-xl"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+
+              {/* Enhanced Posts Modal */}
+              <Modal
+                show={postsModal}
+                onClose={() => setPostsModal(false)}
+                className="!bg-black/50"
+              >
+                <div className="bg-white rounded-3xl overflow-hidden shadow-2xl">
+                  <div className="bg-[#FF8C42] p-6">
+                    <h2 className="text-2xl font-bold text-white">
+                      {edit ? "Edit Post" : "Create New Post"}
+                    </h2>
+                  </div>
+                  <div className="p-6">
+                    <form className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Select Sport
+                        </label>
+                        <Dropdown
+                          label={postSport}
+                          className="w-full !bg-[#FFE9D1] !text-gray-800 !border-2 !border-gray-200 !rounded-xl"
+                          dismissOnClick={true}
+                        >
+                          <div className="h-[200px] overflow-y-auto !text-gray-800">
+                            {sportCategories.flatMap((category) =>
+                              category.sports.map((sport, index) => (
+                                <DropdownItem
+                                  key={index}
+                                  className="!text-gray-800 hover:!text-[#FC6F2F] hover:!bg-[#FFE9D1]/50"
+                                  onClick={() => setPostSport(sport)}
+                                >
+                                  {sport}
+                                </DropdownItem>
+                              ))
+                            )}
+                          </div>
+                        </Dropdown>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Stat
+                        </label>
                         <input
-                          type="email"
-                          value={email}
-                          placeholder="your.email@example.com"
-                          onChange={(e) => setEmail(e.target.value)}
+                          type="text"
+                          value={postStat}
+                          placeholder="e.g., Personal Best, Distance, Weight"
+                          onChange={handleStat}
                           className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
                         />
                       </div>
-                    </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Bio</label>
-                      <textarea
-                        value={userBio}
-                        placeholder="Tell us about yourself..."
-                        onChange={(e) => setUserBio(e.target.value)}
-                        rows={3}
-                        className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30 resize-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Location</label>
-                      <input
-                        type="text"
-                        value={userLocation}
-                        placeholder="City, Country"
-                        onChange={(e) => setUserLocation(e.target.value)}
-                        className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Sports</label>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Dropdown label={userPrimarySport} dismissOnClick={true} className="w-full">
-                          <div className="h-[200px] overflow-y-auto">
-                            <DropdownItem onClick={() => setUserPrimarySport("Boxing")}>Boxing</DropdownItem>
-                            <DropdownItem onClick={() => setUserPrimarySport("Swimming")}>Swimming</DropdownItem>
-                            <DropdownItem onClick={() => setUserPrimarySport("Running")}>Running</DropdownItem>
-                            <DropdownItem onClick={() => setUserPrimarySport("Cycling")}>Cycling</DropdownItem>
-                            <DropdownItem onClick={() => setUserPrimarySport("Tennis")}>Tennis</DropdownItem>
-                          </div>
-                        </Dropdown>
-                        <Dropdown label={userSecondarySport} dismissOnClick={true} className="w-full">
-                          <div className="h-[200px] overflow-y-auto">
-                            <DropdownItem onClick={() => setUserSecondarySport("Boxing")}>Boxing</DropdownItem>
-                            <DropdownItem onClick={() => setUserSecondarySport("Swimming")}>Swimming</DropdownItem>
-                            <DropdownItem onClick={() => setUserSecondarySport("Running")}>Running</DropdownItem>
-                            <DropdownItem onClick={() => setUserSecondarySport("Cycling")}>Cycling</DropdownItem>
-                            <DropdownItem onClick={() => setUserSecondarySport("Tennis")}>Tennis</DropdownItem>
-                          </div>
-                        </Dropdown>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Picture</label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-[#FC6F2F] transition-colors">
-                        <div className="text-4xl mb-2">📷</div>
-                        <FileInput
-                          id="Picture"
-                          accept="image/png, image/jpg"
-                          className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#FC6F2F] file:text-white hover:file:bg-[#E55A2B]"
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Stat Score
+                        </label>
+                        <input
+                          type="text"
+                          value={postDescription}
+                          placeholder="e.g., 100kg, 5km, 2:30 min"
+                          onChange={handleDescription}
+                          className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
                         />
                       </div>
-                    </div>
-                  </form>
-                </div>
-                
-                <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
-                  <button
-                    onClick={() => setToggleSettings(false)}
-                    className="px-6 py-2 text-gray-600 font-medium rounded-xl hover:bg-gray-200 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSave}
-                    className="px-6 py-2 bg-[#FF8C42] text-white font-medium rounded-xl hover:from-[#E55A2B] hover:to-[#FC6F2F] transition-all shadow-lg hover:shadow-xl"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              </div>
-            </Modal>
+                    </form>
+                  </div>
 
-            {/* Enhanced Posts Modal */}
-            <Modal show={postsModal} onClose={() => setPostsModal(false)} className="!bg-black/50 backdrop-blur-sm">
-              <div className="bg-white rounded-3xl overflow-hidden shadow-2xl">
-                <div className="bg-[#FF8C42] p-6">
-                  <h2 className="text-2xl font-bold text-white">{edit ? "Edit Post" : "Create New Post"}</h2>
+                  <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
+                    <button
+                      onClick={() => setPostsModal(false)}
+                      className="px-6 py-2 text-gray-600 font-medium rounded-xl hover:bg-gray-200 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={(e) => handlePostSave(e)}
+                      className="px-6 py-2 bg-[#FF8C42] text-white font-medium rounded-xl hover:from-[#E55A2B] hover:to-[#FC6F2F] transition-all shadow-lg hover:shadow-xl"
+                    >
+                      {edit ? "Update Post" : "Create Post"}
+                    </button>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <form className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Select Sport</label>
-                      <Dropdown
-                        label={postSport}
-                        className="w-full !bg-[#FFE9D1] !text-gray-800 !border-2 !border-gray-200 !rounded-xl"
-                        dismissOnClick={true}
+              </Modal>
+
+              {/* Modern Posts Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {posts && posts.length > 0 ? (
+                  posts
+                    .filter(
+                      (item) =>
+                        item.isPublished === true && item.isDeleted === false
+                    )
+                    .map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all group"
                       >
-                        <div className="h-[200px] overflow-y-auto !text-gray-800">
-                          {sportCategories.flatMap((category) =>
-                            category.sports.map((sport, index) => (
-                              <DropdownItem
-                                key={index}
-                                className="!text-gray-800 hover:!text-[#FC6F2F] hover:!bg-[#FFE9D1]/50"
-                                onClick={() => setPostSport(sport)}
-                              >
-                                {sport}
-                              </DropdownItem>
-                            ))
-                          )}
+                        <div className="mb-4">
+                          <h2 className="text-2xl font-bold text-center bg-[#FF8C42] bg-clip-text text-transparent mb-2">
+                            {item.sport || "No sport"}
+                          </h2>
+                          <h3 className="text-lg text-center text-gray-600 font-medium">
+                            {item.stat || "No stat"}
+                          </h3>
                         </div>
-                      </Dropdown>
-                    </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Stat</label>
-                      <input
-                        type="text"
-                        value={postStat}
-                        placeholder="e.g., Personal Best, Distance, Weight"
-                        onChange={handleStat}
-                        className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
-                      />
-                    </div>
+                        <div className="bg-[#FFF2E6] rounded-xl p-4 mb-4">
+                          <p className="text-gray-800 text-center font-semibold text-lg">
+                            {item.description || "No description"}
+                          </p>
+                        </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Stat Score</label>
-                      <input
-                        type="text"
-                        value={postDescription}
-                        placeholder="e.g., 100kg, 5km, 2:30 min"
-                        onChange={handleDescription}
-                        className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-[#FC6F2F] focus:outline-none transition-colors bg-[#FFE9D1]/30"
-                      />
-                    </div>
-                  </form>
-                </div>
-                
-                <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3">
-                  <button
-                    onClick={() => setPostsModal(false)}
-                    className="px-6 py-2 text-gray-600 font-medium rounded-xl hover:bg-gray-200 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={(e) => handlePostSave(e)}
-                    className="px-6 py-2 bg-[#FF8C42] text-white font-medium rounded-xl hover:from-[#E55A2B] hover:to-[#FC6F2F] transition-all shadow-lg hover:shadow-xl"
-                  >
-                    {edit ? "Update Post" : "Create Post"}
-                  </button>
-                </div>
+                        <div className="flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button
+                            onClick={() => handlePostEdit(item)}
+                            className="bg-[#82C0CC] hover:bg-[#6BA8B5] text-white font-medium py-2 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handlePostDelete(item)}
+                            className=" bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <div className="col-span-full p-8 text-center bg-white/80 rounded-2xl shadow-xl border border-white/20">
+                    <div className="text-6xl mb-4">📝</div>
+                    <p className="text-gray-500 text-lg">No posts available</p>
+                    <p className="text-gray-400 text-sm mt-2">
+                      Create your first post to get started!
+                    </p>
+                  </div>
+                )}
               </div>
-            </Modal>
-
-            {/* Modern Posts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {posts && posts.length > 0 ? (
-                posts
-                  .filter(
-                    (item) =>
-                      item.isPublished === true && item.isDeleted === false
-                  )
-                  .map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all group"
-                    >
-                      <div className="mb-4">
-                        <h2 className="text-2xl font-bold text-center bg-[#FF8C42] bg-clip-text text-transparent mb-2">
-                          {item.sport || "No sport"}
-                        </h2>
-                        <h3 className="text-lg text-center text-gray-600 font-medium">
-                          {item.stat || "No stat"}
-                        </h3>
-                      </div>
-                      
-                      <div className="bg-[#FFF2E6] rounded-xl p-4 mb-4">
-                        <p className="text-gray-800 text-center font-semibold text-lg">
-                          {item.description || "No description"}
-                        </p>
-                      </div>
-
-                      <div className="flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => handlePostEdit(item)}
-                          className="bg-[#82C0CC] hover:bg-[#6BA8B5] text-white font-medium py-2 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all cursor-pointer"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handlePostDelete(item)}
-                          className=" bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all cursor-pointer"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ))
-              ) : (
-                <div className="col-span-full p-8 text-center bg-white/80 rounded-2xl shadow-xl border border-white/20">
-                  <div className="text-6xl mb-4">📝</div>
-                  <p className="text-gray-500 text-lg">No posts available</p>
-                  <p className="text-gray-400 text-sm mt-2">Create your first post to get started!</p>
-                </div>
-              )}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Enhanced Friends Section */}
-        {toggleFriends && (
-          <div className="mt-8">
-            <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-[#FC6F2F] to-[#FF8C42] rounded-full"></div>
-                My Friends
-              </h2>
-              {friends.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">👥</div>
-                  <p className="text-gray-500 text-lg">You do not have any friends yet.</p>
-                  <p className="text-gray-400 text-sm mt-2">Start connecting with other athletes!</p>
-                </div>
-              ) : (
-                <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-                  {friends.map((friend) => (
-                    <div
-                      key={friend.id}
-                      className="bg-gradient-to-br from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-4 text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all border border-white/20"
-                    >
-                      <div className="mb-3">
-                        <p className="font-bold text-gray-800">{friend.trueName}</p>
-                        <p className="text-sm text-gray-600 mb-2">@{friend.username}</p>
-                      </div>
+          {/* Enhanced Friends Section */}
+          {toggleFriends && (
+            <div className="mt-8">
+              <div className="bg-white/80  rounded-2xl p-6 shadow-xl border border-white/20">
+                <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-3">
+                  <div className="w-1 h-8 bg-gradient-to-b from-[#FC6F2F] to-[#FF8C42] rounded-full"></div>
+                  My Friends
+                </h2>
+                {friends.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">👥</div>
+                    <p className="text-gray-500 text-lg">
+                      You do not have any friends yet.
+                    </p>
+                    <p className="text-gray-400 text-sm mt-2">
+                      Start connecting with other athletes!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+                    {friends.map((friend) => (
+                      <div
+                        key={friend.id}
+                        className="bg-gradient-to-br from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-4 text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all border border-white/20"
+                      >
+                        <div className="mb-3">
+                          <p className="font-bold text-gray-800">
+                            {friend.trueName}
+                          </p>
+                          <p className="text-sm text-gray-600 mb-2">
+                            @{friend.username}
+                          </p>
+                        </div>
 
-                      <div className="flex justify-center items-center gap-2 mb-4 p-2 bg-white/50 rounded-xl">
-                        <span className="text-gray-700 font-medium">
-                          {friend.isSpotter ? "Spotter" : "Trainer"}
-                        </span>
-                        <Image
-                          className="h-8 w-8"
-                          src={friend.isSpotter ? SpotterIcon : TrainerIcon}
-                          alt={friend.isSpotter ? "Spotter Icon" : "Trainer Icon"}
-                        />
-                      </div>
+                        <div className="flex justify-center items-center gap-2 mb-4 p-2 bg-white/50 rounded-xl">
+                          <span className="text-gray-700 font-medium">
+                            {friend.isSpotter ? "Spotter" : "Trainer"}
+                          </span>
+                          <Image
+                            className="h-8 w-8"
+                            src={friend.isSpotter ? SpotterIcon : TrainerIcon}
+                            alt={
+                              friend.isSpotter ? "Spotter Icon" : "Trainer Icon"
+                            }
+                          />
+                        </div>
 
-                      <div className="flex justify-center gap-2">
-                        <button
-                          onClick={() => handleMessageFriend(friend.id)}
-                          className="p-2 bg-white hover:bg-[#82C0CC] text-gray-700 hover:text-white rounded-xl transition-all shadow-md hover:shadow-lg"
-                        >
-                          💬
-                        </button>
-                        <button
-                          onClick={() => handleViewFriendProfile(friend.id)}
-                          className="p-2 bg-white hover:bg-[#FC6F2F] text-gray-700 hover:text-white rounded-xl shadow-md hover:shadow-lg"
-                        >
-                          👤
-                        </button>
-                        <button
-                          onClick={() => handleRemoveFriend(friend.id)}
-                          className="p-2 bg-white hover:bg-red-500 text-gray-700 hover:text-white rounded-xl  shadow-md hover:shadow-lg"
-                        >
-                          🗑️
-                        </button>
+                        <div className="flex justify-center gap-2">
+                          <button
+                            onClick={() => handleMessageFriend(friend.id)}
+                            className="p-2 bg-white hover:bg-[#82C0CC] text-gray-700 hover:text-white rounded-xl transition-all shadow-md hover:shadow-lg"
+                          >
+                            💬
+                          </button>
+                          <button
+                            onClick={() => handleViewFriendProfile(friend.id)}
+                            className="p-2 bg-white hover:bg-[#FC6F2F] text-gray-700 hover:text-white rounded-xl shadow-md hover:shadow-lg"
+                          >
+                            👤
+                          </button>
+                          <button
+                            onClick={() => handleRemoveFriend(friend.id)}
+                            className="p-2 bg-white hover:bg-red-500 text-gray-700 hover:text-white rounded-xl  shadow-md hover:shadow-lg"
+                          >
+                            🗑️
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </main>
-  </div>
-  )
-}
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
 
 export default ProfilePage;

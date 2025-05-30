@@ -282,7 +282,6 @@ export default function Home() {
       const result = await createAccount(userData);
 
       if (result) {
-        alert("Account Created!");
         handleSwitch();
       } else {
         alert("Failed to Create Account! Please check your information and try again.");

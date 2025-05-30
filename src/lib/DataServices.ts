@@ -212,23 +212,25 @@ export const getProfileItemsByUser = async (emailOrUsername: string, token: stri
 
 
 
-export const updateProfile = async (post:IuserCreateInfo, token:string) => {
-  const res = await fetch(`${url}UpdateUserInfo/`, { // {userId}
+export const updateProfile = async (post: IuserCreateInfo, userId: number, token: string) => {   
+  const res = await fetch(`${url}User/UpdateUserInfo/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
-    body:JSON.stringify(post)
+    body: JSON.stringify(post)
   });
+  
   if(!res.ok){
     const errorData = await res.json();
     const message = errorData.message;
     console.log(message);
     return false;
   }
+  
   const data = await res.json();
-  return data.success
+  return data.success;
 }
 
 export const getFriendsData = async (userId: number, token: string) => {
