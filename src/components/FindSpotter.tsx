@@ -12,11 +12,9 @@ import {
   IProfileData,
   IuserCreateInfo,
 } from "@/lib/Interfaces";
-import { Button, Label } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
-import Image from "next/image";
-import { X } from "lucide-react";
+// import ProfilePicture from "@/assets/Stock_Profile-removebg-preview.png";
+import { Calendar, ChevronRight, Clock, Edit3, Heart, MapPin, User, X } from "lucide-react";
 
 const FindSpotter = () => {
   const [profileItems, setProfileItems] = useState<IuserCreateInfo | null>();
@@ -192,6 +190,7 @@ const FindSpotter = () => {
         startTime: startTime,
         endTime: endTime,
         daysAvailable: daysAvailable,
+         ...(currentMatchId && { id: currentMatchId })
       };
       console.log("Submitting items:", items);
       console.log("Token:", token);
@@ -273,264 +272,326 @@ const FindSpotter = () => {
     setEdit(false);
   };
 
-  const handleMyName = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setMyName(e.target.value);
 
-  const handleSport = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setUserSport(e.target.value);
-
-  const handleDate = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setDaysAvailable(e.target.value);
-
-  const handleStartTime = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setStartTime(e.target.value);
-
-  const handleEndTime = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEndTime(e.target.value);
-
-  return (
-    <div className="px-4 py-8 bg-gray-50">
-      {profileModal ? (
-        <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 mt-40">
-          <div className="flex justify-between items-center">
-            <p className="text-2xl font-bold text-gray-800">
-              Create Spotter Profile
-            </p>
-
-            <button
-              onClick={handleCancelEdit}
-              className="p-2 text-gray-600 hover:text-gray-800 rounded-full hover:bg-gray-100"
-              aria-label="Close"
-            >
-              <X size={24} />
-            </button>
+   if (profileModal) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] p-6 text-white">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold">Create Your Profile</h2>
+                <p className="text-orange-100 mt-1">Tell others about your workout style</p>
+              </div>
+              <button
+                onClick={handleCancelEdit}
+                className="p-2 hover:bg-white/20 rounded-full "
+              >
+                <X size={24} />
+              </button>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <Label>Name</Label>
+          <div className="p-8 space-y-6">
+            {/* Name Field */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <User size={16} />
+                Full Name
+              </label>
               <input
                 type="text"
-                className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
-                placeholder="Enter Name"
+                className="w-full h-12 rounded-xl px-4 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500"
+                placeholder="Enter your name"
                 value={myName}
-                onChange={handleMyName}
+                onChange={(e) => setMyName(e.target.value)}
               />
             </div>
 
-            <div>
-              <Label>Sport</Label>
+            {/* Sport Field */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <Heart size={16} />
+                Favorite Sport
+              </label>
               <input
                 type="text"
-                className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
-                placeholder="Enter Sport"
+                className="w-full h-12 rounded-xl px-4 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500"
+                placeholder="What sport do you love?"
                 value={userSport}
-                onChange={handleSport}
+                onChange={(e) => setUserSport(e.target.value)}
               />
             </div>
 
-            <div>
-              <Label>Days Available</Label>
+            {/* Days Available */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <Calendar size={16} />
+                Available Days
+              </label>
               <input
                 type="text"
-                className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
+                className="w-full h-12 rounded-xl px-4 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500"
                 placeholder="e.g. Monday/Wednesday/Friday"
                 value={daysAvailable}
-                onChange={handleDate}
+                onChange={(e) => setDaysAvailable(e.target.value)}
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <Label>Start Time</Label>
+            {/* Time Range */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                  <Clock size={16} />
+                  Start Time
+                </label>
                 <input
                   type="text"
-                  className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
-                  placeholder="Enter Start Time"
+                  className="w-full h-12 rounded-xl px-4 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500"
+                  placeholder="6:00 AM"
                   value={startTime}
-                  onChange={handleStartTime}
+                  onChange={(e) => setStartTime(e.target.value)}
                 />
               </div>
-
-              <div>
-                <Label>End Time</Label>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                  <Clock size={16} />
+                  End Time
+                </label>
                 <input
                   type="text"
-                  className="w-full h-10 rounded-lg p-2 border border-gray-300 text-lg bg-[#FFE9D1] text-black placeholder-gray-500"
-                  placeholder="Enter End Time"
+                  className="w-full h-12 rounded-xl px-4 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500"
+                  placeholder="8:00 AM"
                   value={endTime}
-                  onChange={handleEndTime}
+                  onChange={(e) => setEndTime(e.target.value)}
                 />
               </div>
             </div>
 
-            <div>
-              <Label>Bio / Content</Label>
+            {/* Bio */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <Edit3 size={16} />
+                About You
+              </label>
               <textarea
                 value={userContent}
                 onChange={(e) => setUserContent(e.target.value)}
-                placeholder="Tell us a bit about yourself..."
-                className="w-full border p-2 rounded h-24 bg-white text-gray-800"
+                placeholder="Tell potential workout partners about yourself..."
+                className="w-full rounded-xl px-4 py-3 border-2 border-gray-200 focus:border-[#FC6F2F] focus:outline-none  bg-[#FFE9D1] text-gray-800 placeholder-gray-500 resize-none h-24"
               />
             </div>
-          </div>
 
-          <div className="flex gap-4 justify-end">
-            <button
-              onClick={handleCancelEdit}
-              className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400 transition cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handlePost}
-              className="flex-1 bg-[#FC6F2F] text-white py-2 rounded-lg font-semibold text-lg hover:bg-[#e25f20] transition disabled:opacity-50 cursor-pointer"
-              disabled={
-                loading ||
-                !myName ||
-                !userContent ||
-                !startTime ||
-                !endTime ||
-                !daysAvailable ||
-                !userSport
-              }
-            >
-              {loading ? "Posting..." : "Post"}
-            </button>
+            {/* Action Buttons */}
+            <div className="flex gap-4 pt-4">
+              <button
+                onClick={handleCancelEdit}
+                className="flex-1 h-12 rounded-xl border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-50  cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePost}
+                disabled={loading || !myName || !userContent || !startTime || !endTime || !daysAvailable || !userSport}
+                className="flex-1 h-12 rounded-xl bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] text-white font-semibold hover:from-[#e25f20] hover:to-[#FF7043] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg cursor-pointer"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Saving...
+                  </div>
+                ) : (
+                  'Save Profile'
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="bg-gray-50 min-h-screen">
-          <main className="max-w-5xl mx-auto p-4">
-            <div className="flex justify-end mb-4">
-              <Button
-                className="cursor-pointer bg-[#FC6F2F] hover:bg-amber-500 "
-                onClick={handleToggleSettings}
-              >
-                Edit Matchmaking Profile
-              </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50">
+      <div className="max-w-6xl mx-auto p-6">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Workout Matcher</h1>
+            <p className="text-gray-600 mt-1">Find your perfect workout partner</p>
+          </div>
+          <button
+            onClick={handleToggleSettings}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] text-white font-semibold rounded-xl hover:from-[#e25f20] hover:to-[#FF7043] transition-all shadow-lg cursor-pointer"
+          >
+            <Edit3 size={18} />
+            Edit Profile
+          </button>
+        </div>
+
+        {/* Profile Card */}
+        {otherProfiles.length > 0 && currentProfile ? (
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* Profile Header */}
+            <div className="bg-gradient-to-r from-[#FFE9D1] via-[#FFF2E6] to-[#FFE9D1] p-8 text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-[#FC6F2F] to-[#FF8A65] rounded-full mx-auto mb-6 flex items-center justify-center shadow-xl">
+                <User size={48} className="text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                {currentProfile.myName}
+              </h2>
+              <div className="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full text-gray-700 font-medium">
+                <MapPin size={16} />
+                Potential Match {currentIndex + 1} of {otherProfiles.length}
+              </div>
             </div>
 
-            {otherProfiles.length > 0 && currentProfile ? (
-              <div className="max-w-5xl mx-auto bg-[#FFE9D1] rounded-2xl shadow-lg p-6 md:space-y-12 space-y-2 md:mt-20 mt-10">
-                <div className="flex justify-center">
-                  <Image
-                    src={ProfilePicture}
-                    alt="Profile Picture"
-                    className="md:h-50 md:w-50 h-24 w-24 object-cover rounded-full border-4 border-white shadow-md"
-                  />
-                </div>
-
-                <div className="text-center space-y-1">
-                  <h2 className="text-2xl font-bold text-gray-800">
-                    Potential Match
-                  </h2>
-                  <p className="text-xl text-gray-700">
-                    {currentProfile.myName}
-                  </p>
-                  <p className="text-md text-gray-600">
-                    Match {currentIndex + 1} of {otherProfiles.length}
-                  </p>
-                </div>
-
-                {/* Schedule Info */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base">
-                  <div>
-                    <strong>Days Available:</strong>{" "}
-                    {currentProfile.daysAvailable}
+            {/* Profile Content */}
+            <div className="p-8 space-y-8">
+              {/* Quick Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] rounded-xl flex items-center justify-center">
+                      <Calendar size={20} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800">Schedule</h3>
                   </div>
-                  <div>
-                    <strong>Sports:</strong> {currentProfile.userSport}
-                  </div>
-                  <div>
-                    <strong>Start Time:</strong> {currentProfile.startTime}
-                  </div>
-                  <div>
-                    <strong>End Time:</strong> {currentProfile.endTime}
+                  <div className="space-y-2 text-gray-700">
+                    <p><span className="font-medium">Days:</span> {currentProfile.daysAvailable}</p>
+                    <p><span className="font-medium">Time:</span> {currentProfile.startTime} - {currentProfile.endTime}</p>
                   </div>
                 </div>
 
-                {/* Bio Section */}
-                <div className="bg-white rounded-lg p-4 text-gray-800">
-                  <h3 className="font-semibold mb-1">About This Spotter:</h3>
-                  <p className="whitespace-pre-line">
-                    {currentProfile.userContent}
-                  </p>
-                </div>
-
-                {/* Match Controls */}
-                <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
-                  <button
-                    onClick={handleNext}
-                    className="w-full sm:w-auto px-6 py-2 rounded-xl bg-red-400 text-white font-semibold hover:bg-red-500 transition cursor-pointer"
-                  >
-                    Next
-                  </button>
-                  <button
-                    onClick={handleMatch}
-                    className="w-full sm:w-auto px-6 py-2 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition cursor-pointer"
-                    disabled={matchedUsers.includes(currentProfile.userId || 0)}
-                  >
-                    {matchedUsers.includes(currentProfile.userId || 0)
-                      ? "Matched"
-                      : "Match"}
-                  </button>
+                <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] rounded-xl flex items-center justify-center">
+                      <Heart size={20} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800">Sport</h3>
+                  </div>
+                  <p className="text-2xl font-bold text-gray-800">{currentProfile.userSport}</p>
                 </div>
               </div>
-            ) : (
-              // Display the user's own profile when no other profiles available
-              <div className="max-w-5xl mx-auto bg-[#FFE9D1] rounded-2xl shadow-lg p-6 md:space-y-12 space-y-2 md:mt-20 mt-10">
-                <div className="flex justify-center">
-                  <Image
-                    src={ProfilePicture}
-                    alt="Profile Picture"
-                    className="md:h-50 md:w-50 h-24 w-24 object-cover rounded-full border-4 border-white shadow-md"
-                  />
-                </div>
 
-                <div className="text-center space-y-1">
-                  <h2 className="text-2xl font-bold text-gray-800">
-                    {usernameOrEmail ? `@${usernameOrEmail}` : "@username"}
-                  </h2>
-                  <p className="text-xl text-gray-700">{myName}</p>
-                  <p className="text-md text-gray-600">Location: City, State</p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base">
-                  <div>
-                    <strong>Days Available:</strong> {daysAvailable}
-                  </div>
-                  <div>
-                    <strong>Sports:</strong> {userSport}
-                  </div>
-                  <div>
-                    <strong>Start Time:</strong> {startTime}
-                  </div>
-                  <div>
-                    <strong>End Time:</strong> {endTime}
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg p-4 text-gray-800">
-                  <h3 className="font-semibold mb-1">About Me:</h3>
-                  <p className="whitespace-pre-line">{userContent}</p>
-                </div>
-
-                {otherProfiles.length === 0 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-blue-800">
-                    <p className="font-semibold text-center">
-                      No other spotters available at the moment.
-                    </p>
-                    <p className="text-center text-sm mt-1">
-                      Check back later for potential matches!
-                    </p>
-                  </div>
-                )}
+              {/* Bio Section */}
+              <div className="bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-6">
+                <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <User size={20} />
+                  About This Workout Partner
+                </h3>
+                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                  {currentProfile.userContent}
+                </p>
               </div>
-            )}
-          </main>
-        </div>
-      )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={handleNext}
+                  className="flex-1 flex items-center justify-center gap-2 h-14 rounded-xl border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-50  cursor-pointer"
+                >
+                  Next Profile
+                  <ChevronRight size={20} />
+                </button>
+                <button
+                  onClick={handleMatch}
+                  disabled={matchedUsers.includes(currentProfile.userId || 0)}
+                  className={`flex-1 h-14 rounded-xl font-semibold transition-all shadow-lg ${
+                    matchedUsers.includes(currentProfile.userId || 0)
+                      ? 'bg-gray-400 text-white cursor-not-allowed'
+                      : 'bg-gradient-to-r from-emerald-500 to-green-500 text-white hover:from-emerald-600 hover:to-green-600 cursor-pointer'
+                  }`}
+                >
+                  {matchedUsers.includes(currentProfile.userId || 0) ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Heart size={20} />
+                      Matched!
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Heart size={20} />
+                      Match
+                    </div>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Your Profile */
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            {/* Profile Header */}
+            <div className="bg-gradient-to-r from-[#FFE9D1] via-[#FFF2E6] to-[#FFE9D1] p-8 text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-[#FC6F2F] to-[#FF8A65] rounded-full mx-auto mb-6 flex items-center justify-center shadow-xl">
+                <User size={48} className="text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                {myName}
+              </h2>
+              <div className="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full text-gray-700 font-medium">
+                <span>@{usernameOrEmail}</span>
+              </div>
+            </div>
+
+            {/* Profile Content */}
+            <div className="p-8 space-y-8">
+              {/* Quick Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] rounded-xl flex items-center justify-center">
+                      <Calendar size={20} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800">My Schedule</h3>
+                  </div>
+                  <div className="space-y-2 text-gray-700">
+                    <p><span className="font-medium">Days:</span> {daysAvailable}</p>
+                    <p><span className="font-medium">Time:</span> {startTime} - {endTime}</p>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+                      <Heart size={20} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800">My Sport</h3>
+                  </div>
+                  <p className="text-2xl font-bold text-gray-800">{userSport}</p>
+                </div>
+              </div>
+
+              {/* Bio Section */}
+              <div className="bg-gradient-to-r from-[#FFE9D1] to-[#FFF2E6] rounded-2xl p-6">
+                <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <User size={20} />
+                  About Me
+                </h3>
+                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                  {userContent}
+                </p>
+              </div>
+
+              {/* No Matches Message */}
+              {otherProfiles.length === 0 && (
+                <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-8 text-center border-2 border-dashed border-orange-200">
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#FC6F2F] to-[#FF8A65] rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <Heart size={24} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-orange-900 mb-2">
+                    Looking for workout partners...
+                  </h3>
+                  <p className="text-orange-700">
+                    No other spotters available right now. Check back later for potential matches!
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

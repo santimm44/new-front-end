@@ -90,6 +90,7 @@ export interface Friend {
     daysAvailable: string
     startTime: string
     endTime: string
+   
   }
 
   export interface IMatchTrainerCard {

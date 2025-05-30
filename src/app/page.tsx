@@ -138,7 +138,7 @@ export default function Home() {
     } else {
       // Login validation
       if (!username.trim()) {
-        errors.username = "Username/Email is required";
+        errors.username = "Username is required";
       }
 
       if (!password.trim()) {
@@ -189,7 +189,7 @@ export default function Home() {
     value = value.slice(0, 10);
     setBirthdate(value);
     
-    // Clear validation error when user starts typing
+    
     if (validationErrors.birthdate) {
       setValidationErrors(prev => ({ ...prev, birthdate: undefined }));
     }
@@ -206,7 +206,7 @@ export default function Home() {
     
     setPhoneNumber(value);
     
-    // Clear validation error when user starts typing
+    
     if (validationErrors.phoneNumber) {
       setValidationErrors(prev => ({ ...prev, phoneNumber: undefined }));
     }
@@ -215,7 +215,6 @@ export default function Home() {
   const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const file = event.target.files?.[0];
   if (file) {
-    // Validate file size (e.g., max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       alert('File size must be less than 5MB');
       return;
@@ -334,7 +333,7 @@ export default function Home() {
                     htmlFor="user"
                     className="block text-2xl font-semibold mb-2 lg:w-[80%]"
                   >
-                    Username/Email
+                    Username
                   </Label>
                 </div>
                 {validationErrors.username && (
@@ -345,7 +344,7 @@ export default function Home() {
                 <div className="flex justify-center">
                   <Input
                     id="user"
-                    placeholder="Enter Username/Email"
+                    placeholder="Enter Username"
                     required
                     value={username}
                     onChange={(e) => {
@@ -387,7 +386,7 @@ export default function Home() {
               </div>
               <div className="flex justify-center">
                 <Button
-                  className="bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
+                  className="bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC] cursor-pointer"
                   onClick={handleSubmit}
                 >
                   Sign In
@@ -650,7 +649,7 @@ export default function Home() {
               <div className="flex justify-center gap-4 mb-4">
                 <Button
                   className="bg-white"
-                  variant={isSpotter ? "default" : "outline"}
+                  variant={isSpotter ? "outline" : "default"}
                   onClick={() => {
                     setIsSpotter(true);
                     setIsTrainer(false);
@@ -660,7 +659,7 @@ export default function Home() {
                 </Button>
                 <Button
                   className="bg-white"
-                  variant={isTrainer ? "default" : "outline"}
+                  variant={isTrainer ? "outline" : "default"}
                   onClick={() => {
                     setIsTrainer(true);
                     setIsSpotter(false);
@@ -672,7 +671,7 @@ export default function Home() {
 
               <div className="flex justify-center">
                 <Button
-                  className="bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC]"
+                  className="bg-[#82C0CC] text-white text-xl mt-4 h-12 w-40 hover:bg-white hover:text-[#82C0CC] cursor-pointer"
                   onClick={handleSubmit}
                 >
                   Create Account
