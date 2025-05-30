@@ -278,13 +278,11 @@ export default function Home() {
 
     if (switchBool) {
       // Create Account Logic
-      console.log("Creating account with data:", userData);
       const result = await createAccount(userData);
 
       if (result) {
         handleSwitch();
       } else {
-        alert("Failed to Create Account! Please check your information and try again.");
       }
     } else {
       // Login Logic
@@ -294,7 +292,6 @@ export default function Home() {
         if (typeof window !== "undefined") {
           localStorage.setItem("Token", response.token);
           localStorage.setItem("username", username);
-          console.log("Token stored:", response.token);
           console.log("Username stored:", username);
           await getLoggedInUserData(username);
           router.push("/Profile");

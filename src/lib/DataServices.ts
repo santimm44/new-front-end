@@ -5,7 +5,6 @@ let userData: IUserData;
 
 // Login Fetch
 export const login = async (user: IUserInfo) => {
-  console.log(user)
     const res = await fetch(url + "User/Login",{
       method: "POST",
       headers: {
@@ -30,7 +29,6 @@ export const login = async (user: IUserInfo) => {
 export const createAccount = async (user: IuserCreateInfo) => {
   
   try{
-    console.log(user);
     const res = await fetch(url + "User/CreateUser", {
         method: "POST",
         headers: {
